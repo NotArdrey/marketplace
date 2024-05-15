@@ -1,0 +1,385 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: poppins;
+
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-left {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-right {
+    height: 100%;
+    width: 40%;
+    background-color: #3182CE;
+}
+
+.upper-login {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+}
+
+.upper-registration {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    color: white;
+}
+
+.lower-login {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-h1 {
+    justify-self: start;
+}
+
+#login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 80px;
+}
+
+.input-box {
+    width: 50%;
+    height: 40px;
+    padding: 5px;
+    font-size: 24px;
+    box-sizing: border-box;
+}
+
+.input-box:focus {
+    border: none;
+}
+
+.login-button {
+    width: 30%;
+    height: 40px;
+    border: none;
+    background-color: #3182CE;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-right-container {
+    height: 30%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.login-right h1 {
+    color: white;
+    font-size: 50px;
+}
+
+.login-right-container p {
+    font-size: 24px;
+    color: white;
+}
+
+.login-right-container button {
+    height: 40px;
+    width: 70%;
+    border: none;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.triangle {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 250px solid transparent;
+    border-left: 250px solid #FFD700;
+    transform: rotate(180deg);
+}
+
+.small-triangle {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 200px solid transparent;
+    border-left: 200px solid #FDBD01;
+    transform: rotate(180deg);
+}
+  
+.registration-left {
+    height: 100%;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #3182CE;
+} 
+
+.registration-right {
+    height: 100%;
+    width: 60%;
+}
+
+.triangle-registration {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 250px solid transparent;
+    border-left: 250px solid #FFD700;
+    transform: rotate(360deg);
+}
+
+.small-triangle-registration {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 200px solid transparent;
+    border-left: 200px solid #FDBD01;
+    transform: rotate(360deg);
+}
+
+.registration-left-container {
+    height: 30%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.registration-left-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.registration-left-container h1 {
+    color: white;
+    font-size: 50px;
+}
+
+.registration-left-container p {
+    font-size: 24px;
+    color: white;
+}
+
+.registration-left-container button {
+    height: 40px;
+    width: 70%;
+    border: none;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.registration-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registration-right-container {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-row {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.special-form-row {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 2fr 1fr;
+    gap: 5px;
+}
+
+.registration-input-box {
+    width: 100%;
+    height: 40px;
+    padding: 5px;
+    font-size: 24px;
+    box-sizing: border-box;
+}
+
+#registration-form {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+#registration-form button {
+    font-weight: bold;
+}
+
+.login-right-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #3182CE;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    
+}
+
+.navbar-left {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.navbar-left a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-left a:hover {
+    color: #FFD700;
+}
+
+.navbar-right {
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.fa-cart-shopping {
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.navbar-right .fa-cart-shopping:hover {
+    color: #FFD700;
+}
+
+.content {
+    position: absolute;
+    top: 80px;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.searchbar input {
+    box-sizing: border-box;
+    height: 40px;
+    border: none;
+}
+
+.searchbar {
+    width: 500px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+}
+
+.searchbar-text {
+    width: 80%;
+    border: 1px solid #808080;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    overflow: hidden;
+}
+
+.searchbar-text input {
+    width: 100%;
+    height: 38px;
+    padding: 5px;
+}
+
+.searchbar-text input:focus {
+    outline: none;
+}
+
+.searchbar-button {
+    width: 20%;
+    background-color: #FDBD01;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+}
+
+.searchbar-button input{
+    width: 100%;
+    color: white;
+    font-weight: bold;
+    background-color: #FDBD01;
+    border-radius: 0 5px 5px 0;
+}
