@@ -387,7 +387,6 @@ body {
 .products-div {
     flex: 1;
     width: 100%;
-    background-color: lightgray;
     box-sizing: border-box;
     padding: 5px;
     display: flex;
@@ -410,6 +409,7 @@ body {
     background-color: white;
     border-radius: 12px;
     padding: 16px 16px 24px 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .item-upper {
@@ -477,7 +477,7 @@ body {
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: flex-end;
 }
 
 .fa-star {
@@ -516,4 +516,79 @@ body {
 
 .fa-cart-shopping {
     font-size: 16px;
+}
+
+.sidebar {
+    width: 300px;
+    min-height: 100vh;
+    background-color: #3182CE;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sidebar-item {
+    width: 100%;
+    height: 80px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    box-sizing: border-box;
+    padding: 16px;
+}
+
+.sidebar-item:hover {
+    color: yellow;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px 0 0 8px;
+}
+
+.icon i {
+    font-size: 24px;
+    color: white;
+}
+
+.nav-title {
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 0 8px 8px 0;
+}
+
+.sidebar-link {
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar-link:hover {
+    font-weight: bold;
+}
+
+.sidebar-link:hover .nav-title,  .sidebar-link:hover .icon, .sidebar-link:hover .icon i {
+    background-color: white;
+    color: #3182CE;
+}
+
+.sidebar-link:hover .icon .fa-right-from-bracket {
+    color: red;
+}
+
+.sidebar-link:hover .red {
+    color: red;
+}
+
+
+.sidebar a:nth-child(1) {
+    margin-bottom: 16px;
 }

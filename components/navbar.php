@@ -16,7 +16,7 @@
             <a href=""><div class="nav-div">Categories</div></a>
             <a href=""><div class="nav-div">About Us</div></a>
             <a href=""><div class="nav-div">Contact Us</div></a>
-            <a href=""><div class="nav-div">Settings</div></a>
+            <a href="../pages/settings.php"><div class="nav-div">Settings</div></a>
         </div>
         <div class="navbar-right">
             <p>P57.00</p>
