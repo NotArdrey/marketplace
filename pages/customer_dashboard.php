@@ -27,7 +27,7 @@ require '../config/dbconn.php';
             <div class="product-display">
                 <div class="item">
                     <div class="item-upper">
-                        <img src="../product_img/blue_candy.png" class="product-img">
+                        <img src="../product_img/blue_candy.png" class="product-img" draggable="false">
                     </div>
                     <div class="item-lower">
                         <div class="product-name">Methamphetamine</div>
@@ -54,7 +54,7 @@ require '../config/dbconn.php';
 
                 <div class="item">
                     <div class="item-upper">
-                        <img src="../product_img/sopas.jpg" class="product-img">
+                        <img src="../product_img/sopas.jpg" class="product-img" draggable="false">
                     </div>
                     <div class="item-lower">
                         <div class="product-name">Sopas sa Baso</div>
@@ -78,7 +78,7 @@ require '../config/dbconn.php';
 
                 <div class="item">
                     <div class="item-upper">
-                        <img src="../product_img/kamote.jpg" class="product-img">
+                        <img src="../product_img/kamote.jpg" class="product-img" draggable="false">
                     </div>
                     <div class="item-lower">
                         <div class="product-name">Kamote</div>
@@ -106,7 +106,7 @@ require '../config/dbconn.php';
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<div class='item'>
                                 <div class='item-upper'>
-                                    <img src='../product_img/sandwich.jpg' class='product-img'>
+                                    <img src='../product_img/sandwich.jpg' class='product-img' draggable='false'>
                                 </div>
                                 <div class='item-lower'>
                                     <div class='product-name'>" . $row['productName'] . "</div>

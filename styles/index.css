@@ -592,3 +592,19 @@ body {
 .sidebar a:nth-child(1) {
     margin-bottom: 16px;
 }
+
+.settings-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-product-container {
+    min-height: 100vh;
+    width: calc(100% - 300px);
+    position: fixed;
+    left: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
