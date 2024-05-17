@@ -20,7 +20,7 @@
             </div>
         </a>
 
-        <a href="" class="sidebar-link">
+        <a href="../pages/settings.php" class="sidebar-link">
             <div class="sidebar-item">
                 <div class="icon"><i class="fa-solid fa-user"></i></div>
                 <div class="nav-title">Details</div>

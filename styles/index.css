@@ -608,3 +608,83 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.details-container {
+    min-height: 100vh;
+    width: calc(100% - 300px);
+    position: fixed;
+    left: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-details {
+    width: 70%;
+    min-height: 100vh;
+    padding-left: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.details-header {
+    padding-top: 32px;
+    margin-bottom: 32px;
+}
+
+.details {
+    width: 90%;
+    height: 500px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 56px;
+    column-gap: 16px;
+}
+
+.details-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 20px;
+    padding: 8px;
+}
+
+.label-row {
+    display: flex;
+    align-items: flex-end;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.long-row {
+    grid-column: span 2;
+}
+
+.account-image-div {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.account-image {
+    height: 100%;
+    width: 100%;
+}
+
+.right-details {
+    padding-top: 80px;
+    width: 30%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
