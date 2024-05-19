@@ -27,7 +27,7 @@
             </div>
         </a>
 
-        <a href="" class="sidebar-link">
+        <a href="../pages/security.php" class="sidebar-link">
             <div class="sidebar-item">
                 <div class="icon"><i class="fa-solid fa-lock"></i></div>
                 <div class="nav-title">Security</div>

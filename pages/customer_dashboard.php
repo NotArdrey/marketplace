@@ -25,94 +25,25 @@ require '../config/dbconn.php';
         </div>
         <div class="products-div">
             <div class="product-display">
-                <div class="item">
-                    <div class="item-upper">
-                        <img src="../product_img/blue_candy.png" class="product-img" draggable="false">
-                    </div>
-                    <div class="item-lower">
-                        <div class="product-name">Methamphetamine</div>
-                        <div class="product-desc">99% purity made by Heisenberg himself.</div>
-                        <div class="price-rating">
-                            <div class="price">₱65.00</div>
-                            <div class="rating">
-                                <div class="stars">
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                </div>
-                                <div class="numeric-rating">4.9</div>
-                            </div>
-                        </div>
-                        <div class="details-cart">
-                            <div class="details-button">More details</div>
-                            <div class="cart-button"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="item-upper">
-                        <img src="../product_img/sopas.jpg" class="product-img" draggable="false">
-                    </div>
-                    <div class="item-lower">
-                        <div class="product-name">Sopas sa Baso</div>
-                        <div class="product-desc">Benti SB (Sopas sa Baso).</div>
-                        <div class="price-rating">
-                            <div class="price">₱20.00</div>
-                            <div class="rating">
-                                <div class="stars">
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                </div>
-                                <div class="numeric-rating">2.0</div>
-                            </div>
-                        </div>
-                        <div class="details-cart">
-                            <div class="details-button">More details</div>
-                            <div class="cart-button"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="item-upper">
-                        <img src="../product_img/kamote.jpg" class="product-img" draggable="false">
-                    </div>
-                    <div class="item-lower">
-                        <div class="product-name">Kamote</div>
-                        <div class="product-desc">Violent kamote for sale</div>
-                        <div class="price-rating">
-                            <div class="price">₱25.00</div>
-                            <div class="rating">
-                                <div class="stars">
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                </div>
-                                <div class="numeric-rating">1.0</div>
-                            </div>
-                        </div>
-                        <div class="details-cart">
-                            <div class="details-button">More details</div>
-                            <div class="cart-button"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></div>
-                        </div>
-                    </div>
-                </div>
-                
+                        
             <?php
                 $sql = "SELECT * FROM products";
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
+                        $productName = $row['productName'];
+                        $productDesc = $row['productDesc'];
+                        $productPrice = $row['productPrice'];
+                        $productImg = $row['productImg'];
                         echo "<div class='item'>
                                 <div class='item-upper'>
-                                    <img src='../product_img/sandwich.jpg' class='product-img' draggable='false'>
+                                    <img src='../product_img/$productImg' class='product-img' draggable='false'>
                                 </div>
                                 <div class='item-lower'>
-                                    <div class='product-name'>" . $row['productName'] . "</div>
-                                    <div class='product-desc'>" . $row['productDesc'] . "</div>
+                                    <div class='product-name'>$productName</div>
+                                    <div class='product-desc'>$productDesc</div>
                                     <div class='price-rating'>
-                                        <div class='price'>₱" . $row['productPrice'] . "</div>
+                                        <div class='price'>₱$productPrice</div>
                                         <div class='rating'>
                                             <div class='stars'>
                                                 <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
@@ -129,8 +60,7 @@ require '../config/dbconn.php';
                                         <div class='cart-button'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div>
                                     </div>
                                 </div>
-                            </div>"
-                        ;
+                            </div>";
                     }
                 }
             ?>
