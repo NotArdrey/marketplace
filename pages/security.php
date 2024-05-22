@@ -21,7 +21,7 @@
                 <p>Your password must be at least 6 characters and should include a combination of numbers, letters and special characters (!$@%).</p>
             </div>
 
-            <form action="" method="" id="registration-form"></form>
+            <form action="" method="" id="registration-form">
             <div class="row-container">
 
                 <div class="rows">
@@ -43,11 +43,12 @@
                         <a href="">Forgotten your password?</a>
                     </div>    
                 </div>
+                </form>
 
 
-                <div class="Security-submit">
-                    <button class = Security-cancel><a href="">Cancel</a></button>
-                    <button class = Security-save><a href="">Save</a></button>
+                <div class="security-submit">
+                    <button class = security-cancel><a href="">Cancel</a></button>
+                    <button class = security-save><a href="">Save</a></button>
                 </div>
                 
             </div>
