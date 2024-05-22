@@ -41,7 +41,7 @@
             </div>
         </a>
 
-        <a href="" class="sidebar-link">
+        <a href="../crud/logout.php" class="sidebar-link">
             <div class="sidebar-item">
                 <div class="icon"><i class="fa-solid fa-right-from-bracket"></i></div>
                 <div class="nav-title red">Sign out</div>

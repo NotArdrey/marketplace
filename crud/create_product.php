@@ -6,6 +6,7 @@ $productName = $_POST['productName'];
 $productDesc = $_POST['productDesc'];
 $productPrice = $_POST['productPrice'];
 $productStock = $_POST['productStock'];
+$productSellerID = $_SESSION['userID'];
 
 function validate($data) {
     $data = trim($data);
@@ -40,7 +41,7 @@ if ($_FILES["productImg"]["error"] === 4) {
 
         move_uploaded_file($tmpName, $destination);
         
-        $sql = "INSERT INTO products (productName, productDesc, productPrice, productStock, productImg) VALUES ('$productName', '$productDesc', '$productPrice', '$productStock', '$newImageName')";
+        $sql = "INSERT INTO products (productName, productSellerID, productDesc, productPrice, productStock, productImg) VALUES ('$productName', '$productSellerID', '$productDesc', '$productPrice', '$productStock', '$newImageName')";
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION['alert'] = "

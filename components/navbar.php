@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,15 +14,15 @@
 <body>
     <div class="navbar">
         <div class="navbar-left">
-            <a href=""><div class="nav-div">Home</div></a>
+            <a href="../pages/customer_dashboard.php"><div class="nav-div">Home</div></a>
             <a href=""><div class="nav-div">Categories</div></a>
             <a href=""><div class="nav-div">About Us</div></a>
             <a href=""><div class="nav-div">Contact Us</div></a>
             <a href="../pages/settings.php"><div class="nav-div">Settings</div></a>
         </div>
         <div class="navbar-right">
-            <p>P57.00</p>
-            <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+            <p><?php include("../crud/cartSum.php"); ?></p>
+            <a href="../pages/cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
         </div>
     </div>
 </body>

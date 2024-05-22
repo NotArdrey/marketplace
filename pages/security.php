@@ -46,8 +46,8 @@
 
 
                 <div class="Security-submit">
-                    <button class = Security-cancel><a href="">Cancel</a></button>
-                    <button class = Security-save><a href="">Save</a></button>
+                    <button class = "Security-cancel"><a href="">Cancel</a></button>
+                    <button class = "Security-save"><a href="">Save</a></button>
                 </div>
                 
             </div>
