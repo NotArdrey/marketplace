@@ -21,26 +21,25 @@
         <div class="small-triangle-registration"></div>
     </div>
 
-    <div class="registration-right">
-        <div class="registration-right-container">
-            <h1>Create Free Account</h1>
-            <form action="" method="" id="registration-form">
-                <div class="form-row">
-                    <input type="text" placeholder="First Name" class="registration-input-box">
-                    <input type="text" placeholder="Last Name" class="registration-input-box">
-                </div>
-                <div class="special-form-row">
-                    <input type="email" placeholder="NU Email" class="registration-input-box">
-                    <input type="text" placeholder="Contact Number" class="registration-input-box">
-                </div>
-                <div class="form-row">
-                    <input type="password" placeholder="Password" class="registration-input-box">
-                    <input type="password" placeholder="Confirm Password" class="registration-input-box">
-                </div>
-                
-                <input type="submit" value="Sign In" class="login-button">
-            </form>
-        </div>
+<div class="registration-right">
+    <div class="registration-right-container">
+        <h1>Create Free Account</h1>
+        <form action="" method="" id="registration-form">
+            <div class="form-row">
+                <input type="text" placeholder="First Name" class="registration-input-box">
+                <input type="text" placeholder="Last Name" class="registration-input-box">
+            </div>
+            <div class="special-form-row">
+                <input type="email" placeholder="NU Email" class="registration-input-box">
+                <input type="text" placeholder="Contact Number" class="registration-input-box">
+            </div>
+            <div class="form-row">
+                <input type="password" placeholder="Password" class="registration-input-box">
+                <input type="password" placeholder="Confirm Password" class="registration-input-box">
+            </div>
+            <input type="submit" value="Sign In" class="login-button">
+        </form>
     </div>
+</div>
 </body>
 </html>
