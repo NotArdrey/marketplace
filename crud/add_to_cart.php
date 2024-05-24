@@ -8,8 +8,8 @@ $userID = $_SESSION['userID'];
 $sql = "SELECT * FROM products WHERE productID = '$productID'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
-$productSellerID = $row['productSellerID'];
 $productName = $row['productName'];
+$productSellerID = $row['productSellerID'];
 $productUnitPrice = $row['productPrice'];
 
 $sql = "SELECT * FROM cart WHERE productID = '$productID'";
@@ -23,7 +23,7 @@ if (mysqli_num_rows($result) > 0) {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
@@ -52,7 +52,7 @@ if (mysqli_num_rows($result) > 0) {
     exit();
     }
 } else {
-    $sql = "INSERT INTO cart (userID, productID, productName, sellerID, quantity, unitPrice, timeAdded) VALUES ('$userID', '$productID', '$productName', '$productSellerID', 1,
+    $sql = "INSERT INTO cart (userID, productID, sellerID, quantity, unitPrice, timeAdded) VALUES ('$userID', '$productID', '$productSellerID', 1,
     '$productUnitPrice', CURRENT_TIMESTAMP)";
 
 if (mysqli_query($conn, $sql)) {
@@ -62,7 +62,7 @@ if (mysqli_query($conn, $sql)) {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;

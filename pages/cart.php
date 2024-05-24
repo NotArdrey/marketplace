@@ -39,7 +39,7 @@ $userID = $_SESSION['userID'];
                         SUM(e1.productPrice * cart.quantity) OVER () AS totalAmount 
                         FROM products e1 
                         INNER JOIN cart ON e1.productID = cart.productID 
-                        WHERE cart.userID = $userID AND cart.sellerID = $sellerID
+                        WHERE cart.userID = '$userID' AND cart.sellerID = '$sellerID' ORDER BY cart.timeAdded
                     ";
                     
                     $result_items = mysqli_query($conn, $sql_items);
@@ -48,26 +48,57 @@ $userID = $_SESSION['userID'];
 
                     if (mysqli_num_rows($result_items) > 0) {
                         $row = mysqli_fetch_assoc($result_items);
-                        while ($item = mysqli_fetch_assoc($result_items)) {
+                        $totalAmount = $row['totalAmount'];
+                        mysqli_data_seek($result_items, 0);
+                        $num_rows = mysqli_num_rows($result_items);
+
+                        echo "<form method='POST' action='../crud/process_order.php'>";
+                        for ($i = 0; $i < $num_rows; $i++) {
+                            $item = mysqli_fetch_assoc($result_items);
                             echo "
                                 <div class='cart-item-container'>
                                     <div class='cart-item'>
                                         <div class='cart-product-img'><img src='../product_img/" . $item['productImg'] . "'></div>
                                         <div class='cart-product-name'><p>" . $item['productName'] . "</p></div>
-                                        <div class='cart-product-unit-price'><p>" . $item['productPrice'] . "</p></div>
-                                        <div class='cart-product-quantity'><div class='quantity-icon-div'><a href='../crud/minusQuantity.php?productID=".$item['productID']."'><i class='fa-solid fa-square-minus'></i></a></div><p>" . $item['quantity'] . "</p><div class='quantity-icon-div'><a href='../crud/addQuantity.php?productID=".$item['productID'] ."'><i class='fa-solid fa-square-plus'></i></a></div></div>
+                                        <div class='cart-product-unit-price'><p><i class='fa-solid fa-peso-sign'></i>" . $item['productPrice'] . "</p></div>
+                                        <div class='cart-product-quantity'>
+                                            <div class='quantity-icon-div'>
+                                                <a href='../crud/minusQuantity.php?productID=".$item['productID']."'><i class='fa-solid fa-square-minus'></i></a>
+                                            </div>
+                                            <p>" . $item['quantity'] . "</p>
+                                            <div class='quantity-icon-div'>
+                                                <a href='../crud/addQuantity.php?productID=".$item['productID'] ."'><i class='fa-solid fa-square-plus'></i></a>
+                                            </div>
+                                        </div>
                                         <div class='cart-product-subtotal'>
-                                            <p>Subtotal: " . ($item['productPrice'] * $item['quantity']) . "</p>
-                                            <p class='cart-product-delete'><a href='delete.php?id=" . $item['productID'] . "'>Delete</a></p>
+                                            <p class=''><i class='fa-solid fa-peso-sign'></i>" . number_format((float)$item['productPrice'] * $item['quantity'], 2, '.', '') . "</p>
+                                            <p class='cart-product-delete'><a href='../crud/delete_from_cart.php?productID=" . $item['productID'] . "'>Delete</a></p>
                                         </div>
                                     </div>
+                                    <input type='hidden' name='productID[]' value='" . $item['productID'] . "'>
+                                    <input type='hidden' name='quantity[]' value='" . $item['quantity'] . "'>
+                                    <input type='hidden' name='price[]' value='" . $item['productPrice'] . "'>
                                 </div>
                             ";
                         }
+                        $row = mysqli_fetch_assoc($result_items);
                         echo "
-                        <div class='cart-product-total'><p>" . $row['totalAmount'] . "</p></div>
-                        ";
+                        <div class='cart-product-total'>
+                            <div></div>
+                            <div class='cart-total-div'>
+                                <div class='total-amount'>
+                                    Total: " . number_format((float)$totalAmount, 2, '.', '') . "
+                                </div>
+                                <input type='hidden' name='sellerID' value='" . $sellerID . "'>
+                                <input type='hidden' name='totalAmount' value='" . $totalAmount . "'>
+                                <button type='submit' class='place-order-btn'>
+                                    Place Order
+                                </button>
+                            </div>
+                        </div>
+                        </form>";
                     }
+                    
                 }
             }
         ?>
