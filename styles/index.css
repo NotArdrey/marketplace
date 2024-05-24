@@ -1031,3 +1031,83 @@ body {
 
 }
 
+
+.left-about {
+    width: 50%;
+    min-height: inherit;
+}
+
+.right-about {
+    width: 50%;
+    min-height: inherit;
+}
+
+.cart-total-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 16px;
+}
+
+.place-order-btn {
+    width: 70%;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    background-color: #FDBD01;
+    border-radius: 5px;
+    border: none;
+}
+
+.place-order-btn:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.fa-peso-sign {
+    margin-right: 8px;
+}
+
+.product-detail-content {
+    position: absolute;
+    top: 80px;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 1px solid black;
+}
+
+.left-product-detail-content {
+    width: 40%;
+    height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: lightblue;
+}
+
+.right-product-detail-content {
+    width: 60%;
+    min-height: inherit;
+    height: auto;
+    background-color: pink;
+}
+
+.left-product-inner-div {
+    min-height: inherit;
+    height: inherit;
+    width: 100%;
+    background-color: green;
+    padding: 32px;
+}
+
+
+
