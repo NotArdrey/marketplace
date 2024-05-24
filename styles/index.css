@@ -863,7 +863,7 @@ body {
     align-items: center;
 }
 
-<<<<<<< HEAD
+
 .verification-container{
     min-height: 100vh;
     width: calc(100% - 300px);
@@ -1032,7 +1032,6 @@ body {
     
 }
 
-=======
 .left-about {
     width: 50%;
     min-height: inherit;
@@ -1109,4 +1108,4 @@ body {
     background-color: green;
     padding: 32px;
 }
->>>>>>> ac2fb05 (minor changes)
+
