@@ -1109,9 +1109,6 @@ body {
 }
 
 
-    
-}
-
 .left-about {
     width: 50%;
     min-height: inherit;
@@ -1189,6 +1186,107 @@ body {
     padding: 32px;
 }
 
+.resend-verification-card-inputs{
+    margin-top: 20px;
+    margin-left: 30px;
+    text-align: left;
+}
+.resend-verification-card-inputs input{
+    width: 40%;
+    text-align: left;
+}
 
+.resend-verification-container{
+    min-height: 100vh;
+    width: calc(100% - 300px);
+    position: fixed;
+    padding-top: 50px;
+    padding-right: 80px;
+}
+.resend-verification-header{
+    align-self: flex-start;
+    margin-left: 20px;
+    width: 23.5%;
+}
 
+.resend-container{
+    background-color: #3182CE;
+    height:45%;
+    width: 30%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    border-radius: 20px;
+    box-shadow: 0 10px 40px -20px black;
+}
 
+.resend-container h2{
+    color: white;
+    margin-left: 30px;
+    margin-top: 50px;
+}
+
+.resend-container button{
+    border-radius: 20px;
+    margin-left: 30px;
+    margin-top: 25px;
+    height: 40px;
+    width: 20%;
+    border: none;
+    background-color: white;
+    color: #3182CE;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.resend-container p{
+    color: white;
+    margin-left: 30px;
+    margin-top: 35px;
+}
+
+.resend-container input{
+    height: 40%;
+    width: 90%;
+    font-size: 20px;
+    text-align: left;
+    border-radius: 5px;
+    border:1px solid black;
+    padding-left: 10px;
+}
+
+.verification-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0;
+}
+.verification-button:hover {
+    color: #0056b3;
+}
+
+.resend-button{
+    border-radius: 20px;
+    margin-left: 30px;
+    margin-top: 30px;
+    height: 40px;
+    width: 20%;
+    border: none;
+    background-color: white;
+    color: #3182CE;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.resend-verification-submit{
+    width: 36%;
+    
+}

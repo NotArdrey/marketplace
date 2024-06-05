@@ -7,33 +7,7 @@ require '../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
-if (isset($_GET['action']) && $_GET['action'] == 'resend' && isset($_SESSION['user_email'])) {
-    $email = $_SESSION['user_email'];
-
-   
-    $sql = "SELECT first_name, verify_token, verified FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($user = $result->fetch_assoc()) {
-        
-        if ($user['verified'] == 0) {
-            sendemail_verify($user['first_name'], $email, $user['verify_token']);
-            $_SESSION['alert'] = "Verification email has been resent. Please check your inbox.";
-        } else {
-            $_SESSION['alert'] = "Your email is already verified.";
-            $_SESSION['needs_verification'] = false;
-        }
-    } else {
-        $_SESSION['alert'] = "Error: Could not resend verification email.";
-    }
-
-    header("");  
-}
-
+//send email
 function sendemail_verify($first_name, $email, $verify_token) {
     $mail = new PHPMailer(true);
     try {
@@ -41,7 +15,7 @@ function sendemail_verify($first_name, $email, $verify_token) {
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'neilardrey14@gmail.com';
-        $mail->Password   = 'heoh kept fxrg wrhs'; 
+        $mail->Password   = 'fmuu ylup ersh ecas'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -51,6 +25,7 @@ function sendemail_verify($first_name, $email, $verify_token) {
         $mail->isHTML(true);
         $mail->Subject = 'Test Mail';
         $mail->Body = "Hi $first_name,<br>Please click the link below to confirm your email address and activate your account:<br><a href='http://localhost/Project/marketplace/crud/tokenVerification.php?token=". urlencode($verify_token) ."'>Verify Email</a>";
+        $headers = "From: no-reply@.com";
         $mail->send();
         echo 'Message has been sent';
     } catch (Exception $e) {
@@ -100,8 +75,7 @@ if (isset($_POST["register_btn"])) {
             // Send verification email
             sendemail_verify($first_name, $email, $verify_token);
             $_SESSION['alert'] = "Registration successful! Please verify your email.";
-            $_SESSION['user_email'] = $email;  
-            $_SESSION['needs_verification'] = true;
+            $_SESSION['user_email'] = $email; 
             header("Location: ../pages/registration.php");
             exit(0);
         } else {
