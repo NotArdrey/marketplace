@@ -8,8 +8,9 @@ $totalAmount = $_POST['totalAmount'];
 $productIDs = $_POST['productID'];
 $quantities = $_POST['quantity'];
 $prices = $_POST['price'];
+$paymentMethod = $_POST['payment-method'];
 
-$sql = "INSERT INTO orders (userID, sellerID, totalAmount) VALUES ('$userID', '$sellerID', '$totalAmount')";
+$sql = "INSERT INTO orders (userID, sellerID, totalAmount, paymentMethod) VALUES ('$userID', '$sellerID', '$totalAmount', '$paymentMethod')";
 mysqli_query($conn, $sql);
 $orderID = mysqli_insert_id($conn);
 

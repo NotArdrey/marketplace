@@ -4,6 +4,7 @@ require "../config/dbconn.php";
 
 $productID = $_GET['productID'];
 $userID = $_SESSION['userID'];
+$page = $_GET['pageID'];
 
 $sql = "SELECT * FROM products WHERE productID = '$productID'";
 $result = mysqli_query($conn, $sql);
@@ -36,7 +37,11 @@ if (mysqli_num_rows($result) > 0) {
 }); 
     </script>
     ";
-    header("Location: ../pages/customer_dashboard.php");
+    if ($page != "detailed") {
+        header("Location: ../pages/customer_dashboard.php");
+    } else {
+        header("Location: ../pages/product_details.php?productID=$productID");
+    }
     exit();
     } else {
         $_SESSION['alert'] = "
@@ -48,7 +53,11 @@ if (mysqli_num_rows($result) > 0) {
           });
         </script>
         ";
-    header("Location: ../pages/customer_dashboard.php");
+    if ($page != "detailed") {
+        header("Location: ../pages/customer_dashboard.php");
+    } else {
+        header("Location: ../pages/product_details.php?productID=$productID");
+    }
     exit();
     }
 } else {
@@ -75,7 +84,11 @@ if (mysqli_query($conn, $sql)) {
 }); 
     </script>
     ";
-    header("Location: ../pages/customer_dashboard.php");
+    if ($page != "detailed") {
+        header("Location: ../pages/customer_dashboard.php");
+    } else {
+        header("Location: ../pages/product_details.php?productID=$productID");
+    }
     exit();
 } else {
     $_SESSION['alert'] = "
@@ -87,7 +100,11 @@ if (mysqli_query($conn, $sql)) {
           });
         </script>
         ";
-    header("Location: ../pages/customer_dashboard.php");
+    if ($page != "detailed") {
+        header("Location: ../pages/customer_dashboard.php");
+    } else {
+        header("Location: ../pages/product_details.php?productID=$productID");
+    }
     exit();
 }
 }
