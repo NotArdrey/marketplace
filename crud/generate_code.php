@@ -14,8 +14,8 @@ function sendemail_verify($first_name, $email, $verify_token) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'neilardrey14@gmail.com';
-        $mail->Password   = 'fmuu ylup ersh ecas'; 
+        $mail->Username   = 'sample@gmail.com';
+        $mail->Password   = 'password of gmail'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
