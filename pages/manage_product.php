@@ -1,6 +1,7 @@
 <?php
 session_start();
 require '../config/dbconn.php';
+$userID = $_SESSION['userID'];
 ?>
 
 <!DOCTYPE html>
@@ -25,19 +26,13 @@ require '../config/dbconn.php';
 </head>
 
 <body>
-    <?php
-        include_once '../components/navbar.php';
-    ?>
-    <div class="content">
-        <div class="searchbar">
-            <div class="searchbar-text"><input type="text" placeholder="Search"></div>
-            <div class="searchbar-button"><input type="submit" value="Search"></div>
-        </div>
-        <div class="products-div">
-            <div class="product-display">
-
-                <?php
-                $sql = "SELECT * FROM products";
+    <div class="seller-dashboard-container">
+        <?php include_once '../components/seller_sidebar.php'; ?>
+        <div class="inner-dashboard-container">
+            <div class="seller-products-container">
+                <div class="manage-product-display">
+                    <?php
+                $sql = "SELECT * FROM products WHERE productSellerID = '$userID'";
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -67,17 +62,25 @@ require '../config/dbconn.php';
                                     </div>
                                 </div>
                                 <div class='details-cart'>
-                                    <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>More details</div></a>
-                                    <a href='../crud/add_to_cart.php?productID=$productID'><div class='cart-button'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div></a>
+                                    <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>Edit</div></a>
+                                    <a href='../crud/add_to_cart.php?productID=$productID'><div class='cart-button'><i class='fa-solid fa-trash' style='color: #ffffff;'></i></div></a>
                                 </div>
                             </div>
                         </div>";
                     }
                 }
             ?>
+                </div>
             </div>
         </div>
     </div>
+    <script src="../js/index.js"></script>
+    <script>
+    const sidebarLinkManageProducts = document.getElementById('sidebar-manage-products');
+    sidebarLinkManageProducts.addEventListener('click', function(e) {
+        sidebarLinkManageProducts.style.backgroundColor = "white";
+    });
+    </script>
 </body>
 
 </html>
