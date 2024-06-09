@@ -49,6 +49,8 @@ if (isset($_POST["register_btn"])) {
             echo 'Number should be in philippine format number';
         }
 
+    }
+
     // Check if passwords match
     if ($password !== $confirm_password) {
         $_SESSION['alert'] = "Passwords do not match";
