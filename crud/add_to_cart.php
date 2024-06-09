@@ -21,11 +21,11 @@ $row = mysqli_fetch_assoc($result);
 $price = $row['variationPrice'];
 $variationID = $row['variationID'];
 
-$sql = "SELECT * FROM cart WHERE productID = '$productID' AND variationID = '$variationID'";
+$sql = "SELECT * FROM cart WHERE productID = '$productID' AND variationID = '$variationID' AND userID = '$userID'";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-    $sql = "UPDATE cart SET quantity = quantity + 1 WHERE productID = '$productID' AND variationID = '$variationID'";
+    $sql = "UPDATE cart SET quantity = quantity + 1 WHERE productID = '$productID' AND variationID = '$variationID' AND userID = '$userID'";
     if (mysqli_query($conn, $sql)) {
         //write alert here
     } else {

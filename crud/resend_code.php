@@ -14,8 +14,8 @@ function resend_email_verify($first_name, $email, $verify_token){
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'sample@gmail.com';
-        $mail->Password   = 'password of gmail'; 
+        $mail->Username   = 'neilardrey14@gmail.com';
+        $mail->Password   = 'fvvg zyoq qodj qhwc'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -67,4 +67,3 @@ if (isset($_POST['resend_btn'])) {
 
 
 ?>
-
