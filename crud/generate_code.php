@@ -14,8 +14,8 @@ function sendemail_verify($first_name, $email, $verify_token) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'sample@gmail.com';
-        $mail->Password   = 'password of gmail'; 
+        $mail->Username   = 'neilardrey14@gmail.com';
+        $mail->Password   = 'fvvg zyoq qodj qhwc'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -41,6 +41,13 @@ if (isset($_POST["register_btn"])) {
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
     $verify_token = md5(uniqid(time()));
+
+    function isValidPhilippineNumber($contact_number) {
+        $pattern = '/^(\+63|0)9\d{9}$|^02\d{7}$|^0[3-9]\d{7,8}$/';
+
+        if (preg_match($pattern, $contact_number)) {
+            echo 'Number should be in philippine format number';
+        }
 
     // Check if passwords match
     if ($password !== $confirm_password) {
