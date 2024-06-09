@@ -377,13 +377,19 @@ body {
 
 .searchbar-button {
     width: 20%;
+    height: 40px;
     background-color: #FDBD01;
     border-left: none;
     border-radius: 0 5px 5px 0;
+    cursor: pointer;
 }
 
-.searchbar-button input{
+.searchbar-button div {
+    height: 100%;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
     font-weight: bold;
     background-color: #FDBD01;

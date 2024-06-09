@@ -43,8 +43,10 @@ if (!isset($_SESSION['userID'])) {
     ?>
     <div class="content">
         <div class="searchbar">
-            <div class="searchbar-text"><input type="text" placeholder="Search"></div>
-            <div class="searchbar-button"><input type="submit" value="Search"></div>
+            <div class="searchbar-text"><input type="text" placeholder="Search..." id="search-product-input"></div>
+            <div class="searchbar-button">
+                <div><i class="fa-solid fa-magnifying-glass"></i></div>
+            </div>
         </div>
         <div class="products-div">
             <div class="product-display">
