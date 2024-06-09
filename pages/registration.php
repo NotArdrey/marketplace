@@ -24,9 +24,9 @@ require "../config/dbconn.php";
             <h2>NUB Marketplace</h2>
         </div>
         <div class="registration-left-container">
-            <h1>Already a Nationalian?</h1>
+            <h1>Already a member?</h1>
             <p>If you already have an account, just sign in.</p>
-            <button><a href="../pages/index.php">Sign In</a></button>
+            <button onclick="location.href='../pages/index.php'">Sign In</button>
         </div>
         <div class="triangle-registration"></div>
         <div class="small-triangle-registration"></div>
@@ -61,7 +61,7 @@ require "../config/dbconn.php";
                 <div class="form-row">
                     <input type="password" name="password" placeholder="Password" class="registration-input-box"
                         required>
-                    <input type="password" name="confirm_password" placeholder="confirm password"
+                    <input type="password" name="confirm_password" placeholder="Confirm Password"
                         class="registration-input-box" required>
                 </div>
 
