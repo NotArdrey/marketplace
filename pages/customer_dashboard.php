@@ -44,7 +44,7 @@ if (!isset($_SESSION['userID'])) {
     <div class="content">
         <div class="searchbar">
             <div class="searchbar-text"><input type="text" placeholder="Search..." id="search-product-input"></div>
-            <div class="searchbar-button">
+            <div class="searchbar-button" id="search-product-button">
                 <div><i class="fa-solid fa-magnifying-glass"></i></div>
             </div>
         </div>
