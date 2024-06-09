@@ -3,11 +3,6 @@ session_start();
 require "../config/dbconn.php";
 ?>
 
-<?php
-session_start();
-require "../config/dbconn.php";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
