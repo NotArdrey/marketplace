@@ -24,13 +24,6 @@ require "../config/dbconn.php";
         </div>
         <div class="lower-login">
             <h1 class="login-h1">Login To Your Account</h1>
-
-            <?php
-            if(isset($_SESSION['alert'])) {
-            echo $_SESSION['alert'];
-            unset($_SESSION['alert']);
-            }
-        ?>
             <form action="../crud/login.php" method="POST" id="login-form">
                 <input type="text" placeholder="NU Email" class="input-box" name="email">
                 <input type="password" placeholder="Password" class="input-box" name="password">
@@ -47,6 +40,12 @@ require "../config/dbconn.php";
             <button onclick="location.href='../pages/registration.php'">Sign Up</button>
         </div>
     </div>
+    <?php
+            if(isset($_SESSION['alert'])) {
+            echo $_SESSION['alert'];
+            unset($_SESSION['alert']);
+            }
+        ?>
 </body>
 
 </html>

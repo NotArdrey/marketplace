@@ -2,18 +2,22 @@
 session_start();
 include "../config/dbconn.php";
 
-if (isset($_POST['email']) && isset($_POST['password'])) {
+// if (isset($_POST['email']) && isset($_POST['password'])) {
 
-    function validate($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-}
+//     function validate($data) {
+//         $data = trim($data);
+//         $data = stripslashes($data);
+//         $data = htmlspecialchars($data);
+//         return $data;
+//     }
+// }
 
-$loginEmail = validate($_POST['email']);
-$loginPassword = validate($_POST['password']);
+// $loginEmail = validate($_POST['email']);
+// $loginPassword = validate($_POST['password']);
+
+$loginEmail = $_POST['email'];
+$loginPassword = $_POST['password'];
+
 
 $sql = "SELECT * FROM users WHERE email = '$loginEmail' AND userPassword = '$loginPassword'";
 $result = mysqli_query($conn, $sql);
