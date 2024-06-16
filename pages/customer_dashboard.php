@@ -9,11 +9,10 @@ if (!isset($_SESSION['userID'])) {
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $vStatus = $row['verify_status'];
-    if ($vStatus == 0) {
+    if ($vStatus === 0) {
         header("Location: ../pages/index.php");
-    } 
-}
-
+    }
+}  
 ?>
 
 <!DOCTYPE html>
