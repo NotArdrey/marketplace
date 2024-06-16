@@ -12,8 +12,8 @@ function sendemail_code($first_name, $email, $token_pass) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com'; 
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'sample.gmail';
-        $mail->Password   = '******'; 
+        $mail->Username   = 'neilardrey14@gmail.com';
+        $mail->Password   = 'fvvg zyoq qodj qhwc'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
         $mail->Port       = 587; 
 
