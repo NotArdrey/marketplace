@@ -12,27 +12,34 @@
 <body>
         <div class="change-password-container">
             <div class="change-password-header">
-                <h1>Verification Page</h1>
+                <h1>Change Password</h1>
             </div> 
             <div class="password-card">
                 <h2>Change Password</h2>
                 <p id = "container-paragraph">Your password must be at least 6 characters and should include a combination of numbers, letters and special characters (!$@%).</p>
+                <?php
+            if(isset($_SESSION['alert'])) {
+                echo $_SESSION['alert'];
+                unset($_SESSION['alert']);
+            }
+            ?>
                 <div class="change-password-card-inputs">
-                    <form action="" class = "change-password-forms">
+                    <form action="../crud/change_password.php" method="POST" class = "change-password-forms">
                     <div class = "input-rows">
                         <label class = change-password-label>New Password</label>
                         <div>
-                            <input type="text" placeholder="Enter New Password" class = "change-password-box">
+                            <input type="text" placeholder="Enter New Password" name = "password" class = "change-password-box" required>
                         </div>
                         <label class = change-password-label>Confirm Password</label>
                         <div> 
-                            <input type="text" placeholder= "Confirm New Password" class = "change-password-box">
+                            <input type="text" placeholder= "Confirm New Password" name = "confirm-password" class = "change-password-box" required>
                         </div>
                     </div>
-                    </form>
+                    </div>
+                    <input type="submit" value="Confirm" name = "confirm-change-password" class = "change-password-button">
                 </div>
-                <button>Confirm</button>
-            </div>
+                    </form>
+
         </div>
 </body>
 </html>

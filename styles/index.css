@@ -31,12 +31,14 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    position: static;
 }
 
 .login-right {
     height: 100%;
     width: 40%;
     background-color: #3182CE;
+    position: relative;
 }
 
 .upper-login {
@@ -73,6 +75,7 @@ body {
     align-items: center;
     gap: 30px;
     margin-top: 80px;
+
 }
 
 .input-box {
@@ -90,6 +93,7 @@ body {
 .login-button {
     width: 30%;
     height: 40px;
+    margin-top: -10px;
     border: none;
     background-color: #3182CE;
     color: white;
@@ -1123,7 +1127,7 @@ body {
     border:1px solid black;
 }
 
-.change-password-container button{
+.change-password-button{
     border-radius: 20px;
     margin-left: 30px;
     margin-top: -30px;
@@ -1136,6 +1140,9 @@ body {
     font-size: 18px;
     border-radius: 8px;
     cursor: pointer;
+}
+.swal2-shown { 
+    display:flex; height:100vh; 
 }
 
 .left-about {
@@ -2055,7 +2062,7 @@ span img {
 
 .resend-container{
     background-color: #3182CE;
-    height:45%;
+    height:50%;
     width: 30%;
     position: fixed;
     top: 50%;
@@ -2072,7 +2079,6 @@ span img {
 }
 
 .resend-container button{
-    border-radius: 20px;
     margin-left: 30px;
     margin-top: 25px;
     height: 40px;
@@ -2082,10 +2088,25 @@ span img {
     color: #3182CE;
     font-weight: bold;
     font-size: 18px;
-    border-radius: 8px;
+    border-radius: 20px;
     cursor: pointer;
 
 }
+   
+.back-to-registration-code button{
+    height: 30px;
+    width: 31.5%;
+    margin-left: 30px;
+    margin-top: 20px;
+    border: rgb(0, 0, 0);
+    background-color: white;
+    color: #3182CE;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 
 .resend-container p{
     color: white;
@@ -2099,7 +2120,7 @@ span img {
     font-size: 20px;
     text-align: left;
     border-radius: 5px;
-    border: none;
+    border:none;
     padding-left: 10px;
 }
 
@@ -2121,17 +2142,46 @@ span img {
     margin-left: 30px;
     margin-top: 30px;
     height: 40px;
-    width: 20%;
+    width: 30%;
+    border: 5px solid red;
     background-color: white;
     color: #3182CE;
     font-weight: bold;
     font-size: 18px;
-    border-radius: 8px;
     cursor: pointer;
+
 }
 .resend-verification-submit{
-    width: 36%;
-    
+    width: 35%;
+    border: none;
+}
+
+.resend-code-registration{
+    margin-left: 65%;
+    margin-top: 10%;
+    width: 250%;
+}
+.resend-code-registration button{
+    width: 30%;
+    height: 40px;
+    border: none;
+    background-color: #3182CE;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.resend-code-registration input{
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: #3182CE; 
+    text-decoration: underline;
+    cursor: pointer; 
+    padding: 0; 
+    font-family: inherit
 }
 
 .add-variation {
@@ -2430,494 +2480,26 @@ span img {
     align-items: center;
     column-gap: 16px;
   }
-
-  .my-orders-navbar {
-    height: 50px;
-    width: 60%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    background-color: white;
-  }
-
-.my-orders-nav-link {
-    text-decoration: none;
-    color: black;
+.forget-password-login{
+    margin-right: 35%;
+    margin-top: -2%
 }
 
-.my-orders-nav-link:hover {
+.send-code-submit{
+
+    border: none;
+}
+
+.send-code-submit input{
+    margin-left: 30px;
+    margin-top: 30px;
+    padding-left: 25px;
+    height: 40px;
+    width: 31.5%;
+    border: none;
+    background-color: white;
     color: #3182CE;
-    cursor: pointer;
-}
-
-.my-orders-nav-item {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#my-orders-page {
-    background-color: #F5F5F5;
-    row-gap: 16px;
-    padding-top: 32px;
-    padding-bottom: 32px;
-}
-
-.my-orders-display {
-    width: 60%;
-    padding: 0 16px 16px 16px;
-    box-sizing: border-box;
-    height: auto;
-    background-color: white;
-    display: grid;
-    grid-template-rows: 10vh auto 20vh;
-}
-
-#orders-display {
-    width: 100%;
-    box-sizing: border-box;
-    height: auto;
-    background-color: white;
-}
-
-.pending-orders {
-    grid-template-rows: 10vh auto minmax(10vh, auto);
-}
-
-.orders-details {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-}
-
-.orders-details-row {
-    position: relative;
-    padding-bottom: 16px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.orders-details-row::after {
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    border-bottom: 2px solid #D0D0D0;
-    margin-bottom: 16px; /* Adjust as needed */
-}
-
-.left-details-row {
-    width: 50%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    column-gap: 8px;
-}
-
-.orders-product-display {
-    height: 15vh;
-    width: 100%;
-    border-bottom: 1px solid lightgray;
-    display: flex;
-    justify-content: center;
-    align-items: space-between;
-}
-
-.left-product-display {
-    width: 80%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    column-gap: 16px;
-}
-
-.right-product-display {
-    width: 20%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.order-product-img-container {
-    width: 80px;
-    height: 80px;
-    border: 1px solid lightgray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.order-product-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.order-item-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    box-sizing: border-box;
-    padding-top: 16px;
-}
-
-.flex-col {
-    flex-direction: column;
-    row-gap: 16px;
-}
-
-.lower-order-item-total {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    border-radius: 5px;
-    column-gap: 16px;
-}
-
-.rate-product-link {
-    color: white;
-    background-color: #FDBD01;
-    text-decoration: none; 
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-}
-
-.approve {
-    background-color: #1BA244;
-    border: none;
-    font-size: 16px;
-}
-
-.cancel {
-    background-color: #DD3E43;
-    border: none;
-    font-size: 16px;
-}
-
-.rate-product-link:hover {
-    cursor: pointer;
-}
-
-.rate-button {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-}
-
-.order-total {
-    font-size: 32px;
-}
-
-.orders-items {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    row-gap: 16px;
-}
-
-#pending-my-orders {
-    grid-template-rows: 10vh auto 10vh;
-}
-
-.hidden {
-    visibility: hidden;
-    position: absolute;
-}
-
-.visible {
-    visibility: visible;
-    position: static;
-}
-
-.left-order-total {
-    width: 60%;
-    height: auto;
-}
-
-.upper-order-item-total {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 16px;
-}
-
-.right-order-total {
-    height: 100%;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.right-details-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 8px;
-}
-
-#pendingCount, #allCount, #toPayCount, #toReceiveCount, #completedCount {
-    margin-left: 8px;
-}
-
-#orders-tab {
-    display: flex;
-    height: 100%;
-    overflow-y: auto;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #F5F5F5;
-    row-gap: 16px;
-    padding-top: 32px;
-    padding-bottom: 32px;
-}
-
-#orders-navbar {
-    height: 50px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    background-color: white;
-    flex-shrink: 0;
-  }
-
-  .orders-table {
-    width: 100%;
-    text-align: center;
-    padding: 16px 8px;
-  }
-  
-  .orders-tr td {
-    height: 50px;
-    text-align: center;
-  }
-
-  .td-productName {
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .orders-tr td:hover {
-    cursor: default;
-  }
-
-  .td-nextBtn {
-    width: 50px;
-  }
-
-  .td-nextBtn i:hover {
-    cursor: pointer;
-  }
-
-  .td-buyerName {
-    width: 200px;
-  }
-
-  .td-paymentMethod {
-    width: 200px;
-  }
-
-  .td-totalAmount {
-    width: 100px;
-  }
-
-  .td-itemQty {
-    width: 50px;
-  }
-
-  .star-rating-btn-icon {
-    margin-right: 8px;
-  }
-
-  .payment-body {
-    width: 100%;
-    height: 100vh;
-    background-color: #F5F5F5;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .payment-body a {
-    text-decoration: none;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 8px;
-    font-size: 20px;
-    position: absolute;
-    top: 6%;
-    left: 20%;
-  }
-
-  .payment-modal {
-    width: 60%;
-    height: 80vh;
-    background-color: white;
-    border: 1px solid black;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .left-payment {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.qr-img {
-    max-width: 90%;
-    max-height: 90%;
-    width: auto;
-    height: auto;
-}
-
-.right-payment {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: 8px;
-}
-
-#uploadedImage {
-    display: none;
-    max-width: 100%;
-    max-height: 400px; 
-    object-fit: contain;
-    margin-top: 20px;
-}
-
-.proof-of-payment img {
-    max-width: 100%;
-    max-height: 800px; 
-    object-fit: contain;
-    margin-top: 20px;
-}
-
-  .form-buttons-div {
-    width: 100%;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 16px;
-  }
-
-  .payment-form-btn {
-    width: 30%;
-    height: 50%;
-  }
-
-.submit-payment-btn {
-    background-color: #28A745;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    font-size: 16px;
-}
-
-.change-picture-btn {
-    background-color: #FFC107;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-#paymentForm {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: 8px;
-}
-
-.green {
-    color: #009151;
-}
-
-.fa-hand-holding-dollar {
-    font-size: 32px;
-}
-
-.fa-sack-dollar {
-    font-size: 32px;
-}
-
-.proof-of-payment {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.upper-order-details {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.proof-of-payment img {
-    width: 100px;
-    height: auto;
-}
-
-.fa-phone {
-    margin-left: 16px;
-}
-
-.proof-of-payment form {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.payment-approval-form {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 16px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer
 }

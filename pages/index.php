@@ -25,9 +25,10 @@ require "../config/dbconn.php";
         <div class="lower-login">
             <h1 class="login-h1">Login To Your Account</h1>
             <form action="../crud/login.php" method="POST" id="login-form">
-                <input type="text" placeholder="NU Email" class="input-box" name="email">
-                <input type="password" placeholder="Password" class="input-box" name="password">
-                <input type="submit" name="login_btn" value="Sign In" class="login-button">
+                <input type="text" placeholder="NU Email" class="input-box" name="email" required>
+                <input type="password" placeholder="Password" class="input-box" name="password" required>
+                <a href = "../pages/send_code_password.php" class = "forget-password-login">Forget Password?</a>
+                <input type="submit" value="Login" name="login_btn" class="login-button">
             </form>
         </div>
     </div>
@@ -49,3 +50,10 @@ require "../config/dbconn.php";
 </body>
 
 </html>
+
+<?php
+            if(isset($_SESSION['alert'])) {
+                echo $_SESSION['alert'];
+                unset($_SESSION['alert']);
+            }
+            ?>
