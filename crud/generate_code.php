@@ -96,7 +96,9 @@ if (isset($_POST["register_btn"])) {
         exit(0);
     }
 
-    //Check if passwords match
+    
+    $pattern = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/';
+
     if ($password !== $confirm_password) {
         $_SESSION['alert'] = "
         <script>
@@ -104,6 +106,18 @@ if (isset($_POST["register_btn"])) {
                 icon: 'warning',
                 title: 'Registration Error',
                 text: 'Passwords do not match.',
+            });
+        </script>
+        ";
+        header("Location: ../pages/registration.php");
+        exit(0);
+    } elseif (!preg_match($pattern, $password)) {
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Registration Error',
+                text: 'Your password must be at least 6 characters and should include a combination of numbers, letters, and special characters (!$@%).',
             });
         </script>
         ";

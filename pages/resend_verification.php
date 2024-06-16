@@ -19,12 +19,7 @@
         
         <div class="resend-container">
             <h2>Resend Verification</h2>
-            <?php
-                if (isset($_SESSION['alert'])) {
-                    echo $_SESSION['alert'];
-                    unset($_SESSION['alert']);
-                }
-            ?>
+            
             <p id="resend-verification-container-paragraph">Enter NU Email to resend the code</p>
             <form action="../crud/resend_code.php" method="POST" class="resend-verification-form">
                 <div class="resend-verification-card-inputs">
