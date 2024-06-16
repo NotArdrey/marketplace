@@ -9,11 +9,10 @@ if (!isset($_SESSION['userID'])) {
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $vStatus = $row['verify_status'];
-    if ($vStatus == 0) {
+    if ($vStatus === 0) {
         header("Location: ../pages/index.php");
-    } 
-}
-
+    }
+}  
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +39,9 @@ if (!isset($_SESSION['userID'])) {
 <body>
     <?php
         include_once '../components/navbar.php';
+
     ?>
+    
     <div class="content">
         <div class="searchbar">
             <div class="searchbar-text"><input type="text" placeholder="Search..." id="search-product-input"></div>
