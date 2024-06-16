@@ -12,12 +12,12 @@ function sendemail_code($first_name, $email, $token_pass) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com'; 
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'neilardrey14@gmail.com';
-        $mail->Password   = 'fvvg zyoq qodj qhwc'; 
+        $mail->Username   = '*';
+        $mail->Password   = '*'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
         $mail->Port       = 587; 
 
-        $mail->setFrom('neilardrey14@gmail.com', 'Sender');
+        $mail->setFrom('neilardrey14@gmail.com', 'NU Baliwag Marketplace');
         $mail->addAddress($email, $first_name); 
 
         $mail->isHTML(true);
