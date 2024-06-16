@@ -20,31 +20,70 @@ if (isset($_GET['token'])) {
             $update_stmt->execute();
 
             if ($update_stmt->affected_rows > 0) {
-                $_SESSION['alert'] = "Account has been verified successfully. You can now login your account";
+                $_SESSION['alert'] = "
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Account Verified',
+                        text: 'Account has been verified successfully. You can now login.',
+                    });
+                </script>
+                ";
                 header("Location: ../pages/index.php");
-
-                exit(0);
+                exit();
             } else {
-                $_SESSION['alert'] = "Verification failed";
+                $_SESSION['alert'] = "
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Verification Failed',
+                        text: 'Verification failed.',
+                    });
+                </script>
+                ";
                 header("Location: ../pages/index.php");
-                exit(0);
+                exit();
 ;
             }
         } else {
-            $_SESSION['alert'] = "Email already verified. Please login";
+            $_SESSION['alert'] = "
+            <script>
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Already Verified',
+                    text: 'Email already verified. Please login.',
+                });
+            </script>
+            ";
             header("Location: ../pages/index.php");
-            exit(0);
+            exit();
 
         }
     } else {
-        $_SESSION['alert'] = "Token does not exist";
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Token Error',
+                text: 'Token does not exist.',
+            });
+        </script>
+        ";
         header("Location: ../pages/index.php");
-        exit(0);
+        exit();
     }
 } else {
-    $_SESSION['alert'] = "Not Allowed";
+    $_SESSION['alert'] = "
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Not Allowed',
+            text: 'Not allowed.',
+        });
+    </script>
+    ";
     header("Location: ../pages/index.php");
-    exit(0);
+    exit();
 }
 
 ?>

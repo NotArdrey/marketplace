@@ -9,6 +9,7 @@ $token = $_GET['token_pass'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change password</title>
     <link rel="stylesheet" href="../styles/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     </style>
@@ -23,12 +24,6 @@ $token = $_GET['token_pass'];
             <h2>Change Password</h2>
             <p id="container-paragraph">Your password must be at least 6 characters and should include a combination of
                 numbers, letters and special characters (!$@%).</p>
-            <?php
-            if(isset($_SESSION['alert'])) {
-                echo $_SESSION['alert'];
-                unset($_SESSION['alert']);
-            }
-            ?>
             <div class="change-password-card-inputs">
                 <form action="../crud/change_password.php?token_pass=<?php echo urlencode($token);?>" method="POST"
                     class="change-password-forms">
@@ -51,5 +46,10 @@ $token = $_GET['token_pass'];
 
     </div>
 </body>
-
 </html>
+<?php
+            if(isset($_SESSION['alert'])) {
+                echo $_SESSION['alert'];
+                unset($_SESSION['alert']);
+            }
+?>

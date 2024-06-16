@@ -27,7 +27,17 @@ function sendemail_verify($first_name, $email, $verify_token) {
         $mail->Body = "Hi $first_name,<br>Please click the link below to confirm your email address and activate your account:<br><a href='http://localhost/Project/marketplace/crud/tokenVerification.php?token=". urlencode($verify_token) ."'>Verify Email</a>";
         $headers = "From: no-reply@.com";
         $mail->send();
-        echo 'Message has been sent';
+        $_SESSION['alert'] = "
+            <script>
+                Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Message has been sent.',
+                            });
+                </script>
+            ";
+        header("Location: ../pages/registration.php"); 
+        exit(0);
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
@@ -58,21 +68,45 @@ if (isset($_POST["register_btn"])) {
 
     //Validate email
     if (empty($email) || !isValidOutlookEmail($email)) {
-        $_SESSION['alert'] = "Valid NU email is required.";
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Registration Error',
+                text: 'Valid NU email is required.',
+            });
+        </script>
+        ";
         header("Location: ../pages/registration.php");
         exit(0);
     }
 
     //Validate contact number
     if (empty($contact_number) || !isValidPhilippineNumber($contact_number)) {
-        $_SESSION['alert'] = "Contact number should be in Philippine format.";
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Registration Error',
+                text: 'Contact number should be in Philippine format.',
+            });
+        </script>
+        ";
         header("Location: ../pages/registration.php");
         exit(0);
     }
 
     //Check if passwords match
     if ($password !== $confirm_password) {
-        $_SESSION['alert'] = "Passwords do not match.";
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Registration Error',
+                text: 'Passwords do not match.',
+            });
+        </script>
+        ";
         header("Location: ../pages/registration.php");
         exit(0);
     }
@@ -90,7 +124,15 @@ if (isset($_POST["register_btn"])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $_SESSION['alert'] = "Email or Contact Number already registered.";
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Registration Error',
+                text: 'Email or Contact Number already registered.',
+            });
+        </script>
+        ";
         header("Location: ../pages/registration.php");
         exit(0);
     }
@@ -103,12 +145,28 @@ if (isset($_POST["register_btn"])) {
     if ($stmt->execute()) {
 
         sendemail_verify($first_name, $email, $verify_token);
-        $_SESSION['alert'] = "Registration successful! Please verify your email.";
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration successful!',
+                text: 'Please verify your email.',
+            });
+        </script>
+        ";
         $_SESSION['user_email'] = $email; 
         header("Location: ../pages/registration.php");
         exit(0);
     } else {
-        $_SESSION['alert'] = "Registration failed! Please try again.";
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration failed!',
+                text: 'Please try again.',
+            });
+        </script>
+        ";
         header("Location: ../pages/registration.php");
         exit(0);
     }
