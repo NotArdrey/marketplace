@@ -12,8 +12,8 @@ function sendemail_code($first_name, $email, $token_pass) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com'; 
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'sample@gmail.com';
-        $mail->Password   = 'idk'; 
+        $mail->Username   = 'neilardrey14@gmail.com';
+        $mail->Password   = 'fvvg zyoq qodj qhwc'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
         $mail->Port       = 587; 
 
@@ -54,7 +54,7 @@ if (isset($_POST['confirm_code_btn'])) {
                 });
             </script>
             ";
-            header("Location: ../pages/resend_verification.php");
+            header("Location: ../pages/send_code_password.php");
             exit();
         }
 
@@ -141,7 +141,7 @@ if (isset($_POST['confirm_code_btn'])) {
             });
         </script>
         ";
-        header("Location: ../pages/resend_verification.php");
+        header("Location: ../pages/send_code_password.php");
         exit();
     }
 }

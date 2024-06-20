@@ -27,8 +27,20 @@ require "../config/dbconn.php";
             <form action="../crud/login.php" method="POST" id="login-form">
                 <input type="text" placeholder="NU Email" class="input-box" name="email" required>
                 <input type="password" placeholder="Password" class="input-box" name="password" required>
-                <a href = "../pages/send_code_password.php" class = "forget-password-login">Forget Password?</a>
-                <input type="submit" value="Login" name="login_btn" class="login-button">
+                <div>
+                    <div class="pass-checkbox-container">
+                        <div class="left-pass">
+                            <a href="../pages/send_code_password.php" class="forget-password-login">Forget Password?</a>
+                        </div>
+                        <div class="right-checkbox">
+                            <label label class="show-pass-index-label">Show Password</label>
+                            <input type="checkbox" name="checkbox" class="checkbox-index" onclick="myFunction()"
+                                id="box">
+                        </div>
+                    </div>
+                    <input type="submit" value="Login" name="login_btn" class="login-button">
+                </div>
+
             </form>
         </div>
     </div>
@@ -41,6 +53,20 @@ require "../config/dbconn.php";
             <button onclick="location.href='../pages/registration.php'">Sign Up</button>
         </div>
     </div>
+
+    <script>
+    function myFunction() {
+        var passwordInputs = document.getElementsByName('password');
+        Array.from(passwordInputs).forEach(function(input) {
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        });
+    }
+    </script>
+
     <?php
             if(isset($_SESSION['alert'])) {
             echo $_SESSION['alert'];
@@ -50,10 +76,3 @@ require "../config/dbconn.php";
 </body>
 
 </html>
-
-<?php
-            if(isset($_SESSION['alert'])) {
-                echo $_SESSION['alert'];
-                unset($_SESSION['alert']);
-            }
-            ?>

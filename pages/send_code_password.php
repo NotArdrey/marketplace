@@ -1,3 +1,8 @@
+<?php
+session_start();
+require "../config/dbconn.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,17 +19,12 @@
 <body>
     <div class="resend-verification-container">
         <div class="verification-header">
-            <h1>Verification Page</h1>
+            <h1>Change Password</h1>
         </div>
         
         <div class="resend-container">
             <h2>Change Password</h2>
-            <?php
-                if (isset($_SESSION['alert'])) {
-                    echo $_SESSION['alert'];
-                    unset($_SESSION['alert']);
-                }
-            ?>
+
             <p id="resend-verification-container-paragraph">Enter NU Email to change the password</p>
             <form action="../crud/send_code_password.php" method="POST" class="resend-verification-form">
                 <div class="resend-verification-card-inputs">
@@ -35,17 +35,17 @@
                 </div>
 
                 <div class="back-to-registration-code">
-                    <button onclick="location.href='../pages/index.php'">Back</button>
+                    <a href="../pages/index.php" class="button-like">Back</a>
                 </div>
             </form>
 
         </div>
     </div>
+    <?php
+    if (isset($_SESSION['alert'])) {
+        echo $_SESSION['alert'];
+        unset($_SESSION['alert']);
+    }
+    ?>
 </body>
 </html>
-<?php
-            if(isset($_SESSION['alert'])) {
-                echo $_SESSION['alert'];
-                unset($_SESSION['alert']);
-            }
-?>

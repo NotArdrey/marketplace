@@ -30,14 +30,20 @@ $token = $_GET['token_pass'];
                     <div class="input-rows">
                         <label class=change-password-label>New Password</label>
                         <div>
-                            <input type="text" placeholder="Enter New Password" name="password"
+                            <input type="password" placeholder="Enter New Password" name="password"
                                 class="change-password-box" required>
                         </div>
                         <label class=change-password-label>Confirm Password</label>
                         <div>
-                            <input type="text" placeholder="Confirm New Password" name="confirm-password"
+                            <input type="password" placeholder="Confirm New Password" name="confirm-password"
                                 class="change-password-box" required>
+
                         </div>
+                        <div class="checkbox-container">
+                            <label>Show Password</label>
+                            <input type="checkbox" name="checkbox" class="checkbox-change-pass" onclick="myFunction()">
+                        </div>
+
                     </div>
             </div>
             <input type="submit" value="Confirm" name="confirm-change-password" class="change-password-button">
@@ -45,7 +51,21 @@ $token = $_GET['token_pass'];
         </form>
 
     </div>
+
+    <script>
+    function myFunction() {
+        var passwordInputs = document.querySelectorAll('input[name="password"], input[name="confirm-password"]');
+        Array.from(passwordInputs).forEach(function(input) {
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        });
+    }
+    </script>
 </body>
+
 </html>
 <?php
             if(isset($_SESSION['alert'])) {
