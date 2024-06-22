@@ -19,11 +19,18 @@ if ($vStatus === 0) {
     exit();
 }
 
-// Function to fetch products based on search query
-function fetchProducts($conn, $searchQuery = '') {
+// Function to fetch products based on search query or category
+function fetchProducts($conn, $searchQuery = '', $category = '') {
     $sql = "SELECT * FROM products";
+    $conditions = [];
     if (!empty($searchQuery)) {
-        $sql .= " WHERE productName LIKE '%$searchQuery%' OR productDesc LIKE '%$searchQuery%'";
+        $conditions[] = "(productName LIKE '%$searchQuery%' OR productDesc LIKE '%$searchQuery%')";
+    }
+    if (!empty($category)) {
+        $conditions[] = "category = '$category'";
+    }
+    if (count($conditions) > 0) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
     }
     $result = mysqli_query($conn, $sql);
     $products = [];
@@ -85,6 +92,57 @@ if (isset($_POST['search'])) {
     }
     exit();
 }
+
+// Check if the request is an AJAX call for filtering products by category
+if (isset($_POST['category'])) {
+    $category = $_POST['category'];
+    $products = fetchProducts($conn, '', $category);
+    if (!empty($products)) {
+        foreach ($products as $row) {
+            $productID = $row['productID'];
+            $productName = $row['productName'];
+            $productDesc = $row['productDesc'];
+            $productPrice = $row['productPrice'];
+            $productImg = $row['productImg'];
+            echo "<div class='item'>
+                <div class='item-upper'>
+                    <img src='../product_img/$productImg' class='product-img' draggable='false'>
+                </div>
+                <div class='item-lower'>
+                    <div class='product-name'>$productName</div>
+                    <div class='product-desc'>$productDesc</div>
+                    <div class='price-rating'>
+                        <div class='price'>₱$productPrice</div>
+                        <div class='rating'>
+                            <div class='stars'>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                            </div>
+                            <div class='numeric-rating'>4.9</div>
+                        </div>
+                    </div>
+                    <div class='details-cart'>
+                        <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>More details</div></a>
+                        <div class='cart-button' data-productid='$productID'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div>
+                        <div id='cartModal_$productID' class='modal' data-productid='$productID'>
+                            <div class='modal-content'>
+                                <span class='close' data-productid='$productID'>&times;</span>
+                                <h2>Add to Cart</h2>
+                                <p>Your cart is currently empty.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>";
+        }
+    } else {
+        echo "<p>No products found.</p>";
+    }
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -99,7 +157,7 @@ if (isset($_POST['search'])) {
           integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
         *::-webkit-scrollbar {
             display: none;
@@ -226,7 +284,6 @@ function closeModal(productID) {
     }
 }
 
-// Function to search products using AJAX
 function searchProducts() {
     var input = document.getElementById('search-product-input').value;
     var xhr = new XMLHttpRequest();
@@ -239,6 +296,7 @@ function searchProducts() {
     };
     xhr.send('search=' + input);
 }
+
 </script>
 
 </body>
