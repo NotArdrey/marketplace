@@ -88,7 +88,7 @@ if (isset($_POST['search'])) {
             </div>";
         }
     } else {
-        echo "<p>No products found.</p>";
+        echo "<p class='no-item-found'>No products found.</p>";
     }
     exit();
 }
@@ -125,13 +125,42 @@ if (isset($_POST['category'])) {
                         </div>
                     </div>
                     <div class='details-cart'>
-                        <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>More details</div></a>
-                        <div class='cart-button' data-productid='$productID'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div>
+                        <a href='../pages/product_details.php?productID=$productID'>
+                            <div class='details-button'>More details</div>
+                        </a>
+                        <div class='cart-button' data-productid='$productID' data-productimg='$productImg'>
+                            <i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i>
+                        </div>
                         <div id='cartModal_$productID' class='modal' data-productid='$productID'>
                             <div class='modal-content'>
                                 <span class='close' data-productid='$productID'>&times;</span>
                                 <h2>Add to Cart</h2>
-                                <p>Your cart is currently empty.</p>
+                                <div class='modal-details'>                                           
+                                    <img src='../product_img/" . $productImg . "' class='modal-img'>
+                                    <div class='modal-form'>
+                                        <div class='upper-modal-form'>
+                                            <div class='modal-row'>
+                                                <label>Variation / Flavor</label>
+                                                <select name='variation' id='variationSelect_$productID' class='modalInput'>
+                                                </select>
+                                            </div>
+                                            <div class='modal-row'>
+                                                <label>Size</label>
+                                                <select name='size' id='sizeSelect_$productID' onchange='displayPrice($productID)' class='modalInput'>
+                                                </select>
+                                            </div>
+                                            <div class='modal-row'>
+                                                <label>Quantity</label>
+                                                <input type='number' class='modalInputQty' id='qty_$productID'>
+                                            </div>
+                                        </div>
+                                        <div class='bottom-modal-form'>
+                                            <div class='modal-add-to-cart-btn'>
+                                                <a href='' id='addToCartLink_$productID'>Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -210,16 +239,45 @@ if (isset($_POST['category'])) {
                                 </div>
                             </div>
                             <div class='details-cart'>
-                                <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>More details</div></a>
-                                <div class='cart-button' data-productid='$productID'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div>
-                                <div id='cartModal_$productID' class='modal' data-productid='$productID'>
-                                    <div class='modal-content'>
-                                        <span class='close' data-productid='$productID'>&times;</span>
-                                        <h2>Add to Cart</h2>
-                                        <p>Your cart is currently empty.</p>
+                                    <a href='../pages/product_details.php?productID=$productID'>
+                                        <div class='details-button'>More details</div>
+                                    </a>
+                                    <div class='cart-button' data-productid='$productID' data-productimg='$productImg'>
+                                        <i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i>
+                                    </div>
+                                    <div id='cartModal_$productID' class='modal' data-productid='$productID'>
+                                        <div class='modal-content'>
+                                            <span class='close' data-productid='$productID'>&times;</span>
+                                            <h2>Add to Cart</h2>
+                                            <div class='modal-details'>                                           
+                                                <img src='../product_img/" . $productImg . "' class='modal-img'>
+                                                <div class='modal-form'>
+                                                    <div class='upper-modal-form'>
+                                                        <div class='modal-row'>
+                                                            <label>Variation / Flavor</label>
+                                                            <select name='variation' id='variationSelect_$productID' class='modalInput'>
+                                                            </select>
+                                                        </div>
+                                                        <div class='modal-row'>
+                                                            <label>Size</label>
+                                                            <select name='size' id='sizeSelect_$productID' onchange='displayPrice($productID)' class='modalInput'>
+                                                            </select>
+                                                        </div>
+                                                        <div class='modal-row'>                                                                
+                                                            <label>Quantity</label>
+                                                            <input type='number' class='modalInputQty' id='qty_$productID'>
+                                                        </div>
+                                                    </div>
+                                                    <div class='bottom-modal-form'>
+                                                        <div class='modal-add-to-cart-btn'>
+                                                            <a href='' id='addToCartLink_$productID'>Add to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>";
                 }
@@ -232,60 +290,6 @@ if (isset($_POST['category'])) {
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get all elements with class "cart-button"
-        var buttons = document.querySelectorAll(".cart-button");
-
-        // Attach click event listener to each button
-        buttons.forEach(function(btn) {
-            btn.addEventListener("click", function() {
-                // Extract productID from the button's data-productid attribute
-                var productID = btn.getAttribute("data-productid");
-
-                // Open the corresponding modal
-                openModal(productID);
-            });
-        });
-
-        // Get all elements with class "close"
-        var closeButtons = document.querySelectorAll(".close");
-
-        // Attach click event listener to each close button
-        closeButtons.forEach(function(closeBtn) {
-            closeBtn.addEventListener("click", function() {
-                // Extract productID from the close button's data-productid attribute
-                var productID = closeBtn.getAttribute("data-productid");
-
-                // Close the corresponding modal
-                closeModal(productID);
-            });
-        });
-
-        // Close modal when clicking outside of it
-        window.addEventListener("click", function(event) {
-            if (event.target.classList.contains("modal")) {
-                var productID = event.target.getAttribute("data-productid");
-                closeModal(productID);
-            }
-        });
-    });
-
-    // Function to open modal
-    function openModal(productID) {
-        var modal = document.getElementById("cartModal_" + productID);
-        if (modal) {
-            modal.style.display = "flex";
-        }
-    }
-
-    // Function to close modal
-    function closeModal(productID) {
-        var modal = document.getElementById("cartModal_" + productID);
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }
-
     function searchProducts() {
         var input = document.getElementById('search-product-input').value;
         var xhr = new XMLHttpRequest();
@@ -297,6 +301,160 @@ if (isset($_POST['category'])) {
             }
         };
         xhr.send('search=' + input);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var buttons = document.querySelectorAll(".cart-button");
+
+        buttons.forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                var productID = btn.getAttribute("data-productid");
+                var productImg = btn.getAttribute("data-productimg");
+                openModal(productID, productImg);
+            });
+        });
+
+        var closeButtons = document.querySelectorAll(".close");
+
+        closeButtons.forEach(function(closeBtn) {
+            closeBtn.addEventListener("click", function() {
+                var productID = closeBtn.getAttribute("data-productid");
+                closeModal(productID);
+            });
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target.classList.contains("modal")) {
+                var productID = event.target.getAttribute("data-productid");
+                closeModal(productID);
+            }
+        });
+    });
+
+    function openModal(productID, productImg) {
+        var modal = document.getElementById("cartModal_" + productID);
+        if (modal) {
+            var modalImg = modal.querySelector('.modal-img');
+            if (modalImg) {
+                modalImg.src = '../product_img/' + productImg;
+            } else {
+                console.error('Modal image element not found');
+            }
+            modal.style.display = "flex";
+            initializeModal(productID);
+        } else {
+            console.error('Modal not found for productID:', productID);
+        }
+    }
+
+    function closeModal(productID) {
+        var modal = document.getElementById("cartModal_" + productID);
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function initializeModal(productID) {
+        var variationSelect = document.getElementById('variationSelect_' + productID);
+        var sizeSelect = document.getElementById('sizeSelect_' + productID);
+        var price = document.getElementById('productPrice_' + productID);
+        var qty = document.getElementById('qty_' + productID);
+        var addToCartLink = document.getElementById('addToCartLink_' + productID);
+
+        if (!variationSelect || !sizeSelect || !addToCartLink || !qty) {
+            console.error('One or more elements are not found in the DOM.');
+            return;
+        }
+
+        function fetchVariations(productID) {
+            fetch('../crud/getVariations.php?productID=' + productID)
+                .then(response => response.json())
+                .then(data => {
+                    variationSelect.innerHTML = ''; // Clear existing options
+                    data.forEach((variation, index) => {
+                        var option = document.createElement('option');
+                        option.value = variation;
+                        option.text = variation;
+                        if (index === 0) {
+                            option.selected = true;
+                        }
+                        variationSelect.appendChild(option);
+                    });
+                    populateSizes(variationSelect.value, productID);
+                })
+                .catch(error => console.error('Error fetching variations:', error));
+        }
+
+        function populateSizes(variationName, productID) {
+            let url = '../crud/getSizes.php';
+            if (!variationName) {
+                url += '?productID=' + productID;
+            } else {
+                url += '?variationName=' + encodeURIComponent(variationName) + '&productID=' + productID;
+            }
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    sizeSelect.innerHTML = ''; // Clear existing options
+                    data.forEach((size, index) => {
+                        var option = document.createElement('option');
+                        option.value = size;
+                        option.text = size;
+                        if (index === 0) {
+                            option.selected = true;
+                        }
+                        sizeSelect.appendChild(option);
+                    });
+                    displayPrice(productID); // Call displayPrice after sizes are populated
+                    updateAddToCartUrl(productID);
+                })
+                .catch(error => console.error('Error fetching sizes:', error));
+        }
+
+        function displayPrice(productID) {
+            let variation = variationSelect.value;
+            let size = sizeSelect.value;
+
+            fetch('../crud/displayPrice.php?variation=' + encodeURIComponent(variation) + '&size=' + encodeURIComponent(
+                    size) + '&productID=' + productID)
+                .then(response => response.text())
+                .then(data => {
+                    price.textContent = data.replace(/"/g, '');
+                })
+                .catch(error => console.error('Error fetching price:', error));
+        }
+
+        function updateAddToCartUrl(productID) {
+            let addToCartUrl = "../crud/add_to_cart.php?";
+            addToCartUrl += "productID=" + productID + "&variation=" + encodeURIComponent(variationSelect.value) +
+                "&size=" + encodeURIComponent(sizeSelect.value) + "&qty=" + encodeURIComponent(qty.value);
+            addToCartLink.href = addToCartUrl;
+            console.log('Add to Cart URL set to:', addToCartLink.href);
+        }
+
+        variationSelect.addEventListener('change', function() {
+            populateSizes(this.value, productID);
+        });
+
+        sizeSelect.addEventListener('change', function() {
+            displayPrice(productID);
+            updateAddToCartUrl(productID);
+        });
+
+        qty.addEventListener('change', function() {
+            if (qty.value == 0) {
+                Swal.fire({
+                    title: "Invalid Quantity!",
+                    text: "You must order at least 1 item!",
+                    icon: "error"
+                });
+                qty.value = 1;
+            } else {
+                updateAddToCartUrl(productID);
+            }
+        });
+
+        fetchVariations(productID);
     }
     </script>
 
