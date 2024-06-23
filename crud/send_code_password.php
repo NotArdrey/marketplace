@@ -45,8 +45,16 @@ if (isset($_POST['confirm_code_btn'])) {
         
         
         if (empty($email) || !isValidOutlookEmail($email)) {
-            $_SESSION['alert'] = "Valid Outlook email is required.";
-            header("Location: ../pages/resend_verification.php");
+            $_SESSION['alert'] = "
+            <script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Validation Error',
+                    text: 'Valid Outlook email is required.',
+                });
+            </script>
+            ";
+            header("Location: ../pages/send_code_password.php");
             exit();
         }
 
@@ -70,30 +78,70 @@ if (isset($_POST['confirm_code_btn'])) {
             if ($stmt_insert->execute()) {
                 
                 if (sendemail_code($first_name, $email, $token_pass)) {
-                    $_SESSION['alert'] = "Code has been sent to your email.";
+                    $_SESSION['alert'] = "
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Code Sent',
+                            text: 'Code has been sent to your email.',
+                        });
+                    </script>
+                    ";
                     $_SESSION['user_email'] = $email;
                     header("Location: ../pages/send_code_password.php");
                     exit();
                 } else {
-                    $_SESSION['alert'] = "Failed to send email. Please try again.";
+                    $_SESSION['alert'] = "
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: 'Failed to send email. Please try again.',
+                        });
+                    </script>
+                    ";
                     header("Location: ../pages/send_code_password.php");
                     exit();
                 }
             } else {
-                $_SESSION['alert'] = "Failed to update token. Please try again.";
-                header("Location: ../pages/send_code_password.php");
-                exit();
+    
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to update token. Please try again.',
+            });
+        </script>
+        ";
+        header("Location: ../pages/send_code_password.php");
+        exit();
             }
         } else {
-            // Email not found in database
-            $_SESSION['alert'] = "Email not found. Please register your email now!";
+            $_SESSION['alert'] = "
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Email Not Found',
+                    text: 'Email not found. Please register your email now!',
+                });
+            </script>
+            ";
             header("Location: ../pages/send_code_password.php");
             exit();
         }
 
     } else {
-        $_SESSION['alert'] = "Email field is required.";
-        header("Location: ../pages/resend_verification.php");
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Validation Error',
+                text: 'Email field is required.',
+            });
+        </script>
+        ";
+        header("Location: ../pages/send_code_password.php");
         exit();
     }
 }

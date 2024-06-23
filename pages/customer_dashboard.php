@@ -1,17 +1,147 @@
 <?php
 session_start();
 require '../config/dbconn.php';
+
+// Check if user is logged in
 if (!isset($_SESSION['userID'])) {
     header("Location: ../pages/index.php");
-} else {
-    $userID = $_SESSION['userID'];
-    $sql = "SELECT * FROM users WHERE userID = '$userID'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $vStatus = $row['verify_status'];
-    if ($vStatus === 0) {
-        header("Location: ../pages/index.php");
+    exit();
+}
+
+// Check if user is verified
+$userID = $_SESSION['userID'];
+$sql = "SELECT * FROM users WHERE userID = '$userID'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$vStatus = $row['verify_status'];
+if ($vStatus === 0) {
+    header("Location: ../pages/index.php");
+    exit();
+}
+
+// Function to fetch products based on search query or category
+function fetchProducts($conn, $searchQuery = '', $category = '') {
+    $sql = "SELECT * FROM products";
+    $conditions = [];
+    if (!empty($searchQuery)) {
+        $conditions[] = "(productName LIKE '%$searchQuery%' OR productDesc LIKE '%$searchQuery%')";
     }
+    if (!empty($category)) {
+        $conditions[] = "category = '$category'";
+    }
+    if (count($conditions) > 0) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
+    }
+    $result = mysqli_query($conn, $sql);
+    $products = [];
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $products[] = $row;
+        }
+    }
+    return $products;
+}
+
+// Check if the request is an AJAX call for searching products
+if (isset($_POST['search'])) {
+    $searchQuery = $_POST['search'];
+    $products = fetchProducts($conn, $searchQuery);
+    if (!empty($products)) {
+        foreach ($products as $row) {
+            $productID = $row['productID'];
+            $productName = $row['productName'];
+            $productDesc = $row['productDesc'];
+            $productPrice = $row['productPrice'];
+            $productImg = $row['productImg'];
+            echo "<div class='item'>
+                <div class='item-upper'>
+                    <img src='../product_img/$productImg' class='product-img' draggable='false'>
+                </div>
+                <div class='item-lower'>
+                    <div class='product-name'>$productName</div>
+                    <div class='product-desc'>$productDesc</div>
+                    <div class='price-rating'>
+                        <div class='price'>₱$productPrice</div>
+                        <div class='rating'>
+                            <div class='stars'>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                            </div>
+                            <div class='numeric-rating'>4.9</div>
+                        </div>
+                    </div>
+                    <div class='details-cart'>
+                        <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>More details</div></a>
+                        <div class='cart-button' data-productid='$productID'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div>
+                        <div id='cartModal_$productID' class='modal' data-productid='$productID'>
+                            <div class='modal-content'>
+                                <span class='close' data-productid='$productID'>&times;</span>
+                                <h2>Add to Cart</h2>
+                                <p>Your cart is currently empty.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>";
+        }
+    } else {
+        echo "<p>No products found.</p>";
+    }
+    exit();
+}
+
+// Check if the request is an AJAX call for filtering products by category
+if (isset($_POST['category'])) {
+    $category = $_POST['category'];
+    $products = fetchProducts($conn, '', $category);
+    if (!empty($products)) {
+        foreach ($products as $row) {
+            $productID = $row['productID'];
+            $productName = $row['productName'];
+            $productDesc = $row['productDesc'];
+            $productPrice = $row['productPrice'];
+            $productImg = $row['productImg'];
+            echo "<div class='item'>
+                <div class='item-upper'>
+                    <img src='../product_img/$productImg' class='product-img' draggable='false'>
+                </div>
+                <div class='item-lower'>
+                    <div class='product-name'>$productName</div>
+                    <div class='product-desc'>$productDesc</div>
+                    <div class='price-rating'>
+                        <div class='price'>₱$productPrice</div>
+                        <div class='rating'>
+                            <div class='stars'>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                            </div>
+                            <div class='numeric-rating'>4.9</div>
+                        </div>
+                    </div>
+                    <div class='details-cart'>
+                        <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>More details</div></a>
+                        <div class='cart-button' data-productid='$productID'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div>
+                        <div id='cartModal_$productID' class='modal' data-productid='$productID'>
+                            <div class='modal-content'>
+                                <span class='close' data-productid='$productID'>&times;</span>
+                                <h2>Add to Cart</h2>
+                                <p>Your cart is currently empty.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>";
+        }
+    } else {
+        echo "<p>No products found.</p>";
+    }
+    exit();
 }
 ?>
 
@@ -28,7 +158,7 @@ if (!isset($_SESSION['userID'])) {
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
     *::-webkit-scrollbar {
         display: none;
@@ -42,116 +172,96 @@ if (!isset($_SESSION['userID'])) {
     <div class="content">
         <div class="searchbar">
             <div class="searchbar-text">
-                <input type="text" placeholder="Search..." id="search-product-input">
+                <input type="text" placeholder="Search..." id="search-product-input" onkeyup="searchProducts()">
             </div>
             <div class="searchbar-button" id="search-product-button">
-                <div>
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
+                <div><i class="fa-solid fa-magnifying-glass"></i></div>
             </div>
         </div>
         <div class="products-div">
-            <div class="product-display">
+            <div class="product-display" id="product-display">
                 <?php
-                $sql = "SELECT * FROM products";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $productID = $row['productID'];
-                        $productName = $row['productName'];
-                        $productDesc = $row['productDesc'];
-                        $productPrice = $row['productPrice'];
-                        $productImg = $row['productImg'];
-                        echo "
-                        <div class='item'>
-                            <div class='item-upper'>
-                                <img src='../product_img/$productImg' class='product-img' draggable='false'>
-                            </div>
-                            <div class='item-lower'>
-                                <div class='product-name'>$productName</div>
-                                <div class='product-desc'>$productDesc</div>
-                                <div class='price-rating'>
-                                    <div class='price'>₱$productPrice</div>
-                                    <div class='rating'>
-                                        <div class='stars'>
-                                            <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
-                                            <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
-                                            <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
-                                            <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
-                                            <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
-                                        </div>
-                                        <div class='numeric-rating'>4.9</div>
+            $products = fetchProducts($conn);
+            if (!empty($products)) {
+                foreach ($products as $row) {
+                    $productID = $row['productID'];
+                    $productName = $row['productName'];
+                    $productDesc = $row['productDesc'];
+                    $productPrice = $row['productPrice'];
+                    $productImg = $row['productImg'];
+                    echo "<div class='item'>
+                        <div class='item-upper'>
+                            <img src='../product_img/$productImg' class='product-img' draggable='false'>
+                        </div>
+                        <div class='item-lower'>
+                            <div class='product-name'>$productName</div>
+                            <div class='product-desc'>$productDesc</div>
+                            <div class='price-rating'>
+                                <div class='price'>₱$productPrice</div>
+                                <div class='rating'>
+                                    <div class='stars'>
+                                        <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                        <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                        <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                        <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
+                                        <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
                                     </div>
+                                    <div class='numeric-rating'>4.9</div>
                                 </div>
-                                <div class='details-cart'>
-                                    <a href='../pages/product_details.php?productID=$productID'>
-                                        <div class='details-button'>More details</div>
-                                    </a>
-                                    <div class='cart-button' data-productid='$productID' data-productimg='$productImg'>
-                                        <i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i>
-                                    </div>
-                                    <div id='cartModal_$productID' class='modal' data-productid='$productID'>
-                                        <div class='modal-content'>
-                                            <span class='close' data-productid='$productID'>&times;</span>
-                                            <h2>Add to Cart</h2>
-                                            <div class='modal-details'>                                           
-                                                <img src='../product_img/" . $productImg . "' class='modal-img'>
-                                                <div class='modal-form'>
-                                                    <div class='upper-modal-form'>
-                                                        <div class='modal-row'>
-                                                            <label>Variation / Flavor</label>
-                                                            <select name='variation' id='variationSelect_$productID' class='modalInput'>
-                                                            </select>
-                                                        </div>
-                                                        <div class='modal-row'>
-                                                            <label>Size</label>
-                                                            <select name='size' id='sizeSelect_$productID' onchange='displayPrice($productID)' class='modalInput'>
-                                                            </select>
-                                                        </div>
-                                                        <div class='modal-row'>
-                                                            <label>Quantity</label>
-                                                            <input type='number' class='modalInputQty' id='qty_$productID'>
-                                                        </div>
-                                                    </div>
-                                                    <div class='bottom-modal-form'>
-                                                        <div class='modal-add-to-cart-btn'>
-                                                            <a href='' id='addToCartLink_$productID'>Add to Cart</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                            </div>
+                            <div class='details-cart'>
+                                <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>More details</div></a>
+                                <div class='cart-button' data-productid='$productID'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div>
+                                <div id='cartModal_$productID' class='modal' data-productid='$productID'>
+                                    <div class='modal-content'>
+                                        <span class='close' data-productid='$productID'>&times;</span>
+                                        <h2>Add to Cart</h2>
+                                        <p>Your cart is currently empty.</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>";
-                    }
+                        </div>
+                    </div>";
                 }
-                ?>
+            } else {
+                echo "No products found";
+            }
+            ?>
             </div>
         </div>
     </div>
+
     <script>
     document.addEventListener("DOMContentLoaded", function() {
+        // Get all elements with class "cart-button"
         var buttons = document.querySelectorAll(".cart-button");
 
+        // Attach click event listener to each button
         buttons.forEach(function(btn) {
             btn.addEventListener("click", function() {
+                // Extract productID from the button's data-productid attribute
                 var productID = btn.getAttribute("data-productid");
-                var productImg = btn.getAttribute("data-productimg");
-                openModal(productID, productImg);
+
+                // Open the corresponding modal
+                openModal(productID);
             });
         });
 
+        // Get all elements with class "close"
         var closeButtons = document.querySelectorAll(".close");
 
+        // Attach click event listener to each close button
         closeButtons.forEach(function(closeBtn) {
             closeBtn.addEventListener("click", function() {
+                // Extract productID from the close button's data-productid attribute
                 var productID = closeBtn.getAttribute("data-productid");
+
+                // Close the corresponding modal
                 closeModal(productID);
             });
         });
 
+        // Close modal when clicking outside of it
         window.addEventListener("click", function(event) {
             if (event.target.classList.contains("modal")) {
                 var productID = event.target.getAttribute("data-productid");
@@ -160,22 +270,15 @@ if (!isset($_SESSION['userID'])) {
         });
     });
 
-    function openModal(productID, productImg) {
+    // Function to open modal
+    function openModal(productID) {
         var modal = document.getElementById("cartModal_" + productID);
         if (modal) {
-            var modalImg = modal.querySelector('.modal-img');
-            if (modalImg) {
-                modalImg.src = '../product_img/' + productImg;
-            } else {
-                console.error('Modal image element not found');
-            }
             modal.style.display = "flex";
-            initializeModal(productID);
-        } else {
-            console.error('Modal not found for productID:', productID);
         }
     }
 
+    // Function to close modal
     function closeModal(productID) {
         var modal = document.getElementById("cartModal_" + productID);
         if (modal) {
@@ -183,109 +286,20 @@ if (!isset($_SESSION['userID'])) {
         }
     }
 
-    function initializeModal(productID) {
-        var variationSelect = document.getElementById('variationSelect_' + productID);
-        var sizeSelect = document.getElementById('sizeSelect_' + productID);
-        var price = document.getElementById('productPrice_' + productID);
-        var qty = document.getElementById('qty_' + productID);
-        var addToCartLink = document.getElementById('addToCartLink_' + productID);
-
-        if (!variationSelect || !sizeSelect || !addToCartLink || !qty) {
-            console.error('One or more elements are not found in the DOM.');
-            return;
-        }
-
-        function fetchVariations(productID) {
-            fetch('../crud/getVariations.php?productID=' + productID)
-                .then(response => response.json())
-                .then(data => {
-                    variationSelect.innerHTML = ''; // Clear existing options
-                    data.forEach((variation, index) => {
-                        var option = document.createElement('option');
-                        option.value = variation;
-                        option.text = variation;
-                        if (index === 0) {
-                            option.selected = true;
-                        }
-                        variationSelect.appendChild(option);
-                    });
-                    populateSizes(variationSelect.value, productID);
-                })
-                .catch(error => console.error('Error fetching variations:', error));
-        }
-
-        function populateSizes(variationName, productID) {
-            let url = '../crud/getSizes.php';
-            if (!variationName) {
-                url += '?productID=' + productID;
-            } else {
-                url += '?variationName=' + encodeURIComponent(variationName) + '&productID=' + productID;
+    function searchProducts() {
+        var input = document.getElementById('search-product-input').value;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (this.status === 200) {
+                document.getElementById('product-display').innerHTML = this.responseText;
             }
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    sizeSelect.innerHTML = ''; // Clear existing options
-                    data.forEach((size, index) => {
-                        var option = document.createElement('option');
-                        option.value = size;
-                        option.text = size;
-                        if (index === 0) {
-                            option.selected = true;
-                        }
-                        sizeSelect.appendChild(option);
-                    });
-                    displayPrice(productID); // Call displayPrice after sizes are populated
-                    updateAddToCartUrl(productID);
-                })
-                .catch(error => console.error('Error fetching sizes:', error));
-        }
-
-        function displayPrice(productID) {
-            let variation = variationSelect.value;
-            let size = sizeSelect.value;
-
-            fetch('../crud/displayPrice.php?variation=' + encodeURIComponent(variation) + '&size=' + encodeURIComponent(
-                    size) + '&productID=' + productID)
-                .then(response => response.text())
-                .then(data => {
-                    price.textContent = data.replace(/"/g, '');
-                })
-                .catch(error => console.error('Error fetching price:', error));
-        }
-
-        function updateAddToCartUrl(productID) {
-            let addToCartUrl = "../crud/add_to_cart.php?";
-            addToCartUrl += "productID=" + productID + "&variation=" + encodeURIComponent(variationSelect.value) +
-                "&size=" + encodeURIComponent(sizeSelect.value) + "&qty=" + encodeURIComponent(qty.value);
-            addToCartLink.href = addToCartUrl;
-            console.log('Add to Cart URL set to:', addToCartLink.href);
-        }
-
-        variationSelect.addEventListener('change', function() {
-            populateSizes(this.value, productID);
-        });
-
-        sizeSelect.addEventListener('change', function() {
-            displayPrice(productID);
-            updateAddToCartUrl(productID);
-        });
-
-        qty.addEventListener('change', function() {
-            if (qty.value == 0) {
-                Swal.fire({
-                    title: "Invalid Quantity!",
-                    text: "You must order at least 1 item!",
-                    icon: "error"
-                });
-                qty.value = 1;
-            } else {
-                updateAddToCartUrl(productID);
-            }
-        });
-
-        fetchVariations(productID);
+        };
+        xhr.send('search=' + input);
     }
     </script>
+
 </body>
 
 </html>

@@ -19,9 +19,18 @@
             <a href="../pages/customer_dashboard.php">
                 <div class="nav-div">Home</div>
             </a>
-            <a href="">
-                <div class="nav-div">Categories</div>
-            </a>
+            <nav>
+                <ul class="navbar">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="dropbtn">Categories</a>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="loadCategory('food')">Food</a>
+                            <a href="#" onclick="loadCategory('accessories')">Accessories</a>
+                            <a href="#" onclick="loadCategory('fashion')">Fashion</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
             <a href="../pages/my_orders.php">
                 <div class="nav-div">My Orders</div>
             </a>

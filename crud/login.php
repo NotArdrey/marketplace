@@ -39,8 +39,18 @@ if (mysqli_num_rows($result) == 1) {
         ];
         $_SESSION['userID'] = $row['userID'];
         header("Location: ../pages/customer_dashboard.php");
-    } else {
-        $_SESSION['alert'] = "Please verify your email address";
+        exit();
+
+    }else{
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Verification Required',
+                text: 'Please verify your email address.',
+            });
+        </script>
+        ";
         header("Location: ../pages/index.php");
         exit(0);
     }
