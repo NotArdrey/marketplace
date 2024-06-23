@@ -74,13 +74,42 @@ if (isset($_POST['search'])) {
                         </div>
                     </div>
                     <div class='details-cart'>
-                        <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>More details</div></a>
-                        <div class='cart-button' data-productid='$productID'><i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i></div>
+                        <a href='../pages/product_details.php?productID=$productID'>
+                            <div class='details-button'>More details</div>
+                        </a>
+                        <div class='cart-button' data-productid='$productID' data-productimg='$productImg'>
+                            <i class='fa-solid fa-cart-shopping' style='color: #ffffff;'></i>
+                        </div>
                         <div id='cartModal_$productID' class='modal' data-productid='$productID'>
                             <div class='modal-content'>
                                 <span class='close' data-productid='$productID'>&times;</span>
                                 <h2>Add to Cart</h2>
-                                <p>Your cart is currently empty.</p>
+                                <div class='modal-details'>                                           
+                                    <img src='../product_img/" . $productImg . "' class='modal-img'>
+                                    <div class='modal-form'>
+                                        <div class='upper-modal-form'>
+                                            <div class='modal-row'>
+                                                <label>Variation / Flavor</label>
+                                                <select name='variation' id='variationSelect_$productID' class='modalInput'>
+                                                </select>
+                                            </div>
+                                            <div class='modal-row'>
+                                                <label>Size</label>
+                                                <select name='size' id='sizeSelect_$productID' onchange='displayPrice($productID)' class='modalInput'>
+                                                </select>
+                                            </div>
+                                            <div class='modal-row'>                                                                
+                                                <label>Quantity</label>
+                                                <input type='number' class='modalInputQty' id='qty_$productID'>
+                                            </div>
+                                        </div>
+                                        <div class='bottom-modal-form'>
+                                            <div class='modal-add-to-cart-btn'>
+                                                <a href='' id='addToCartLink_$productID'>Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -298,12 +327,17 @@ if (isset($_POST['category'])) {
         xhr.onload = function() {
             if (this.status === 200) {
                 document.getElementById('product-display').innerHTML = this.responseText;
+                initializeCartButtons(); // Reinitialize the cart buttons after updating the content
             }
         };
         xhr.send('search=' + input);
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+        initializeCartButtons();
+    });
+
+    function initializeCartButtons() {
         var buttons = document.querySelectorAll(".cart-button");
 
         buttons.forEach(function(btn) {
@@ -329,7 +363,7 @@ if (isset($_POST['category'])) {
                 closeModal(productID);
             }
         });
-    });
+    }
 
     function openModal(productID, productImg) {
         var modal = document.getElementById("cartModal_" + productID);
