@@ -12,7 +12,6 @@ require "../config/dbconn.php";
     <title>Registration</title>
     <link rel="stylesheet" href="../styles/index.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     </style>
@@ -52,16 +51,35 @@ require "../config/dbconn.php";
                         required>
                     <input type="password" name="confirm_password" placeholder="Confirm Password"
                         class="registration-input-box" required>
-                        <div class="resend-code-registration">
-                            <button onclick="location.href='../pages/resend_verification.php'">Resend Code</button>
-                        </div>
+                    <div class="check-box-registration-container">
+                        Show Password
+                        <input type="checkbox" name="checkbox" class="checkbox" onclick="myFunction()" id="box">
+                    </div>
+
+                    <div class="resend-code-registration">
+                        <button onclick="location.href='../pages/resend_verification.php'">Resend Code</button>
+                    </div>
                 </div>
 
 
-                <input type="submit" value="Sign In" name="register_btn" class="login-button">
+                <input type="submit" value="Sign In" name="register_btn" class="login-button-registration">
             </form>
         </div>
     </div>
+
+    <script>
+    function myFunction() {
+        var passwordInputs = document.querySelectorAll('input[name="password"], input[name="confirm_password"]');
+        Array.from(passwordInputs).forEach(function(input) {
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        });
+    }
+    </script>
+
 
 </body>
 
@@ -72,7 +90,7 @@ require "../config/dbconn.php";
                 unset($_SESSION['alert']);
             }
             ?>
-            <?php
+<?php
             if(isset($_SESSION['status'])) {
                 echo $_SESSION['status'];
                 unset($_SESSION['status']);

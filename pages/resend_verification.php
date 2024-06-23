@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resend Verification</title>
     <link rel="stylesheet" href="../styles/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     </style>
 </head>
@@ -18,12 +19,7 @@
         
         <div class="resend-container">
             <h2>Resend Verification</h2>
-            <?php
-                if (isset($_SESSION['alert'])) {
-                    echo $_SESSION['alert'];
-                    unset($_SESSION['alert']);
-                }
-            ?>
+            
             <p id="resend-verification-container-paragraph">Enter NU Email to resend the code</p>
             <form action="../crud/resend_code.php" method="POST" class="resend-verification-form">
                 <div class="resend-verification-card-inputs">
@@ -42,3 +38,9 @@
     </div>
 </body>
 </html>
+<?php
+            if(isset($_SESSION['alert'])) {
+                echo $_SESSION['alert'];
+                unset($_SESSION['alert']);
+            }
+            ?>

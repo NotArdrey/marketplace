@@ -78,6 +78,9 @@ body {
 
 }
 
+.checkbox-container{
+    color: white;
+}
 .input-box {
     width: 50%;
     height: 40px;
@@ -90,10 +93,36 @@ body {
     border: none;
 }
 
+.pass-checkbox-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:180%;
+    position: relative;
+    right: 88px;
+    bottom: 20px;
+}
+
+.left-pass{
+    width:100%;
+}
+
+.right-checkbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+}
+.right-checkbox input{
+    margin-left:10px;
+    margin-top: 1px;
+}
+
 .login-button {
-    width: 30%;
+    width: 50%;
     height: 40px;
-    margin-top: -10px;
+    margin-top: 5px;
+    margin-left: 70px;
     border: none;
     background-color: #3182CE;
     color: white;
@@ -102,7 +131,23 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
-
+.check-box-registration-container{
+    margin-top:-25px;
+    width: 50%;
+    height:40%;
+}
+.login-button-registration{
+    width: 36%;
+    height: 40px;
+    margin-top: -15px;
+    border: none;
+    background-color: #3182CE;
+    color: white;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
 .login-right {
     display: flex;
     flex-direction: column;
@@ -172,11 +217,13 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: #3182CE;
+    overflow: hidden;
 } 
 
 .registration-right {
     height: 100%;
     width: 60%;
+    overflow: hidden;
 }
 
 .triangle-registration {
@@ -753,6 +800,7 @@ body {
 .account-image {
     height: 100%;
     width: 100%;
+    
 }
 
 .right-details {
@@ -760,8 +808,41 @@ body {
     width: 30%;
     min-height: 100vh;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
+
+}
+.right-details form{
+    margin-top: -65%;
+    width: 50%;
+    margin-left: 60px
+
+}
+
+
+.custom-file-input {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-file-input input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .settings-container {
@@ -826,6 +907,28 @@ body {
     padding: 5px;
 }
 
+.checkbox{
+    margin-top: 20px;
+}
+
+.row input:focus{
+    outline:0
+}
+
+.row.success input{
+    border-color:green;
+}
+
+.row.error input{
+    border-color:red;
+}
+
+.row .error{
+    color:red;
+}
+
+
+
 .forget-password {
     padding-bottom: 10px;
 }
@@ -842,6 +945,7 @@ body {
     cursor: pointer;
 }
 
+
 .security-save {
     width: 30%;
     height: 40px;
@@ -852,7 +956,7 @@ body {
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    margin-left: 20px;
+    margin-left: 0px;
 }
 
 .security-submit button a {
@@ -1126,11 +1230,26 @@ body {
     width: 450px;
     border:1px solid black;
 }
+.checkbox-container{
+    margin-top: -10;
+}
 
+.no-products p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    flex-direction: column; 
+    color: #333;
+    font-size: 18px;
+}
 .change-password-button{
+    position: relative;
+    bottom: 40px;
     border-radius: 20px;
     margin-left: 30px;
-    margin-top: -30px;
+    margin-bottom: 300px;
     height: 40px;
     width: 20%;
     border: none;
@@ -2093,17 +2212,21 @@ span img {
 
 }
    
-.back-to-registration-code button{
+.back-to-registration-code a{
+    display: inline-block;
     height: 30px;
     width: 31.5%;
     margin-left: 30px;
     margin-top: 20px;
-    border: rgb(0, 0, 0);
+    border: none; 
     background-color: white;
     color: #3182CE;
     font-weight: bold;
     font-size: 18px;
     border-radius: 5px;
+    text-align: center; 
+    line-height: 30px; 
+    text-decoration: none; 
     cursor: pointer;
 }
 
@@ -2151,18 +2274,24 @@ span img {
     cursor: pointer;
 
 }
+.checkbox-change-pass{
+    position:relative;
+    bottom: 23px;
+    right: 85px;
+}
 .resend-verification-submit{
     width: 35%;
     border: none;
 }
 
 .resend-code-registration{
-    margin-left: 65%;
+    margin-left: -40%;
     margin-top: 10%;
-    width: 250%;
+    width: 100%;
 }
+
 .resend-code-registration button{
-    width: 30%;
+    width: 75%;
     height: 40px;
     border: none;
     background-color: #3182CE;
@@ -2502,4 +2631,50 @@ span img {
     font-weight: bold;
     font-size: 18px;
     cursor: pointer
+}
+
+ .nav-item {
+    float: left;
+}
+
+.nav-item a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin-right: 10%;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#product-list {
+    margin: 5px;
 }
