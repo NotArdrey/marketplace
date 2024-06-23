@@ -60,6 +60,7 @@ imagesBackBtn.addEventListener("click", (e) => {
   hr1.style.borderTopColor = "#C3E2FF";
 });
 
+
 imagesNextBtn.addEventListener("click", (e) => {
   addProductPage2.style.visibility = "hidden";
   addProductPage2.style.position = "absolute";
@@ -411,7 +412,6 @@ document.addEventListener("DOMContentLoaded", function() {
               // Show the delete button container
               deleteButtonContainer.style.display = 'block';
           };
-
           reader.readAsDataURL(file);
       });
 
@@ -432,21 +432,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Initial check
   toggleDeleteButtonVisibility();
+  
 });
 
-document.getElementById('allMyOrdersBtn').addEventListener('click', function() {
-  console.log("naclick ako");
-  fetch('../crud/allMyOrders.php')
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok ' + response.statusText);
-          }
-          return response.text();
-      })
-      .then(data => {
-          document.getElementById('my-orders-page').innerHTML = data;
-      })
-      .catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-      });
-});

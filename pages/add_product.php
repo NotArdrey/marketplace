@@ -112,7 +112,7 @@ $userID = $_SESSION['userID'];
                                 </div>
                                 <div class="image-container">
                                     <div class="delete-button-container" id="delete-button-container">
-                                        <button class="delete-button" onclick="deleteImage()">X</button>
+                                        <button form="dump-form" class="delete-button">X</button>
                                     </div>
                                     <img id="imgPreview" src="#" alt="Preview Image"
                                         style="display: none; max-width: 250px; max-height: 250px;">
@@ -328,6 +328,8 @@ $userID = $_SESSION['userID'];
                     </div>
             </div>
             </form>
+            <form id="dump-form"></form>
+
         </div>
         <script src="../js/index.js"></script>
 </body>

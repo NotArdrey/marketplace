@@ -17,7 +17,7 @@ function sendemail_code($first_name, $email, $token_pass) {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
         $mail->Port       = 587; 
 
-        $mail->setFrom('neilardrey14@gmail.com', 'Sender');
+        $mail->setFrom('neilardrey14@gmail.com', 'NU Baliwag Marketplace');
         $mail->addAddress($email, $first_name); 
 
         $mail->isHTML(true);
