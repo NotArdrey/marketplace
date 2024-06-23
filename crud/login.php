@@ -19,6 +19,7 @@ $loginEmail = $_POST['email'];
 $loginPassword = $_POST['password'];
 
 
+
 $sql = "SELECT * FROM users WHERE email = '$loginEmail' AND userPassword = '$loginPassword'";
 $result = mysqli_query($conn, $sql);
 
@@ -26,7 +27,7 @@ if (mysqli_num_rows($result) == 1) {
 
     $row = mysqli_fetch_assoc($result);
 
-    if($row["verify_status"] == 1){
+    if($row["verify_status"] == 1) {
 
         $_SESSION['authenticated'] = TRUE;
         $_SESSION['auth_user'] = [
@@ -38,14 +39,11 @@ if (mysqli_num_rows($result) == 1) {
         ];
         $_SESSION['userID'] = $row['userID'];
         header("Location: ../pages/customer_dashboard.php");
-        exit();
-
-    }else{
+    } else {
         $_SESSION['alert'] = "Please verify your email address";
         header("Location: ../pages/index.php");
         exit(0);
     }
-
 
 } else {
     $_SESSION['alert'] = "

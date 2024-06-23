@@ -345,6 +345,55 @@ if (!isset($_SESSION['userID'])) {
         }
     });
 
+    document.addEventListener("DOMContentLoaded", function() {
+        const toDeliverOrdersBtn = document.getElementById("toDeliverOrdersBtn");
+        if (toDeliverOrdersBtn) {
+            toDeliverOrdersBtn.addEventListener("click", function() {
+                fetch('../crud/toDeliverOrders.php?userID=' + userID)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        // Ensure the orders-tab element exists
+                        const ordersTab = document.getElementById("orders-tab");
+                        if (!ordersTab) {
+                            console.error("Element with id 'orders-tab' not found.");
+                            return;
+                        }
+
+                        // Ensure the orders-display div exists or create it
+                        let ordersDisplay = document.getElementById("orders-display");
+                        if (!ordersDisplay) {
+                            ordersDisplay = document.createElement("div");
+                            ordersDisplay.id = "orders-display";
+                            ordersTab.appendChild(ordersDisplay);
+                        }
+
+                        // Remove the element with the ID "displayedOrder" if it exists
+                        const displayedOrder = document.getElementById("displayedOrder");
+                        if (displayedOrder) {
+                            displayedOrder.parentNode.removeChild(displayedOrder);
+                        }
+
+                        // Clear the content of orders-display
+                        while (ordersDisplay.firstChild) {
+                            ordersDisplay.removeChild(ordersDisplay.firstChild);
+                        }
+
+                        // Append the fetched data to orders-display
+                        ordersDisplay.insertAdjacentHTML('beforeend', data);
+                    })
+
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            });
+        }
+    });
+
     // document.addEventListener("DOMContentLoaded", function() {
     //     const pendingOrdersBtn = document.getElementById("toPayOrdersBtn");
     //     if (toPayOrdersBtn) {
@@ -372,32 +421,7 @@ if (!isset($_SESSION['userID'])) {
     //     }
     // });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const pendingOrdersBtn = document.getElementById("toDeliverOrdersBtn");
-        if (toDeliverOrdersBtn) {
-            toDeliverOrdersBtn.addEventListener("click", function() {
-                fetch('../crud/toDeliverOrders.php?userID=' + userID)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok ' + response.statusText);
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        const ordersTable = document.getElementById("orders-table");
 
-                        // Clear the content of the table
-                        ordersTable.innerHTML = '';
-
-                        // Append the fetched data to the table
-                        ordersTable.insertAdjacentHTML('beforeend', data);
-                    })
-                    .catch(error => {
-                        console.error('There was a problem with the fetch operation:', error);
-                    });
-            });
-        }
-    });
 
     document.addEventListener("DOMContentLoaded", function() {
         const completedOrdersBtn = document.getElementById("completedOrdersBtn");
@@ -479,6 +503,38 @@ if (!isset($_SESSION['userID'])) {
                         });
                 } else if (orderStatus === 'To Pay') {
                     fetch('../crud/seller_orders/displayOrderPayment.php?orderID=' + orderID)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok ' + response
+                                    .statusText);
+                            }
+                            return response.text();
+                        })
+                        .then(data => {
+                            const ordersPage = document.getElementById("orders-tab");
+                            const preserveElement = document.getElementById("orders-navbar");
+
+                            // Temporarily remove the preserved element
+                            if (preserveElement) {
+                                ordersPage.removeChild(preserveElement);
+                            }
+
+                            // Clear the existing content
+                            ordersPage.innerHTML = '';
+
+                            // Append the preserved element back
+                            if (preserveElement) {
+                                ordersPage.appendChild(preserveElement);
+                            }
+
+                            // Append the new content
+                            ordersPage.insertAdjacentHTML('beforeend', data);
+                        })
+                        .catch(error => {
+                            console.error('There was a problem with the fetch operation:', error);
+                        });
+                } else if (orderStatus === 'To Receive') {
+                    fetch('../crud/seller_orders/displayToDeliverOrders.php?orderID=' + orderID)
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error('Network response was not ok ' + response

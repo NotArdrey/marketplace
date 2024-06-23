@@ -39,8 +39,20 @@
             </a>
         </div>
         <div class="navbar-right">
-            <p></p>
-            <a href="../pages/cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="../pages/cart.php" class="cart-wrapper">
+                <i class="fa-solid fa-cart-shopping" style="font-size: 20px;"></i>
+                <?php 
+                $sql = "SELECT COUNT(variationID) AS variationCount FROM cart WHERE userID = '$userID';";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                $variationCount = $row['variationCount'];
+                if ($variationCount != 0) {
+                    echo '
+                        <span class="cart-notification">' . $variationCount . '</span>
+                    ';
+                }
+                ?>
+            </a>
         </div>
     </div>
 </body>

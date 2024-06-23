@@ -13,6 +13,17 @@ if (!isset($_SESSION['userID'])) {
         header("Location: ../pages/index.php");
     } 
 }  
+
+$productID = $_GET['productID'];
+$sql = "SELECT * FROM products WHERE productID = '$productID'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $sellerID = $row['productSellerID'];
+        $sql = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM users WHERE userID = '" . $sellerID . "'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $sellerName = $row['full_name'];
+        $initialQty = 1;
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +56,7 @@ if (!isset($_SESSION['userID'])) {
     ?>
     <?php
         $productID = $_GET['productID'];
-        $sql = "SELECT productImg FROM products WHERE productID = '$productID'";
+        $sql = "SELECT * FROM products WHERE productID = '$productID'";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
     ?>
@@ -55,7 +66,7 @@ if (!isset($_SESSION['userID'])) {
             <section class="container">
                 <div class="slider-wrapper">
                     <div class="slider">
-                        <img id="slide-1" src="../product_img/<?php echo $row['productImg']; ?>">
+                        <img id="slide-1" src="../product_img/<?php echo $row['productImg']; ?>" draggable="false">
                         <?php 
                             $sql = "SELECT * FROM product_img WHERE productID = '$productID'";
                             $result = mysqli_query($conn, $sql);
@@ -63,7 +74,7 @@ if (!isset($_SESSION['userID'])) {
                             if ($numRows > 0) {
                                 for ($counter = 2; $counter < $numRows + 2; $counter++) {
                                     $row = mysqli_fetch_assoc($result);
-                                    echo '<img id="slide-' . $counter . '" src="../product_img/' . $row['productImg'] . '">';
+                                    echo '<img id="slide-' . $counter . '" src="../product_img/' . $row['productImg'] . '"draggable="false">';
                                 }
                             }
                         ?>
@@ -108,6 +119,7 @@ if (!isset($_SESSION['userID'])) {
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
             $sellerID = $row['productSellerID'];
+            
         ?>
         <div class="right-product-detail">
             <div class="right-product-upper-detail">
@@ -115,11 +127,12 @@ if (!isset($_SESSION['userID'])) {
                     <h1><?php echo $row['productName']; ?></h1>
                     <h2 id="productPrice">69</h2>
                     <p><?php echo $row['productDesc']; ?></p>
-                    <select name="variation" id="variationSelect"></select>
-                    <select name="size" id="sizeSelect" onchange="displayPrice()"></select>
+                    <select name="variation" id="variationSelect" class="detailedProductInput"></select>
+                    <select name="size" id="sizeSelect" onchange="displayPrice()" class="detailedProductInput"></select>
+                    <input type="number" value="<?php echo $initialQty;?>" name="quantity" id="qty" min="1">
                 </div>
                 <div>
-                    <h2>Sold by: <?php echo $sellerID; ?></h2>
+                    <h2>Sold by: <?php echo $sellerName; ?></h2>
                 </div>
             </div>
             <div class="right-product-lower-detail">
@@ -201,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const variationSelect = document.getElementById('variationSelect');
     const sizeSelect = document.getElementById('sizeSelect');
     const price = document.getElementById('productPrice');
+    const qty = document.getElementById('qty');
     const addToCartLink = document.getElementById('addToCartLink');
     let addToCartUrl = "../crud/add_to_cart.php?pageID=detailed";
     var productID = <?php echo json_encode($productID); ?>;
@@ -268,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateAddToCartUrl() {
         addToCartUrl = "../crud/add_to_cart.php?pageID=detailed";
         addToCartUrl += "&productID=" + productID + "&variation=" + encodeURIComponent(variationSelect.value) +
-            "&size=" + encodeURIComponent(sizeSelect.value);
+            "&size=" + encodeURIComponent(sizeSelect.value) + "&qty=" + encodeURIComponent(qty.value);
         addToCartLink.href = addToCartUrl;
         console.log('Add to Cart URL set to:', addToCartLink.href);
     }
@@ -280,6 +294,19 @@ document.addEventListener('DOMContentLoaded', function() {
     sizeSelect.addEventListener('change', function() {
         displayPrice();
         updateAddToCartUrl();
+    });
+
+    qty.addEventListener('change', function() {
+        if (qty.value == 0) {
+            Swal.fire({
+                title: "Invalid Quantity!",
+                text: "You must order atleast 1 item!",
+                icon: "error"
+            });
+            qty.value = 1;
+        } else {
+            updateAddToCartUrl();
+        }
     });
 
     document.getElementById('variationSelect').addEventListener('change', function() {

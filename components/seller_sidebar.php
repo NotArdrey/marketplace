@@ -45,12 +45,13 @@
             </div>
         </a>
 
-        <a href="../crud/logout.php" class="sidebar-link" id="sidebar-item-5">
+        <a href="../pages/upload_qr.php" class="sidebar-link" id="sidebar-item-4">
             <div class="sidebar-item">
-                <div class=" icon sidebar-item-5"><i class="fa-solid fa-right-from-bracket"></i></div>
-                <div class="nav-title red sidebar-item-5">Sign out</div>
+                <div class="icon sidebar-item-4"><i class="fa-solid fa-qrcode"></i></div>
+                <div class="nav-title sidebar-item-4">Upload Your QR</div>
             </div>
         </a>
+    </div>
     </div>
 </body>
 

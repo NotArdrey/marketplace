@@ -13,11 +13,17 @@ if (!isset($_SESSION['userID'])) {
         header("Location: ../pages/index.php");
     }
     $orderID = $_GET['orderID']; 
+    $sellerID = $_GET['sellerID'];
 
     $sql = "SELECT totalAmount FROM orders WHERE orderID = '$orderID'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $totalAmount = $row['totalAmount'];
+
+    $sql = "SELECT qr_code FROM users WHERE userID = '$sellerID'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $sellerQR = $row['qr_code'];
 }
 
 ?>
@@ -49,7 +55,7 @@ if (!isset($_SESSION['userID'])) {
         </a>
         <div class="payment-modal">
             <div class="left-payment">
-                <img src="../profile_pics/qr.jpeg" class="qr-img">
+                <img src="../qr_codes/<?php echo $sellerQR;?>" class="qr-img">
             </div>
             <div class="right-payment">
                 <form action="../crud/submitPayment.php?orderID=<?php echo $orderID;?>" method="POST" id="paymentForm"
@@ -100,6 +106,8 @@ if (!isset($_SESSION['userID'])) {
             // Show the input field
             paymentInput.style.display = "flex";
             paymentScreenshot.style.display = "block"; // Show the file input again
+
+            fileInput.value = "";
         });
 
         paymentScreenshot.addEventListener("change", function(event) {

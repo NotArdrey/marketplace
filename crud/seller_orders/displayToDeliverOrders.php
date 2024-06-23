@@ -1,44 +1,42 @@
 <?php
 session_start();
-require "../config/dbconn.php";
-$userID = $_SESSION['userID'];
+require "../../config/dbconn.php";
+$orderID = $_GET['orderID'];
 
-$sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'To Pay' ORDER BY orderDate DESC";
-$result = mysqli_query($conn, $sql);
 
-if (mysqli_num_rows($result) > 0) {
-    // Fetch all orders into an array
-    $orders = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $orders[] = $row;
-    }
-
-    // Iterate over the orders array with foreach
-    foreach ($orders as $row) {
-        // Order details
-        $orderID = $row['orderID'];
-        $status = $row['orderStatus'];
-        $totalPrice = $row['totalAmount'];
-        $sellerID = $row['sellerID'];
-        $orderPlaced = $row['orderDate'];
-        $paymentStatus = $row['paymentStatus'];
-        $paymentImg = $row['paymentImg'];
-
-        // Fetch seller full name
-        $sql = "SELECT CONCAT(first_name, ' ', last_name) AS sellerFullName FROM users WHERE userID = '$sellerID'";
+$sql = "SELECT * FROM orders WHERE orderID = '$orderID'";
         $result = mysqli_query($conn, $sql);
-        $sellerRow = mysqli_fetch_assoc($result);
-        $sellerName = $sellerRow['sellerFullName'];
+        
+if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    
+    $orderID = $row['orderID'];
+    $status = $row['orderStatus'];
+    $totalPrice = $row['totalAmount'];
+    $sellerID = $row['sellerID'];
+    $orderPlaced = $row['orderDate'];
+    $dateToDeliver = $row['deliveryDate'];
+    $buyerID = $row['userID'];
+    $modeOfPayment = $row['paymentMethod'];
+    $paymentImg = $row['paymentImg'];
+    $paymentStatus = $row['paymentStatus'];
+    
+    $userSql = "SELECT * FROM users WHERE userID = '$buyerID'";
+    $userResult = mysqli_query($conn, $userSql);
+    $userRow = mysqli_fetch_assoc($userResult);
+    $buyerName = $userRow['first_name'] . ' ' . $userRow['last_name'];
+    $contactNum = $userRow['contact_number'];
+    
 
-        echo '
-        <div class="my-orders-display all-my-orders">
-            <div class="orders-details">
-                <div class="orders-details-row">
-                    <div class="left-details-row"><i class="fa-solid fa-store"></i><strong>' . $sellerName . '</strong></div>
-                    <div class="right-details-row">' . $status . '</div>
-                </div>
+    echo '
+    <div class="my-orders-display all-my-orders pending-orders" id="displayedOrder">
+        <div class="orders-details">
+            <div class="orders-details-row">
+                <div class="left-details-row"><i class="fa-solid fa-circle-user"></i><strong>' . $buyerName . '</strong><i class="fa-solid fa-phone"></i><strong>' . $contactNum . '</strong></div>
+                <div class="right-details-row">To Deliver</div>
             </div>
-            <div class="orders-items">';
+        </div>
+        <div class="orders-items">';
 
         // Fetch items for this order
         $itemSql = "SELECT * FROM order_items WHERE orderID = '$orderID'";
@@ -71,11 +69,14 @@ if (mysqli_num_rows($result) > 0) {
                 $variationRow = mysqli_fetch_assoc($variationResult);
                 $variationName = $variationRow['variationName'];
                 $size = $variationRow['variationSize'];
-
                 $dateTime = new DateTime($orderPlaced);
                 $formattedDate = $dateTime->format('F j, Y');
                 $formattedTime = $dateTime->format('h:i A');
                 $formattedDateTime = $formattedDate . ' at ' . $formattedTime;
+                $dateTime = new DateTime($dateToDeliver);
+                $formattedDeliveryDate = $dateTime->format('F j, Y');
+                $formattedDeliveryTime = $dateTime->format('h:i A');
+                $formattedDeliveryDateTime = $formattedDeliveryDate . ' at ' . $formattedDeliveryTime;
 
                 echo '
                 <div class="orders-product-display">
@@ -99,30 +100,27 @@ if (mysqli_num_rows($result) > 0) {
             </div>
             <div class="order-item-total">
                 <div class="left-order-total">
-                    <p>Order Status: To Pay</p>
-                    <p>Payment Status: ' . $paymentStatus . '</p>
+                    <p>Order Status: To Deliver</p>
                     <p>Order Placed: ' . $formattedDateTime . '</p>
+                    <p>Should be delivered by: ' . $formattedDeliveryDateTime . '</p>
+                    <p>Mode of Payment: ' . $modeOfPayment . '</p>
                 </div>
                 <div class="right-order-total">
                     <div class="upper-order-item-total">
                         Order Total: <span class="order-total"><i class="fa-solid fa-peso-sign"></i>' . $totalPrice . '</span>
                     </div>
-                    <div class="lower-order-item-total">';
-        if (empty($paymentImg)) {
-            echo '
-                        <a href="../pages/payment.php?orderID=' . $orderID . '&sellerID=' . $sellerID . '" class="rate-product-link">
-                            <div class="rate-button">Pay</div>
-                        </a>';
-        } else {
-            echo '
-                        <div class="rate-button rate-product-link disabled">Payment Submitted</div>';
-        }
-        echo '
+                    <div class="lower-order-item-total">
+                        <a href="../crud/handlePendingOrder.php?orderID=' . $orderID . '&action=approve' . '" class="rate-product-link approve">
+                            <div class="rate-button">Approve</div>
+                        </a>
+                        <a href="../crud/handlePendingOrder.php?orderID=' . $orderID . '&action=cancel' . '" class="rate-product-link cancel">
+                            <div class="rate-button">Reject</div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>';
-    }
+    
 } else {
     echo '<p>No orders found.</p>';
 }

@@ -17,33 +17,36 @@
 <body>
     <div class="sidebar">
         <!-- Main Menu nav-link -->
-        <a href="../pages/customer_dashboard.php" class="sidebar-link">
-            <div class="sidebar-item">
-                <div class="icon"><i class="fa-solid fa-arrow-left-long"></i></div>
-                <div class="nav-title">Back to Main Menu</div>
-            </div>
-        </a>
+        <div class="sidebar-divider">
+            <a href="../pages/customer_dashboard.php" class="sidebar-link">
+                <div class="sidebar-item">
+                    <div class="icon"><i class="fa-solid fa-arrow-left-long"></i></div>
+                    <div class="nav-title">Back to Main Menu</div>
+                </div>
+            </a>
 
-        <a href="../pages/settings.php" class="sidebar-link">
-            <div class="sidebar-item">
-                <div class="icon"><i class="fa-solid fa-user"></i></div>
-                <div class="nav-title">Details</div>
-            </div>
-        </a>
+            <a href="../pages/settings.php" class="sidebar-link">
+                <div class="sidebar-item">
+                    <div class="icon"><i class="fa-solid fa-user"></i></div>
+                    <div class="nav-title">Details</div>
+                </div>
+            </a>
 
-        <a href="../pages/security.php" class="sidebar-link">
-            <div class="sidebar-item">
-                <div class="icon"><i class="fa-solid fa-lock"></i></div>
-                <div class="nav-title">Security</div>
-            </div>
-        </a>
-
-        <a href="../crud/logout.php" class="sidebar-link">
-            <div class="sidebar-item">
-                <div class="icon"><i class="fa-solid fa-right-from-bracket"></i></div>
-                <div class="nav-title red">Sign out</div>
-            </div>
-        </a>
+            <a href="../pages/security.php" class="sidebar-link">
+                <div class="sidebar-item">
+                    <div class="icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="nav-title">Security</div>
+                </div>
+            </a>
+        </div>
+        <div class="sidebar-divider">
+            <a href="../crud/logout.php" class="sidebar-link">
+                <div class="sidebar-item">
+                    <div class="icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+                    <div class="nav-title red">Sign out</div>
+                </div>
+            </a>
+        </div>
     </div>
 </body>
 
