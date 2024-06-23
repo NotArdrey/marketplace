@@ -1,5 +1,27 @@
 <?php
-$token = $_GET['token_pass'];
+session_start();
+require '../config/dbconn.php'; 
+
+$token = isset($_GET['token_pass']) ? $_GET['token_pass'] : null;
+
+if (!$token) {
+    // Redirect or show an error message if the token is not present
+    echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Invalid or missing token.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '../pages/send_code_password.php';
+                }
+            });
+          </script>";
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

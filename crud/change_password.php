@@ -13,8 +13,23 @@ if (isset($_POST['confirm-change-password'])) {
     $password = validate($password);
     $confirm_password = validate($confirm_password);
 
+    $pattern = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{6,}$/';
+
+    if (!preg_match($pattern, $password)) {
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid password format',
+                text: 'Password must be at least 6 characters long and include at least one letter, one number, and one special character.',
+            });
+        </script>
+        ";
+        header("Location: ../pages/change_password.php");
+        exit();
+    }
+
     if ($password === $confirm_password) {
-        
         if (isset($_GET['token_pass'])) {
             $token = $_GET['token_pass'];
 
@@ -29,9 +44,10 @@ if (isset($_POST['confirm-change-password'])) {
                 $token = $row['token_pass'];
                 $current_password = $row['userPassword'];
 
-                if ($password !== $current_password) {
+                if (!password_verify($password, $current_password)) {
+                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                     $update_stmt = $conn->prepare("UPDATE users SET userPassword = ? WHERE token_pass = ?");
-                    $update_stmt->bind_param("ss", $password, $token);
+                    $update_stmt->bind_param("ss", $hashed_password, $token);
                     if ($update_stmt->execute()) {
                         $_SESSION['alert'] = "
                         <script>
@@ -42,9 +58,8 @@ if (isset($_POST['confirm-change-password'])) {
                             });
                         </script>
                         ";
-                        header("Location: ../pages/change_password.php");
+                        header("Location: ../pages/index.php");
                         exit();
-                        
                     } else {
                         $_SESSION['alert'] = "
                         <script>
@@ -55,7 +70,7 @@ if (isset($_POST['confirm-change-password'])) {
                             });
                         </script>
                         ";
-                        header("Location: ../pages/change_password.php");
+                        header("Location: ../pages/index.php");
                         exit();
                     }
                 } else {
@@ -68,7 +83,7 @@ if (isset($_POST['confirm-change-password'])) {
                         });
                     </script>
                     ";
-                    header("Location: ../pages/change_password.php");
+                    header("Location: ../pages/index.php");
                     exit();
                 }
             } else {
@@ -76,12 +91,12 @@ if (isset($_POST['confirm-change-password'])) {
                 <script>
                     Swal.fire({
                         icon: 'error',
-                        title: 'No user found with this email',
-                        text: 'No user found with the provided email. Please check your email or register.',
+                        title: 'No user found with this token',
+                        text: 'No user found with the provided token. Please check the link or contact support.',
                     });
                 </script>
                 ";
-                header("Location: ../pages/change_password.php");
+                header("Location: ../pages/index.php");
                 exit();
             }
         } else {
@@ -89,13 +104,12 @@ if (isset($_POST['confirm-change-password'])) {
             <script>
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Token pass not set in session',
-                    text: 'Please ensure the token is properly set in the session.',
-
+                    title: 'Token pass not set in URL',
+                    text: 'Please ensure the token is properly set in the URL.',
                 });
             </script>
             ";
-            header("Location: ../pages/change_password.php");
+            header("Location: ../pages/index.php");
             exit();
         }
     } else {
@@ -105,11 +119,10 @@ if (isset($_POST['confirm-change-password'])) {
                 icon: 'warning',
                 title: 'Passwords do not match',
                 text: 'Please make sure your passwords match.',
-                
             });
         </script>
         ";
-        header("Location: ../pages/change_password.php");
+        header("Location: ../pages/index.php");
         exit();
     }
 } else {
@@ -122,8 +135,9 @@ if (isset($_POST['confirm-change-password'])) {
         });
     </script>
     ";
-    header("Location: ../pages/change_password.php");
+    header("Location: ../pages/index.php");
     exit();
 }
+
 
 ?>
