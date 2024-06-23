@@ -17,40 +17,43 @@
 <body>
     <div class="sidebar">
         <!-- Main Menu nav-link -->
-        <a href="../pages/customer_dashboard.php" class="sidebar-link" id="sidebar-item-1">
-            <div class="sidebar-item">
-                <div class="icon sidebar-item-1"><i class="fa-solid fa-arrow-left-long"></i></div>
-                <div class="nav-title sidebar-item-1">Back to Main Menu</div>
-            </div>
-        </a>
+        <div class="sidebar-divider">
+            <a href="../pages/customer_dashboard.php" class="sidebar-link" id="sidebar-item-1">
+                <div class="sidebar-item">
+                    <div class="icon sidebar-item-1"><i class="fa-solid fa-arrow-left-long"></i></div>
+                    <div class="nav-title sidebar-item-1">Back to Main Menu</div>
+                </div>
+            </a>
 
-        <a href="../pages/manage_product.php" class="sidebar-link" id="sidebar-item-2">
-            <div class=" sidebar-item">
-                <div class="icon sidebar-item-2"><i class="fa-solid fa-pen-to-square"></i></div>
-                <div class="nav-title sidebar-item-2">Manage Products</div>
-            </div>
-        </a>
+            <a href="../pages/manage_product.php" class="sidebar-link" id="sidebar-item-2">
+                <div class=" sidebar-item">
+                    <div class="icon sidebar-item-2"><i class="fa-solid fa-pen-to-square"></i></div>
+                    <div class="nav-title sidebar-item-2">Manage Products</div>
+                </div>
+            </a>
 
-        <a href="../pages/add_product.php" class="sidebar-link" id="sidebar-item-3">
-            <div class="sidebar-item">
-                <div class=" icon sidebar-item-3"><i class="fa-solid fa-plus"></i></div>
-                <div class="nav-title sidebar-item-3">Add Products</div>
-            </div>
-        </a>
+            <a href="../pages/add_product.php" class="sidebar-link" id="sidebar-item-3">
+                <div class="sidebar-item">
+                    <div class=" icon sidebar-item-3"><i class="fa-solid fa-plus"></i></div>
+                    <div class="nav-title sidebar-item-3">Add Products</div>
+                </div>
+            </a>
 
-        <a href="../pages/orders.php" class="sidebar-link" id="sidebar-item-4">
-            <div class="sidebar-item">
-                <div class="icon sidebar-item-4"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                <div class="nav-title sidebar-item-4">Orders</div>
-            </div>
-        </a>
+            <a href="../pages/orders.php" class="sidebar-link" id="sidebar-item-4">
+                <div class="sidebar-item">
+                    <div class="icon sidebar-item-4"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <div class="nav-title sidebar-item-4">Orders</div>
+                </div>
+            </a>
 
-        <a href="../pages/upload_qr.php" class="sidebar-link" id="sidebar-item-4">
-            <div class="sidebar-item">
-                <div class="icon sidebar-item-4"><i class="fa-solid fa-qrcode"></i></div>
-                <div class="nav-title sidebar-item-4">Upload Your QR</div>
-            </div>
-        </a>
+            <a href="../pages/upload_qr.php" class="sidebar-link" id="sidebar-item-4">
+                <div class="sidebar-item">
+                    <div class="icon sidebar-item-4"><i class="fa-solid fa-qrcode"></i></div>
+                    <div class="nav-title sidebar-item-4">Upload Your QR</div>
+                </div>
+            </a>
+        </div>
+
     </div>
     </div>
 </body>
