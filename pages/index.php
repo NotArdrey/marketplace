@@ -94,8 +94,6 @@ require "../config/dbconn.php";
             <form action="../crud/login.php" method="POST" id="login-form">
                 <input type="text" placeholder="NU Email" class="input-box" name="email" required>
                 <input type="password" placeholder="Password" class="input-box" name="password" required>
-                <a href="../pages/send_code_password.php" class="forget-password-login">Forget Password?</a>
-                <input type="submit" value="Login" name="login_btn" class="login-button">
                 <div>
                     <div class="pass-checkbox-container">
                         <div class="left-pass">
