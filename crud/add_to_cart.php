@@ -32,7 +32,7 @@ if (mysqli_num_rows($result) > 0) {
         <script>
             const Toast = Swal.mixin({
               toast: true,
-              position: 'top-end',
+              position: 'bottom-end',
               showConfirmButton: false,
               timer: 3000,
               timerProgressBar: true,
@@ -43,9 +43,11 @@ if (mysqli_num_rows($result) > 0) {
             });
             Toast.fire({
               icon: 'success',
-              title: 'Added shit to cart'
+              title: 'Added ". addslashes($productName) ." to cart'
             });
+        </script>
         ";
+        
     } else {
         //write alert here
         
@@ -60,7 +62,7 @@ if (mysqli_num_rows($result) > 0) {
         <script>
             const Toast = Swal.mixin({
               toast: true,
-              position: 'top-end',
+              position: 'bottom-end',
               showConfirmButton: false,
               timer: 3000,
               timerProgressBar: true,
@@ -71,8 +73,9 @@ if (mysqli_num_rows($result) > 0) {
             });
             Toast.fire({
               icon: 'success',
-              title: 'Added shit to cart'
+              title: 'Added ". addslashes($productName) ." to cart'
             });
+        </script>
         ";
     } else {
         

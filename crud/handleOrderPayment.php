@@ -61,4 +61,6 @@ if ($orderID && $action) {
     }
     header("Location: ../pages/orders.php");
     
+} else {
+    echo "alang naset na orderID at action";
 }

@@ -64,8 +64,6 @@ if($_FILES["productImg"]["error"] === 4) {
         }         
                 
 if ($result) {
-    $sql = "INSERT INTO product_img (userID, productID, productImg) VALUES ('$userID', '$productID', '$newImageName')";
-    $result = mysqli_query($conn, $sql);
     
     foreach ($categories as $category) {
         switch ($category) {
