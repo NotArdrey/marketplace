@@ -2,32 +2,22 @@
 session_start();
 include "../config/dbconn.php";
 
-// if (isset($_POST['email']) && isset($_POST['password'])) {
-
-//     function validate($data) {
-//         $data = trim($data);
-//         $data = stripslashes($data);
-//         $data = htmlspecialchars($data);
-//         return $data;
-//     }
-// }
-
-// $loginEmail = validate($_POST['email']);
-// $loginPassword = validate($_POST['password']);
-
 $loginEmail = $_POST['email'];
 $loginPassword = $_POST['password'];
 
 
 
-$sql = "SELECT * FROM users WHERE email = '$loginEmail' AND userPassword = '$loginPassword'";
-$result = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM users WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $loginEmail);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if (mysqli_num_rows($result) == 1) {
 
     $row = mysqli_fetch_assoc($result);
 
-    if($row["verify_status"] == 1) {
+    if($row["verify_status"] == 1){
 
         $_SESSION['authenticated'] = TRUE;
         $_SESSION['auth_user'] = [
@@ -55,6 +45,7 @@ if (mysqli_num_rows($result) == 1) {
         exit(0);
     }
 
+
 } else {
     $_SESSION['alert'] = "
         <script>
@@ -62,12 +53,10 @@ if (mysqli_num_rows($result) == 1) {
                 icon: 'error',
                 title: 'Wrong username or password',
                 text: 'Please try again.'
-          });
+        });
         </script>
-        ";
+    ";
     header("Location: ../pages/index.php");
     exit();
 }
-
-
 ?>

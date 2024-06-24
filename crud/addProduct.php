@@ -63,70 +63,65 @@ if($_FILES["productImg"]["error"] === 4) {
             }
         }         
                 
-if ($result) {
-    $sql = "INSERT INTO product_img (userID, productID, productImg) VALUES ('$userID', '$productID', '$newImageName')";
-    $result = mysqli_query($conn, $sql);
-    
-    foreach ($categories as $category) {
-        switch ($category) {
-            case "Electronics":
-                $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 1)";
-                $result = mysqli_query($conn, $sql);
-                break;
-            case "Clothing":
-                $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 2)";
-                $result = mysqli_query($conn, $sql);
-                break;
-            case "Jewelry":
-                $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 3)";
-                $result = mysqli_query($conn, $sql);
-                break;
-            case "Food":
-                $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 4)";
-                $result = mysqli_query($conn, $sql);
-                break;
-            case "Beverages":
-                $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 5)";
-                $result = mysqli_query($conn, $sql);
-                break;
-        }
-    }
+        if ($result) {
+            foreach ($categories as $category) {
+                switch ($category) {
+                    case "Electronics":
+                        $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 1)";
+                        $result = mysqli_query($conn, $sql);
+                        break;
+                    case "Clothing":
+                        $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 2)";
+                        $result = mysqli_query($conn, $sql);
+                        break;
+                    case "Jewelry":
+                        $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 3)";
+                        $result = mysqli_query($conn, $sql);
+                        break;
+                    case "Food":
+                        $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 4)";
+                        $result = mysqli_query($conn, $sql);
+                        break;
+                    case "Beverages":
+                        $sql = "INSERT INTO product_categories (productID, categoryID) VALUES ('$productID', 5)";
+                        $result = mysqli_query($conn, $sql);
+                        break;
+                }
+            }
 
-    foreach ($paymentMethod as $method) {
-        switch ($method) {
-            case "GCash":
-                $sql = "INSERT INTO payment_method (methodID, productID) VALUES ( 1, '$productID')";
+            foreach ($paymentMethod as $method) {
+                switch ($method) {
+                    case "GCash":
+                        $sql = "INSERT INTO payment_method (methodID, productID) VALUES ( 1, '$productID')";
+                        $result = mysqli_query($conn, $sql);
+                        break;
+                    case "COD":
+                        $sql = "INSERT INTO payment_method (methodID, productID) VALUES (2, '$productID')";
+                        $result = mysqli_query($conn, $sql);
+                        break;
+                }
+            }
+            $lowestPrice = PHP_FLOAT_MAX;
+            foreach ($variationsData as $variation) {
+                $variationName = $variation['variation'];
+                $size = $variation['size'];
+                $price = $variation['price'];
+                $quantity = $variation['quantity'];
+                $isMadeToOrder = $variation['isMadeToOrder'];
+                
+                $sql = "INSERT INTO variations (productID, variationName, variationSize, variationPrice, variationQty, isMadeToOrder) VALUES ('$productID', '$variationName', '$size', '$price', '$quantity', '$isMadeToOrder')";
                 $result = mysqli_query($conn, $sql);
-                break;
-            case "COD":
-                $sql = "INSERT INTO payment_method (methodID, productID) VALUES (2, '$productID')";
-                $result = mysqli_query($conn, $sql);
-                break;
-        }
-    }
-    $lowestPrice = PHP_FLOAT_MAX;
-    foreach ($variationsData as $variation) {
-        $variationName = $variation['variation'];
-        $size = $variation['size'];
-        $price = $variation['price'];
-        $quantity = $variation['quantity'];
-        $isMadeToOrder = $variation['isMadeToOrder'];
-        
-        $sql = "INSERT INTO variations (productID, variationName, variationSize, variationPrice, variationQty, isMadeToOrder) VALUES ('$productID', '$variationName', '$size', '$price', '$quantity', '$isMadeToOrder')";
-        $result = mysqli_query($conn, $sql);
 
-        if ($price < $lowestPrice) {
-            $lowestPrice = $price;
+                if ($price < $lowestPrice) {
+                    $lowestPrice = $price;
+                }
+            }
+    
+            $sql = "UPDATE products SET productPrice = '$lowestPrice' WHERE productID = '$productID'";
+            $result = mysqli_query($conn, $sql);
+    
+            header("Location: ../pages/add_product.php");
         }
-    }
-    
-    $sql = "UPDATE products SET productPrice = '$lowestPrice' WHERE productID = '$productID'";
-    $result = mysqli_query($conn, $sql);
-    
-    header("Location: ../pages/add_product.php");
-}
     }
 }
-
-
 ?>
