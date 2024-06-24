@@ -17,13 +17,11 @@ if (isset($_POST['security-save'])) {
     $row = $result->fetch_assoc();
 
     if ($row) {
+        $hashed_password = $row['userPassword'];
 
-        $password = $row['userPassword'];
+        if (password_verify($current_password, $hashed_password)) {
 
-
-        if ($password === $current_password) { 
-
-            $pattern = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%])[A-Za-z\d@$!%]{6,}$/';
+            $pattern = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{6,}$/';
 
             if ($new_password !== $re_enter_password) {
                 $_SESSION['alert'] = "
@@ -50,12 +48,11 @@ if (isset($_POST['security-save'])) {
                 header("Location: ../pages/security.php");
                 exit(0);
             }
-        
 
-            
+            $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
             $sql = "UPDATE users SET userPassword = ? WHERE userID = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $new_password, $userID);
+            $stmt->bind_param("ss", $new_hashed_password, $userID);
 
             if ($stmt->execute()) {
                 $_SESSION['alert'] = "

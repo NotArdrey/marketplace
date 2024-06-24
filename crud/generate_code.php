@@ -3,7 +3,6 @@ session_start();
 require '../config/dbconn.php';
 require '../vendor/autoload.php';
 
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -14,8 +13,8 @@ function sendemail_verify($first_name, $email, $verify_token) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'sample@gmail.com';
-        $mail->Password   = '**** **** **** ****'; 
+        $mail->Username   = 'neilardrey14@gmail.com';
+        $mail->Password   = 'nwkp lnkd qxja msid'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -54,19 +53,19 @@ if (isset($_POST["register_btn"])) {
     $confirm_password = $_POST["confirm_password"];
     $verify_token = md5(uniqid(time()));
 
-    //validate Philippine number
+    
     function isValidPhilippineNumber($contact_number) {
         $pattern = '/^(\+63|0)9\d{9}$|^02\d{7}$|^0[3-9]\d{7,8}$/';
         return preg_match($pattern, $contact_number);
     }
 
-    //validate Outlook email
+   
     function isValidOutlookEmail($email) {
         $pattern = '/^[a-zA-Z._%+-]+@([a-zA-Z0-9-]+\.)?nu-baliwag\.edu\.ph$/';
         return preg_match($pattern, $email);
     }
 
-    //Validate email
+    
     if (empty($email) || !isValidOutlookEmail($email)) {
         $_SESSION['alert'] = "
         <script>
@@ -81,7 +80,7 @@ if (isset($_POST["register_btn"])) {
         exit(0);
     }
 
-    //Validate contact number
+   
     if (empty($contact_number) || !isValidPhilippineNumber($contact_number)) {
         $_SESSION['alert'] = "
         <script>
@@ -97,7 +96,7 @@ if (isset($_POST["register_btn"])) {
     }
 
     
-    $pattern = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/';
+    $pattern = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{6,}$/';
 
     if ($password !== $confirm_password) {
         $_SESSION['alert'] = "
@@ -125,12 +124,11 @@ if (isset($_POST["register_btn"])) {
         exit(0);
     }
 
-    // Check database connection
+    
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    //Check if the email or contact number already exists
     $sql = "SELECT * FROM users WHERE email = ? OR contact_number = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $email, $contact_number);
@@ -151,10 +149,11 @@ if (isset($_POST["register_btn"])) {
         exit(0);
     }
 
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
  
     $sql = "INSERT INTO users (first_name, last_name, email, contact_number, userPassword, verify_token) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssss", $first_name, $last_name, $email, $contact_number, $password, $verify_token);
+    $stmt->bind_param("ssssss", $first_name, $last_name, $email, $contact_number, $hashed_password, $verify_token);
 
     if ($stmt->execute()) {
 

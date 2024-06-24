@@ -24,43 +24,108 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
+   
     $check = getimagesize($_FILES["image"]["tmp_name"]);
-    if ($check !== false) {
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
+    if ($check === false) {
         $uploadOk = 0;
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'File is not an image.',
+            });
+        </script>
+        ";
+        header("Location: ../pages/settings.php");
+        exit();
     }
 
-    if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
-    }
-
+    // Check file size
     if ($_FILES["image"]["size"] > 500000) {
-        echo "Sorry, your file is too large.";
         $uploadOk = 0;
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Sorry, your file is too large.',
+            });
+        </script>
+        ";
+        header("Location: ../pages/settings.php");
+        exit();
     }
 
+    // Allow certain file formats
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-        echo "Sorry, only JPG, JPEG, & PNG files are allowed.";
         $uploadOk = 0;
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Sorry, only JPG, JPEG, & PNG files are allowed.',
+            });
+        </script>
+        ";
+        header("Location: ../pages/settings.php");
+        exit();
     }
+
 
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Sorry, your file was not uploaded.',
+            });
+        </script>
+        ";
+        header("Location: ../pages/settings.php");
+        exit();
     } else {
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
             $sql = "UPDATE users SET profilePicture = '$target_file' WHERE userID = '$userID'";
             if (mysqli_query($conn, $sql)) {
-                echo "The file " . htmlspecialchars(basename($_FILES["image"]["name"])) . " has been uploaded.";
-                header("Location: settings.php");
+                $_SESSION['alert'] = "
+                <script>
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'The file " . htmlspecialchars(basename($_FILES["image"]["name"])) . " has been uploaded.',
+                    });
+                </script>
+                ";
+                header("Location: ../pages/settings.php");
                 exit();
             } else {
-                echo "Sorry, there was an error updating your profile picture.";
+                $_SESSION['alert'] = "
+                <script>
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Sorry, there was an error updating your profile picture.',
+                    });
+                </script>
+                ";
+                header("Location: ../pages/settings.php");
+                exit();
             }
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            $_SESSION['alert'] = "
+            <script>
+                Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Sorry, there was an error uploading your file.',
+                });
+            </script>
+            ";
+            header("Location: ../pages/settings.php");
+            exit();
         }
     }
 }
@@ -73,12 +138,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
     <link rel="stylesheet" href="../styles/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+    <?php
+    if (isset($_SESSION['alert'])) {
+        echo $_SESSION['alert'];
+        unset($_SESSION['alert']);
+    }
+    ?>
     <div class="settings-container">
-        <?php  
-        include_once '../components/sidebar.php'; 
+        <?php include_once '../components/sidebar.php'; 
         $sql = "SELECT * FROM users WHERE userID = '$userID'";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
