@@ -102,7 +102,6 @@ if (mysqli_num_rows($result) > 0) {
                 <div class="left-order-total">
                     <p>Order Status: To Deliver</p>
                     <p>Order Placed: ' . $formattedDateTime . '</p>
-                    <p>Should be delivered by: ' . $formattedDeliveryDateTime . '</p>
                     <p>Mode of Payment: ' . $modeOfPayment . '</p>
                 </div>
                 <div class="right-order-total">
@@ -110,11 +109,11 @@ if (mysqli_num_rows($result) > 0) {
                         Order Total: <span class="order-total"><i class="fa-solid fa-peso-sign"></i>' . $totalPrice . '</span>
                     </div>
                     <div class="lower-order-item-total">
-                        <a href="../crud/handlePendingOrder.php?orderID=' . $orderID . '&action=approve' . '" class="rate-product-link approve">
-                            <div class="rate-button">Approve</div>
+                        <a href="../crud/handleToDeliverOrder.php?orderID=' . $orderID . '&action=fulfilled' . '" class="rate-product-link approve">
+                            <div class="rate-button">Fulfilled</div>
                         </a>
-                        <a href="../crud/handlePendingOrder.php?orderID=' . $orderID . '&action=cancel' . '" class="rate-product-link cancel">
-                            <div class="rate-button">Reject</div>
+                        <a href="../crud/handleToDeliverOrder.php?orderID=' . $orderID . '&action=failed' . '" class="rate-product-link cancel">
+                            <div class="rate-button">Unsuccessful</div>
                         </a>
                     </div>
                 </div>

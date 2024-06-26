@@ -25,6 +25,7 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'Pending
                 $totalPrice = $row['totalAmount'];
                 $sellerID = $row['sellerID'];
                 $orderPlaced = $row['orderDate'];
+                $mop = $row['paymentMethod'];
         
                 // Fetch seller full name
                 $sql = "SELECT CONCAT(first_name, ' ', last_name) AS sellerFullName FROM users WHERE userID = '$sellerID'";
@@ -104,6 +105,7 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'Pending
                         <div class="left-order-total">
                             <p>Order Status: Pending</p>
                             <p>Order Placed: ' . $formattedDateTime . '</p>
+                            <p>Mode of Payment: ' . $mop . '</p>
                         </div>
                         <div class="right-order-total">
                             <div class="upper-order-item-total">

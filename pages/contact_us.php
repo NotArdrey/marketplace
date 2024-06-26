@@ -21,7 +21,7 @@ require "../crud/verify_status.php";
     </div>
 
     <div class="contact-img-div">
-        <img src="../about_contact_pics/contact-img.png" class="contact-img">
+        <img src="../img/contact-img.png" class="contact-img">
     </div>
 
     <div class="contact-h1">

@@ -23,7 +23,7 @@ function sendemail_verify($first_name, $email, $verify_token) {
 
         $mail->isHTML(true);
         $mail->Subject = 'Test Mail';
-        $mail->Body = "Hi $first_name,<br>Please click the link below to confirm your email address and activate your account:<br><a href='http://localhost/Project/marketplace/crud/tokenVerification.php?token=". urlencode($verify_token) ."'>Verify Email</a>";
+        $mail->Body = "Hi $first_name,<br>Please click the link below to confirm your email address and activate your account:<br><a href='http://localhost/marketplace/crud/tokenVerification.php?token=". urlencode($verify_token) ."'>Verify Email</a>";
         $headers = "From: no-reply@.com";
         $mail->send();
         $_SESSION['alert'] = "

@@ -394,35 +394,6 @@ if (!isset($_SESSION['userID'])) {
         }
     });
 
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const pendingOrdersBtn = document.getElementById("toPayOrdersBtn");
-    //     if (toPayOrdersBtn) {
-    //         toPayOrdersBtn.addEventListener("click", function() {
-    //             fetch('../crud/toPayOrders.php?userID=' + userID)
-    //                 .then(response => {
-    //                     if (!response.ok) {
-    //                         throw new Error('Network response was not ok ' + response.statusText);
-    //                     }
-    //                     return response.text();
-    //                 })
-    //                 .then(data => {
-    //                     const ordersTable = document.getElementById("orders-table");
-
-    //                     // Clear the content of the table
-    //                     ordersTable.innerHTML = '';
-
-    //                     // Append the fetched data to the table
-    //                     ordersTable.insertAdjacentHTML('beforeend', data);
-    //                 })
-    //                 .catch(error => {
-    //                     console.error('There was a problem with the fetch operation:', error);
-    //                 });
-    //         });
-    //     }
-    // });
-
-
-
     document.addEventListener("DOMContentLoaded", function() {
         const completedOrdersBtn = document.getElementById("completedOrdersBtn");
         if (completedOrdersBtn) {
@@ -435,14 +406,36 @@ if (!isset($_SESSION['userID'])) {
                         return response.text();
                     })
                     .then(data => {
-                        const ordersTable = document.getElementById("orders-table");
+                        // Ensure the orders-tab element exists
+                        const ordersTab = document.getElementById("orders-tab");
+                        if (!ordersTab) {
+                            console.error("Element with id 'orders-tab' not found.");
+                            return;
+                        }
 
-                        // Clear the content of the table
-                        ordersTable.innerHTML = '';
+                        // Ensure the orders-display div exists or create it
+                        let ordersDisplay = document.getElementById("orders-display");
+                        if (!ordersDisplay) {
+                            ordersDisplay = document.createElement("div");
+                            ordersDisplay.id = "orders-display";
+                            ordersTab.appendChild(ordersDisplay);
+                        }
 
-                        // Append the fetched data to the table
-                        ordersTable.insertAdjacentHTML('beforeend', data);
+                        // Remove the element with the ID "displayedOrder" if it exists
+                        const displayedOrder = document.getElementById("displayedOrder");
+                        if (displayedOrder) {
+                            displayedOrder.parentNode.removeChild(displayedOrder);
+                        }
+
+                        // Clear the content of orders-display
+                        while (ordersDisplay.firstChild) {
+                            ordersDisplay.removeChild(ordersDisplay.firstChild);
+                        }
+
+                        // Append the fetched data to orders-display
+                        ordersDisplay.insertAdjacentHTML('beforeend', data);
                     })
+
                     .catch(error => {
                         console.error('There was a problem with the fetch operation:', error);
                     });
@@ -565,72 +558,42 @@ if (!isset($_SESSION['userID'])) {
                         .catch(error => {
                             console.error('There was a problem with the fetch operation:', error);
                         });
+                } else {
+                    fetch('../crud/seller_orders/displayCompletedOrders.php?orderID=' + orderID)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok ' + response
+                                    .statusText);
+                            }
+                            return response.text();
+                        })
+                        .then(data => {
+                            const ordersPage = document.getElementById("orders-tab");
+                            const preserveElement = document.getElementById("orders-navbar");
+
+                            // Temporarily remove the preserved element
+                            if (preserveElement) {
+                                ordersPage.removeChild(preserveElement);
+                            }
+
+                            // Clear the existing content
+                            ordersPage.innerHTML = '';
+
+                            // Append the preserved element back
+                            if (preserveElement) {
+                                ordersPage.appendChild(preserveElement);
+                            }
+
+                            // Append the new content
+                            ordersPage.insertAdjacentHTML('beforeend', data);
+                        })
+                        .catch(error => {
+                            console.error('There was a problem with the fetch operation:', error);
+                        });
                 }
             }
         });
     });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        setMinDateTime();
-    });
-
-    function setMinDateTime() {
-        const etaInput = document.getElementById('eta');
-        if (etaInput) {
-            // Set the minimum date and time to the current date and time
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-
-            const minDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-            etaInput.min = minDateTime;
-        }
-    }
-
-    function checkAndSubmitForm(action) {
-        const etaInput = document.getElementById('eta');
-        if (!etaInput) {
-            // If the etaInput element does not exist, return and do nothing
-            return;
-        }
-
-        setMinDateTime(); // Ensure the min datetime is up to date
-
-        if (etaInput.value === '') {
-            event.preventDefault();
-            etaInput.style.border = '2px solid red';
-            Swal.fire({
-                title: "Error!",
-                text: "Please select an estimated delivery date.",
-                icon: "error"
-            });
-        } else if (new Date(etaInput.value) < new Date(etaInput.min)) {
-            event.preventDefault();
-            etaInput.style.border = '2px solid red';
-            Swal.fire({
-                title: "Invalid date!",
-                text: "The selected date and time cannot be in the past.",
-                icon: "error"
-            });
-        } else {
-            etaInput.style.border = '';
-
-            // Set the action value and submit the form
-            const form = document.getElementById('payment-approval-form');
-
-            // Create and set the action input value
-            let actionInput = document.createElement('input');
-            actionInput.type = 'hidden';
-            actionInput.name = 'action';
-            actionInput.value = action;
-
-            form.appendChild(actionInput);
-            form.submit();
-        }
-    }
     </script>
 </body>
 

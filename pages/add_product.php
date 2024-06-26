@@ -97,18 +97,18 @@ $userID = $_SESSION['userID'];
                             <div class="left-add-product-form">
                                 <div class="product-form-row">
                                     <label for="">Product Name</label>
-                                    <input type="text" class="input" name="productName">
+                                    <input type="text" class="input" name="productName" required>
                                 </div>
                                 <div class="product-form-row">
                                     <label for="">Product Description</label>
-                                    <textarea id="" rows="4" name="productDesc"></textarea>
+                                    <textarea id="" rows="4" name="productDesc" required></textarea>
                                 </div>
                             </div>
                             <div class="right-add-product-form">
                                 <div class="product-form-row">
                                     <label for="">Add Product Display Photo</label>
                                     <input type="file" name="productImg" id="productImg"
-                                        accept=".jpg, .jpeg, .png, .avif" onchange="previewImage(event)" />
+                                        accept=".jpg, .jpeg, .png, .avif" onchange="previewImage(event)" required />
                                 </div>
                                 <div class="image-container">
                                     <div class="delete-button-container" id="delete-button-container">

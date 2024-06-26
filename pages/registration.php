@@ -62,7 +62,7 @@ require "../config/dbconn.php";
                 </div>
 
 
-                <input type="submit" value="Sign In" name="register_btn" class="login-button-registration">
+                <input type="submit" value="Sign Up" name="register_btn" class="login-button-registration">
             </form>
         </div>
     </div>
@@ -85,14 +85,8 @@ require "../config/dbconn.php";
 
 </html>
 <?php
-            if (isset($_SESSION['alert'])) {
-                echo $_SESSION['alert'];
-                unset($_SESSION['alert']);
-            }
-            ?>
-<?php
-            if(isset($_SESSION['status'])) {
-                echo $_SESSION['status'];
-                unset($_SESSION['status']);
-             }
-            ?>
+    if (isset($_SESSION['alert'])) {
+        echo $_SESSION['alert'];
+        unset($_SESSION['alert']);
+    }
+?>

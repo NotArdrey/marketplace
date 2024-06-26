@@ -22,7 +22,7 @@ if (!isset($_SESSION['userID'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - NUBMarketplace</title>
+    <title>Location - NUB Marketplace</title>
     <link rel="stylesheet" href="../styles/index.css">
 </head>
 
@@ -34,10 +34,10 @@ if (!isset($_SESSION['userID'])) {
     <div class="about-container">
 
         <div class="about-h1">
-            <h1> About Us </h1>
+            <h1>Location</h1>
         </div>
         <div class="about-h2">
-            <h2> NUBMarketplace </h2>
+            <h2> NU-B Marketplace </h2>
         </div>
 
         <div class="about-desc">
@@ -55,11 +55,11 @@ if (!isset($_SESSION['userID'])) {
         </div>
 
         <div class="nub1-img-div">
-            <img src="../about_contact_pics/about-img.png" alt="" class="nub1-image">
+            <img src="../img/about-img.png" alt="" class="nub1-image">
         </div>
 
         <div class="nub2-img-div">
-            <img src="../about_contact_pics/about-img2.png" alt="" class="nub2-image">
+            <img src="../img/about-img2.png" alt="" class="nub2-image">
         </div>
 
         <div class="about-rectangle">

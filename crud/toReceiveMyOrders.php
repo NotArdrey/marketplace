@@ -21,18 +21,20 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'To Rece
                 $totalPrice = $row['totalAmount'];
                 $sellerID = $row['sellerID'];
                 $orderPlaced = $row['orderDate'];
+                $mop = $row['paymentMethod'];
         
                 // Fetch seller full name
-                $sql = "SELECT CONCAT(first_name, ' ', last_name) AS sellerFullName FROM users WHERE userID = '$sellerID'";
+                $sql = "SELECT *, CONCAT(first_name, ' ', last_name) AS sellerFullName FROM users WHERE userID = '$sellerID'";
                 $result = mysqli_query($conn, $sql);
                 $sellerRow = mysqli_fetch_assoc($result);
                 $sellerName = $sellerRow['sellerFullName'];
+                $contactNum = $sellerRow['contact_number'];
         
                 echo '
                 <div class="my-orders-display all-my-orders pending-orders">
                     <div class="orders-details">
                         <div class="orders-details-row">
-                            <div class="left-details-row"><i class="fa-solid fa-store"></i><strong>' . $sellerName . '</strong></div>
+                            <div class="left-details-row"><i class="fa-solid fa-store"></i><strong>' . $sellerName . '</strong><i class="fa-solid fa-phone"></i><strong>' . $contactNum . '</strong></div>
                             <div class="right-details-row">' . $status . '</div>
                         </div>
                     </div>
@@ -98,9 +100,9 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'To Rece
                     </div>
                     <div class="order-item-total">
                         <div class="left-order-total">
-                            <p>Order Status: Pending</p>
+                            <p>Order Status: To Receive</p>
                             <p>Order Placed: ' . $formattedDateTime . '</p>
-                            <p>Estimated Delivery Date:</p>
+                            <p>Mode of Payment: ' . $mop . '</p>
                         </div>
                         <div class="right-order-total">
                             <div class="upper-order-item-total">

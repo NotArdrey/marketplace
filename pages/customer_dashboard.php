@@ -14,6 +14,7 @@ $sql = "SELECT * FROM users WHERE userID = '$userID'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 $vStatus = $row['verify_status'];
+$initialQty = 1;
 if ($vStatus === 0) {
     header("Location: ../pages/index.php");
     exit();
@@ -294,9 +295,15 @@ if (isset($_POST['category'])) {
                                                             <select name='size' id='sizeSelect_$productID' onchange='displayPrice($productID)' class='modalInput'>
                                                             </select>
                                                         </div>
-                                                        <div class='modal-row'>                                                                
-                                                            <label>Quantity</label>
-                                                            <input type='number' class='modalInputQty' id='qty_$productID'>
+                                                        <div class='split-modal-row'>                                                                
+                                                            <div class='left-modal'>
+                                                                <label>Quantity</label>
+                                                                <input type='number' class='modalInputQty' id='qty_$productID' value='$initialQty'>
+                                                            </div>
+                                                            <div class='right-modal'>
+                                                                <label>Price</label>
+                                                                <p class='' id='productPrice_$productID'></p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class='bottom-modal-form'>

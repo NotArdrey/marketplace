@@ -63,8 +63,8 @@ $userID = $_SESSION['userID'];
                                     </div>
                                 </div>
                                 <div class='details-cart'>
-                                    <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>Edit</div></a>
-                                    <a href='../crud/add_to_cart.php?productID=$productID'><div class='cart-button'><i class='fa-solid fa-trash' style='color: #ffffff;'></i></div></a>
+                                    <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>View Details</div></a>
+                                    <div class='cart-button' data-productid='$productID' id='deleteBtn'><i class='fa-solid fa-trash' style='color: #ffffff;'></i></div>
                                 </div>
                             </div>
                         </div>";
@@ -76,7 +76,30 @@ $userID = $_SESSION['userID'];
         </div>
     </div>
     <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const deleteButtons = document.querySelectorAll('.cart-button');
 
+        deleteButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const productID = this.getAttribute('data-productid');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href =
+                            `../crud/delete_product.php?productID=${productID}`;
+                    }
+                });
+            });
+        });
+    });
     </script>
 </body>
 

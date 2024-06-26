@@ -14,8 +14,8 @@ function resend_email_verify($first_name, $email, $verify_token){
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'sample@gmail.com';
-        $mail->Password   = '**** **** **** ****'; 
+        $mail->Username   = 'neilardrey14@gmail.com';
+        $mail->Password   = 'nwkp lnkd qxja msid'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -24,7 +24,7 @@ function resend_email_verify($first_name, $email, $verify_token){
 
         $mail->isHTML(true);
         $mail->Subject = 'Resend Email Verification';
-        $mail->Body = "Hi $first_name,<br>Please click the link below to confirm your email address and activate your account:<br><a href='http://localhost/Project/marketplace/crud/tokenVerification.php?token=". urlencode($verify_token) ."'>Verify Email</a>";
+        $mail->Body = "Hi $first_name,<br>Please click the link below to confirm your email address and activate your account:<br><a href='http://localhost/marketplace/crud/tokenVerification.php?token=". urlencode($verify_token) ."'>Verify Email</a>";
         $mail->send();
         $_SESSION['alert'] = "
         <script>
