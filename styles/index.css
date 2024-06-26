@@ -3553,3 +3553,12 @@ span img {
     height: 40px;
     z-index: 99;
   }
+  
+  .cancel-btn {
+    background-color: #DC3545;
+    color: white;
+  }
+
+#cancel-btn {
+    background-color: #DC3545;
+}

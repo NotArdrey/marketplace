@@ -111,6 +111,11 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'Pending
                             <div class="upper-order-item-total">
                                 Order Total: <span class="order-total"><i class="fa-solid fa-peso-sign"></i>' . $totalPrice . '</span>
                             </div>
+                            <div class="lower-order-item-total">
+                                <a href="../crud/cancel_order.php?orderID=' . $orderID . '" class="rate-product-link" id="cancel-btn">
+                                    <div class="rate-button cancel-btn">Cancel Order</div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>';
