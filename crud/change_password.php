@@ -70,7 +70,7 @@ if (isset($_POST['confirm-change-password'])) {
                             });
                         </script>
                         ";
-                        header("Location: ../pages/index.php");
+                        header("Location: ../pages/change_password.php");
                         exit();
                     }
                 } else {
@@ -83,7 +83,7 @@ if (isset($_POST['confirm-change-password'])) {
                         });
                     </script>
                     ";
-                    header("Location: ../pages/index.php");
+                    header("Location: ../pages/change_password.php");
                     exit();
                 }
             } else {
@@ -96,7 +96,7 @@ if (isset($_POST['confirm-change-password'])) {
                     });
                 </script>
                 ";
-                header("Location: ../pages/index.php");
+                header("Location: ../pages/change_password.php");
                 exit();
             }
         } else {

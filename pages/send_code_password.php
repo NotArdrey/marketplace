@@ -31,7 +31,7 @@ require "../config/dbconn.php";
                     <input type="text" name="email" required>
                 </div>
                 <div class="send-code-submit" >
-                    <input type="submit" value="send code" name = "confirm_code_btn" class="send-code-button">
+                    <input type="submit" value="Send code" name = "confirm_code_btn" class="send-code-button">
                 </div>
 
                 <div class="back-to-registration-code">

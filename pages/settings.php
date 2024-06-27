@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
             </div>
             <div class="right-details">
                 <div class="account-image-div">
-                    <img src="<?php echo !empty($row['profilePicture']) ? $row['profilePicture'] : '../profile_pics/default.png'; ?>"
+                    <img src="<?php echo !empty($row['profilePicture']) ? $row['profilePicture'] : '../img/default.png'; ?>"
                         alt="Profile Picture" class="account-image">
                 </div>
 

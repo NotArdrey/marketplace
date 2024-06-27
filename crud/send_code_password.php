@@ -22,7 +22,7 @@ function sendemail_code($first_name, $email, $token_pass) {
 
         $mail->isHTML(true);
         $mail->Subject = 'Password Reset Code';
-        $mail->Body    = "Hi $first_name,<br>Please click the link below to change your password:<br><a href='http://localhost/Project/marketplace/pages/change_password.php?token_pass=". urlencode($token_pass) ."'>Verify Email</a>";
+        $mail->Body    = "Hi $first_name,<br>Please click the link below to change your password:<br><a href='http://localhost/marketplace/pages/change_password.php?token_pass=". urlencode($token_pass) ."'>Change Password</a>";
 
         $mail->send();
         return true; 

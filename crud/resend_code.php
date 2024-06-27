@@ -7,24 +7,28 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
+function generateOTP() {
+    return str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+}
 
-function resend_email_verify($first_name, $email, $verify_token){
+function resend_email_verify($first_name, $email, $otp, $verify_token) {
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'sample@gmail.com';
-        $mail->Password   = '**** **** **** ****'; 
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'neilardrey14@gmail.com';
+        $mail->Password = 'nwkp lnkd qxja msid';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port = 587;
 
         $mail->setFrom('neilardrey14@gmail.com', 'Sender');
         $mail->addAddress($email, $first_name);
 
         $mail->isHTML(true);
         $mail->Subject = 'Resend Email Verification';
-        $mail->Body = "Hi $first_name,<br>Please click the link below to confirm your email address and activate your account:<br><a href='http://localhost/Project/marketplace/crud/tokenVerification.php?token=". urlencode($verify_token) ."'>Verify Email</a>";
+        $mail->Body = "Hi $first_name,<br>Your OTP is <strong>$otp</strong>.<br>Please click the link below to confirm your email address and activate your account:<br><a href='http://localhost/marketplace/pages/otp_verification.php?token=" . urlencode($verify_token) . "'>Verify Email</a>";
+
         $mail->send();
         $_SESSION['alert'] = "
         <script>
@@ -35,8 +39,6 @@ function resend_email_verify($first_name, $email, $verify_token){
             });
         </script>
         ";
-        header("Location: ../pages/resend_verification.php"); 
-        exit();
     } catch (Exception $e) {
         $_SESSION['alert'] = "
         <script>
@@ -47,60 +49,56 @@ function resend_email_verify($first_name, $email, $verify_token){
             });
         </script>
         ";
-        header("Location: ../pages/resend_verification.php"); 
-        exit();
     }
-
 }
+
 if (isset($_POST['resend_btn'])) {
     if (!empty(trim($_POST['email']))) {
         $email = mysqli_real_escape_string($conn, $_POST['email']);
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }    
         function isValidOutlookEmail($email) {
             $pattern = '/^[a-zA-Z._%+-]+@([a-zA-Z0-9-]+\.)?nu-baliwag\.edu\.ph$/';
             return preg_match($pattern, $email);
         }
-    
-        if (empty($email) || !isValidOutlookEmail($email)) {
+
+        if (!isValidOutlookEmail($email)) {
             $_SESSION['alert'] = "
             <script>
                 Swal.fire({
                     icon: 'warning',
                     title: 'Validation Error',
-                    text: 'Valid Outlook email is required.',
+                    text: 'Valid NU email is required.',
                 });
             </script>
             ";
             header("Location: ../pages/resend_verification.php");
-            exit(0);
+            exit();
         }
 
         $checkemail_query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
         $checkemail_query_run = mysqli_query($conn, $checkemail_query);
 
-        
         if (mysqli_num_rows($checkemail_query_run) > 0) {
             $row = mysqli_fetch_array($checkemail_query_run);
             if ($row['verify_status'] == "0") {
                 $first_name = $row["first_name"];
                 $verify_token = $row["verify_token"];
-                $email = $row["email"];
-   
-                resend_email_verify($first_name, $email, $verify_token);
+                $otp = generateOTP();
+                
+                // Save the OTP in the database
+                $update_otp_query = "UPDATE users SET otp='$otp' WHERE email='$email'";
+                mysqli_query($conn, $update_otp_query);
+
+                resend_email_verify($first_name, $email, $otp, $verify_token);
                 $_SESSION['alert'] = "
                 <script>
                     Swal.fire({
                         icon: 'success',
                         title: 'Verification Email Sent',
-                        text: 'Verification has been sent to your email.',
+                        text: 'Code has been sent to your email.',
                     });
                 </script>
                 ";
-                header("Location: ../pages/resend_verification.php");
-                exit(0);
             } else {
                 $_SESSION['alert'] = "
                 <script>
@@ -112,9 +110,6 @@ if (isset($_POST['resend_btn'])) {
                 </script>
                 ";
             }
-                header("Location: ../pages/resend_verification.php");
-                exit(0);
-            }
         } else {
             $_SESSION['alert'] = "
             <script>
@@ -125,9 +120,9 @@ if (isset($_POST['resend_btn'])) {
                 });
             </script>
             ";
-            header("Location: ../pages/resend_verification.php");
-            exit(0);
         }
+        header("Location: ../pages/resend_verification.php");
+        exit();
     } else {
         $_SESSION['alert'] = "
         <script>
@@ -138,9 +133,8 @@ if (isset($_POST['resend_btn'])) {
             });
         </script>
         ";
+        header("Location: ../pages/resend_verification.php");
+        exit();
     }
-
-    header("Location: ../pages/resend_verification.php");
-    exit(0);
-
+}
 ?>
