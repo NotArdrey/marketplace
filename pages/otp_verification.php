@@ -1,7 +1,16 @@
 <?php
 session_start();
 require "../config/dbconn.php";
+
+if (isset($_SESSION['token'])) {
+    $token = $_SESSION['token'];
+} else {
+
+    $token = ''; 
+}
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +35,8 @@ require "../config/dbconn.php";
         <div class="otp-container">
             <h2>OTP Verification</h2>
             <p id="container-paragraph">Enter the 4 digits code that you have received on your NU email</p>
-            <form action="otp_verify.php" method="POST" id="otp-form">
+            <form action="../crud/otp_verify.php?token=<?php echo urlencode($token);?>" method="POST" id="otp-form">
+    
                 <div class="otp-card-inputs">
                     <input type="text" maxlength="1" name="otp[]" autofocus>
                     <input type="text" maxlength="1" name="otp[]">

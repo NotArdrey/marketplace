@@ -2,61 +2,82 @@
 session_start();
 include "../config/dbconn.php";
 
+class UserAuth {
+    private $conn;
+    private $email;
+    private $password;
+
+    public function __construct($conn, $email, $password) {
+        $this->conn = $conn;
+        $this->email = $email;
+        $this->password = $password;
+    }
+
+    public function authenticate() {
+        $user = $this->getUserByEmail();
+        
+        if ($user && $this->verifyPassword($user['userPassword'])) {
+            if ($user['verify_status'] == 1) {
+                $this->setUserSession($user);
+                $this->redirect('../pages/customer_dashboard.php');
+            } else {
+                $this->setAlert('warning', 'Verification Required', 'Please verify your email address.');
+                $this->redirect('../pages/index.php');
+            }
+        } else {
+            $this->setAlert('error', 'Wrong username or password', 'Please try again.');
+            $this->redirect('../pages/index.php');
+        }
+    }
+
+    private function getUserByEmail() {
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->num_rows == 1 ? $result->fetch_assoc() : null;
+    }
+
+    private function verifyPassword($hashedPassword) {
+        // Assuming passwords are hashed, use password_verify() for checking.
+        return password_verify($this->password, $hashedPassword);
+    }
+
+    private function setUserSession($user) {
+        $_SESSION['authenticated'] = true;
+        $_SESSION['auth_user'] = [
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name'],
+            'email' => $user['email'],
+            'contact_number' => $user['contact_number'],
+            'userPassword' => $user['userPassword'],
+        ];
+        $_SESSION['userID'] = $user['userID'];
+    }
+
+    private function setAlert($icon, $title, $text) {
+        $_SESSION['alert'] = "
+            <script>
+                Swal.fire({
+                    icon: '$icon',
+                    title: '$title',
+                    text: '$text',
+                });
+            </script>
+        ";
+    }
+
+    private function redirect($url) {
+        header("Location: $url");
+        exit();
+    }
+}
+
 $loginEmail = $_POST['email'];
 $loginPassword = $_POST['password'];
 
-
-
-$sql = "SELECT * FROM users WHERE email = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $loginEmail);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if (mysqli_num_rows($result) == 1) {
-
-    $row = mysqli_fetch_assoc($result);
-
-    if($row["verify_status"] == 1){
-
-        $_SESSION['authenticated'] = TRUE;
-        $_SESSION['auth_user'] = [
-            'first_name' => $row['first_name'],
-            'last_name' => $row['last_name'],
-            'email' => $row['email'],
-            'contact_number' => $row['contact_number'],
-            'userPassword' => $row['userPassword'],
-        ];
-        $_SESSION['userID'] = $row['userID'];
-        header("Location: ../pages/customer_dashboard.php");
-        exit();
-
-    }else{
-        $_SESSION['alert'] = "
-        <script>
-            Swal.fire({
-                icon: 'warning',
-                title: 'Verification Required',
-                text: 'Please verify your email address.',
-            });
-        </script>
-        ";
-        header("Location: ../pages/index.php");
-        exit(0);
-    }
-
-
-} else {
-    $_SESSION['alert'] = "
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Wrong username or password',
-                text: 'Please try again.'
-        });
-        </script>
-    ";
-    header("Location: ../pages/index.php");
-    exit();
-}
+$auth = new UserAuth($conn, $loginEmail, $loginPassword);
+$auth->authenticate();
 ?>

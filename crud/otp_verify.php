@@ -3,20 +3,35 @@ session_start();
 require '../config/dbconn.php';
 
 if (isset($_POST['verify_otp_btn'])) {
-    if (!empty($_POST['otp'])) {
+    if (!empty($_POST['otp']) && is_array($_POST['otp'])) {
         $otp_array = $_POST['otp'];
         $otp = implode('', $otp_array);
 
-        if (isset($_GET['token'])) {
-            $token = $_GET['token'];
+        if (strlen($otp) !== 4 || !ctype_digit($otp)) {
+            $_SESSION['alert'] = "
+            <script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Invalid OTP Format',
+                    text: 'OTP must be a 4-digit number.',
+                });
+            </script>
+            ";
+            header("Location: ../pages/otp_verification.php");
+            exit();
+        }
 
-            $verify_otp_query = "SELECT * FROM users WHERE verify_token='$token' AND otp='$otp' LIMIT 1";
-            $verify_otp_query_run = mysqli_query($conn, $verify_otp_query);
+        $verify_otp_query = "SELECT * FROM users WHERE otp='$otp' LIMIT 1";
+        $verify_otp_query_run = mysqli_query($conn, $verify_otp_query);
 
+        if ($verify_otp_query_run) {
             if (mysqli_num_rows($verify_otp_query_run) > 0) {
                 $row = mysqli_fetch_array($verify_otp_query_run);
-                if ($row['verify_status'] == "0") {
-                    $update_verify_status_query = "UPDATE users SET verify_status='1', otp=NULL WHERE verify_token='$token'";
+                $user_id = $row['userID']; // Get the user ID
+                $verify_status = $row['verify_status']; 
+
+                if ($verify_status == "0") {
+                    $update_verify_status_query = "UPDATE users SET verify_status='1', otp=NULL WHERE userID='$user_id'";
                     mysqli_query($conn, $update_verify_status_query);
 
                     $_SESSION['alert'] = "
@@ -30,7 +45,7 @@ if (isset($_POST['verify_otp_btn'])) {
                     ";
                     header("Location: ../pages/index.php");
                     exit();
-                } else {
+                } else if ($verify_status == "1") {
                     $_SESSION['alert'] = "
                     <script>
                         Swal.fire({
@@ -41,6 +56,18 @@ if (isset($_POST['verify_otp_btn'])) {
                     </script>
                     ";
                     header("Location: ../pages/index.php");
+                    exit();
+                } else {
+                    $_SESSION['alert'] = "
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Verification Failed',
+                            text: 'An error occurred during verification. Please try again.',
+                        });
+                    </script>
+                    ";
+                    header("Location: ../pages/otp_verification.php");
                     exit();
                 }
             } else {
@@ -61,8 +88,8 @@ if (isset($_POST['verify_otp_btn'])) {
             <script>
                 Swal.fire({
                     icon: 'error',
-                    title: 'Token Missing',
-                    text: 'Verification token is missing. Please check your email and try again.',
+                    title: 'Database Error',
+                    text: 'There was an error processing your request. Please try again later.',
                 });
             </script>
             ";
