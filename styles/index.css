@@ -358,6 +358,20 @@ body {
     z-index: 99;
 }
 
+.navbar-admin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #252525;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    z-index: 99;
+}
+
 .navbar-left {
     height: 100%;
     width: 50%;
@@ -1751,7 +1765,7 @@ body {
     column-gap: 32px;
 }
 
-.product-form-row {
+.product-form-row, .admin-form-row {
     width: 100%;
     height: auto;
     display: flex;
@@ -1761,7 +1775,7 @@ body {
     row-gap: 8px;
 }
 
-.product-form-row input[type="text"], textarea {
+.product-form-row input[type="text"], textarea, .admin-form-row input[type="text"], .admin-form-row input[type="password"], .admin-form-row input[type="email"] {
     width: 100%;
     box-sizing: border-box;
     font-size: 24px;
@@ -3561,4 +3575,48 @@ span img {
 
 #cancel-btn {
     background-color: #DC3545;
+}
+
+.delete-product-btn {
+    background-color: #DC3545;
+}
+
+#users-navbar {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#create-admin-page {
+    justify-content: center;
+    align-items: center;
+}
+
+.create-admin-form {
+    width: auto;
+    height: auto;
+}
+
+.create-admin-div {
+    width: 30vw;
+    height: 60vh;
+    border-radius: 12px;
+    background-color: #3182CE;
+    padding: 24px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.upper-admin-form {
+    width: 100%;
+    height: auto;
+}
+
+#create-admin-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: none;
 }

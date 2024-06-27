@@ -64,7 +64,7 @@ $userID = $_SESSION['userID'];
                                 </div>
                                 <div class='details-cart'>
                                     <a href='../pages/product_details.php?productID=$productID'><div class='details-button'>View Details</div></a>
-                                    <div class='cart-button' data-productid='$productID' id='deleteBtn'><i class='fa-solid fa-trash' style='color: #ffffff;'></i></div>
+                                    <div class='cart-button delete-product-btn' data-productid='$productID' id='deleteBtn'><i class='fa-solid fa-trash' style='color: #ffffff;'></i></div>
                                 </div>
                             </div>
                         </div>";
@@ -82,19 +82,19 @@ $userID = $_SESSION['userID'];
         deleteButtons.forEach(button => {
             button.addEventListener("click", function() {
                 const productID = this.getAttribute('data-productid');
-
+                var userRole = 'user';
                 Swal.fire({
                     title: "Are you sure?",
                     text: "You won't be able to revert this!",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href =
-                            `../crud/delete_product.php?productID=${productID}`;
+                            `../crud/delete_product.php?productID=${productID}&userRole=${userRole}`;
                     }
                 });
             });
