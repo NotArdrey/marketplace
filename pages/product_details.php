@@ -9,6 +9,7 @@ if (!isset($_SESSION['userID'])) {
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $vStatus = $row['verify_status'];
+    $userType = $row['user_type'];
     if ($vStatus == 0) {
         header("Location: ../pages/index.php");
     } 
@@ -52,7 +53,12 @@ $sql = "SELECT * FROM products WHERE productID = '$productID'";
 
 <body>
     <?php
+    if ($userType == 'user') {
         include_once '../components/navbar.php';
+    } else {
+        include_once '../components/admin_navbar.php';
+    }
+        
     ?>
     <?php
         $productID = $_GET['productID'];

@@ -4,6 +4,10 @@ require "../config/dbconn.php";
 
 $productID = $_GET['productID'];
 $userID = $_SESSION['userID'];
+$sql = "SELECT user_type FROM users WHERE userID = '$userID'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$userType = $row['user_type'];
 $page = $_GET['pageID'];
 $variationName = $_GET['variation'];
 $size = $_GET['size'];
@@ -31,6 +35,20 @@ if ($userID == $productSellerID) {
       } else {
           header("Location: ../pages/product_details.php?productID=$productID");
       }
+        exit();
+}
+
+if ($userType == 'admin') {
+  $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+              title: 'Error',
+              text: 'You can\\'t buy a product using an admin account!',
+              icon: 'error'
+            });
+        </script>
+        ";
+        header("Location: ../pages/product_details.php?productID=$productID");
         exit();
 }
 
