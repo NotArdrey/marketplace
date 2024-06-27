@@ -113,7 +113,7 @@ if (mysqli_num_rows($result) > 0) {
                             <p class=''><i class='fa-solid fa-peso-sign'></i>" . number_format((float)$item['variationPrice'] * $item['quantity'], 2, '.', '') . "</p>
                         </div>
                         <div class='cart-item-delete'>
-                            <a href='../crud/delete_from_cart.php?productID=" . $item['productID'] . "'><i class='fa-solid fa-x'></i></a>
+                            <a href='../crud/delete_from_cart.php?variationID=" . $variationID . "'><i class='fa-solid fa-x'></i></a>
                         </div>
                     </div>
                     <div class='cart-item-border'>

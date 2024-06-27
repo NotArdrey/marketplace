@@ -600,6 +600,7 @@ if (!isset($_SESSION['userID'])) {
         setMinDateTime(); // Ensure the min datetime is up to date
 
         if (etaInput.value === '') {
+            event.preventDefault();
             etaInput.style.border = '2px solid red';
             Swal.fire({
                 title: "Error!",
@@ -607,9 +608,10 @@ if (!isset($_SESSION['userID'])) {
                 icon: "error"
             });
         } else if (new Date(etaInput.value) < new Date(etaInput.min)) {
+            event.preventDefault();
             etaInput.style.border = '2px solid red';
             Swal.fire({
-                title: "Error!",
+                title: "Invalid date!",
                 text: "The selected date and time cannot be in the past.",
                 icon: "error"
             });

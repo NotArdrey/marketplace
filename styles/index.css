@@ -2749,6 +2749,9 @@ span img {
     width: 100%;
     box-sizing: border-box;
     height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: white;
 }
 
@@ -2976,7 +2979,7 @@ span img {
   .orders-table {
     width: 100%;
     text-align: center;
-    padding: 16px 8px;
+    padding: 0 8px 16px 8px;
   }
   
   .orders-tr td {
@@ -3484,4 +3487,14 @@ span img {
     width: 120%;
     background-color: #3182CE;
     z-index: -1;
+  }
+
+  .cart-item-delete a {
+    color: black;
+  }
+
+  .eta {
+    width: auto;
+    height: 40px;
+    border-radius: 8px;
   }
