@@ -105,7 +105,7 @@ $sql = "SELECT * FROM products WHERE productID = '$productID'";
                     <i class='fa-solid fa-star' style='color: #FFD43B;'></i>
                 </div>
                 <div>4.8/5</div>
-                <div>69 Reviews</div>
+                <div>100 Reviews</div>
             </div>
             <div class="long-cart-btn-div">
                 <a href="" id="addToCartLink">
@@ -157,7 +157,7 @@ $sql = "SELECT * FROM products WHERE productID = '$productID'";
                         <div class="feedback-date">May 25, 2024</div>
                     </div>
                     <div class="feedback-content-div">
-                        Hell nah.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                     </div>
                     <div class="feedback-img"></div>
                 </div>
@@ -179,7 +179,7 @@ $sql = "SELECT * FROM products WHERE productID = '$productID'";
                         <div class="feedback-date">May 25, 2024</div>
                     </div>
                     <div class="feedback-content-div">
-                        Hell nah.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                     </div>
                     <div class="feedback-img"></div>
                 </div>
@@ -201,7 +201,7 @@ $sql = "SELECT * FROM products WHERE productID = '$productID'";
                         <div class="feedback-date">May 25, 2024</div>
                     </div>
                     <div class="feedback-content-div">
-                        Hell nah.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                     </div>
                     <div class="feedback-img"></div>
                 </div>

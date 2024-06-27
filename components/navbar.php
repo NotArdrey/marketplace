@@ -19,7 +19,7 @@
             <a href="../pages/customer_dashboard.php">
                 <div class="nav-div">Home</div>
             </a>
-            <nav>
+            <!-- <nav>
                 <ul class="navbar">
                     <li class="nav-item dropdown">
                         <a href="#" class="dropbtn">Categories</a>
@@ -30,12 +30,12 @@
                         </div>
                     </li>
                 </ul>
-            </nav>
+            </nav> -->
             <a href="../pages/my_orders.php">
                 <div class="nav-div">My Orders</div>
             </a>
             <a href="../pages/about_us.php">
-                <div class="nav-div">About Us</div>
+                <div class="nav-div">Location</div>
             </a>
             <a href="../pages/contact_us.php">
                 <div class="nav-div">Contact Us</div>

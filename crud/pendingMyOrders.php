@@ -25,6 +25,7 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'Pending
                 $totalPrice = $row['totalAmount'];
                 $sellerID = $row['sellerID'];
                 $orderPlaced = $row['orderDate'];
+                $mop = $row['paymentMethod'];
         
                 // Fetch seller full name
                 $sql = "SELECT CONCAT(first_name, ' ', last_name) AS sellerFullName FROM users WHERE userID = '$sellerID'";
@@ -104,10 +105,16 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'Pending
                         <div class="left-order-total">
                             <p>Order Status: Pending</p>
                             <p>Order Placed: ' . $formattedDateTime . '</p>
+                            <p>Mode of Payment: ' . $mop . '</p>
                         </div>
                         <div class="right-order-total">
                             <div class="upper-order-item-total">
                                 Order Total: <span class="order-total"><i class="fa-solid fa-peso-sign"></i>' . $totalPrice . '</span>
+                            </div>
+                            <div class="lower-order-item-total">
+                                <a href="../crud/cancel_order.php?orderID=' . $orderID . '" class="rate-product-link" id="cancel-btn">
+                                    <div class="rate-button cancel-btn">Cancel Order</div>
+                                </a>
                             </div>
                         </div>
                     </div>

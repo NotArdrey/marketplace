@@ -16,14 +16,16 @@ $sql = "SELECT
         INNER JOIN 
             products ON order_items.productID = products.productID
         WHERE 
-            orders.sellerID = '$userID' AND orders.orderStatus = 'Complete'
+            orders.sellerID = '$userID' AND orders.orderStatus NOT IN ('Pending', 'To Pay', 'To Receive')
         GROUP BY 
             orders.orderID;";
             
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-    echo '<tr id="orders-tr">
+    echo '<table class="orders-table" id="orders-table">';
+    echo '<thead>
+        <tr id="orders-tr">
                         <th>Order ID</th>
                         <th>Customer Name</th>
                         <th>Amount</th>
@@ -33,8 +35,12 @@ if (mysqli_num_rows($result) > 0) {
                         <th>Date</th>
                         <th>Status</th>
                         <th></th>
-                    </tr>';
+                    </tr>
+                </thead>';
+    echo '<tbody>';
     foreach ($result as $row) {
+        $orderID = $row['orderID'];
+        $orderStatus = $row['orderStatus'];
         echo '<tr class="orders-tr">';
         echo '<td class="td-orderID">' . $row['orderID'] . '</td>'; 
         echo '<td class="td-buyerName">' . $row['buyerFullName'] . '</td>'; 
@@ -44,9 +50,11 @@ if (mysqli_num_rows($result) > 0) {
         echo '<td class="td-paymentMethod">' . $row['paymentMethod'] . '</td>'; 
         echo '<td class="td-orderDate">' . $row['formattedOrderDate'] . '</td>'; 
         echo '<td class="td-orderStatus">' . $row['orderStatus'] . '</td>'; 
-        echo '<td class="td-nextBtn"><i class="fa-solid fa-chevron-right"></i></td>';
+        echo '<td class="td-nextBtn"><i class="fa-solid fa-chevron-right" data-order-id="' . $orderID . '" data-order-status="' . $orderStatus . '"></i></td>';
         echo '</tr>';
     }
+    echo '</tbody>';
+    echo '</table>';
 } else {
     echo '<p>No orders found.</p>';
 }

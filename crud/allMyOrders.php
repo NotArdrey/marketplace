@@ -20,6 +20,7 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' ORDER BY orderDate DESC";
                 $totalPrice = $row['totalAmount'];
                 $sellerID = $row['sellerID'];
                 $orderPlaced = $row['orderDate'];
+                $details = $row['detailedStatus'];
         
                 // Fetch seller full name
                 $sql = "SELECT CONCAT(first_name, ' ', last_name) AS sellerFullName FROM users WHERE userID = '$sellerID'";
@@ -97,7 +98,7 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' ORDER BY orderDate DESC";
                     </div>
                     <div class="order-item-total">
                         <div class="left-order-total">
-                            <p>Order Status: To Pay</p>
+                            <p>Order Status: ' . $details . '</p>
                             <p>Order Placed: ' . $formattedDateTime . '</p>
                         </div>
                         <div class="right-order-total">

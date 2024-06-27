@@ -113,20 +113,14 @@ if ($result && mysqli_num_rows($result) > 0) {
                     Order Total: <span class="order-total"><i class="fa-solid fa-peso-sign"></i>' . $totalPrice . '</span>
                 </div>
                 <div class="lower-order-item-total">
-                <form method="POST" class="payment-approval-form" id="payment-approval-form" action="../crud/handleOrderPayment.php">';
-
-    if (!empty($paymentImg)) {
-        echo '
-        <input type="hidden" name="orderID" value="' . $orderID . '">
-        <button class="rate-product-link approve" type="button" onclick="checkAndSubmitForm(\'approve\')" name="action">
-            <div class="rate-button">Approve</div>
-        </button>';
+                <form method="POST" class="payment-approval-form" id="payment-approval-form" action="../crud/handleOrderPayment.php">
+                    <input type="hidden" name="orderID" value="' . $orderID . '">';
+    
+    if (empty($paymentImg)) {
+        echo '<input class="rate-product-link cancel" type="submit" name="action" value="Reject" onclick="console.log(\'Reject button clicked\')">';
     }
 
-    echo '
-        <button class="rate-product-link cancel" type="submit" name="action" value="reject">
-            <div class="rate-button">Reject</div>
-        </button>
+    echo ' 
         </div>
         </div>
     </div>';
@@ -134,15 +128,17 @@ if ($result && mysqli_num_rows($result) > 0) {
     if (!empty($paymentImg)) {
         echo ' 
         <div class="proof-of-payment">
-            <p>Select Estimated Delivery Date</p>
-            <input type="datetime-local" name="eta" id="eta" class="eta">
             <a href="../payment_proof/' . $paymentImg .'" target="_blank"><img src="../payment_proof/' . $paymentImg . '"></a>
             <p>Click to view image</p>
-        </div>';
+            <div class="input-holder">
+                <input form="payment-approval-form" class="rate-product-link approve h-100" type="submit" name="action" value="Accept" onclick="console.log(\'Accept button clicked\')">
+                <input form="payment-approval-form" class="rate-product-link cancel h-100" type="submit" name="action" value="Reject" onclick="console.log(\'Reject button clicked\')">
+            </div>
+        </div>
+        </form>';
     }
 
     echo '
-        </form>
         </div>
     </div>';
 

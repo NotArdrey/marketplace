@@ -3,7 +3,7 @@ session_start();
 require "../config/dbconn.php";
 $userID = $_SESSION['userID'];
 
-$sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'Completed' ORDER BY orderDate DESC";
+$sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus NOT IN ('Pending', 'To Pay', 'To Receive') ORDER BY orderDate DESC";
         $result = mysqli_query($conn, $sql);
         
         if (mysqli_num_rows($result) > 0) {
@@ -21,18 +21,21 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'Complet
                 $totalPrice = $row['totalAmount'];
                 $sellerID = $row['sellerID'];
                 $orderPlaced = $row['orderDate'];
+                $paymentMethod = $row['paymentMethod'];
+                $details = $row['detailedStatus'];
         
                 // Fetch seller full name
-                $sql = "SELECT CONCAT(first_name, ' ', last_name) AS sellerFullName FROM users WHERE userID = '$sellerID'";
+                $sql = "SELECT *, CONCAT(first_name, ' ', last_name) AS sellerFullName FROM users WHERE userID = '$sellerID'";
                 $result = mysqli_query($conn, $sql);
                 $sellerRow = mysqli_fetch_assoc($result);
                 $sellerName = $sellerRow['sellerFullName'];
+                $contactNumber = $sellerRow['contact_number'];
         
                 echo '
                 <div class="my-orders-display all-my-orders">
                     <div class="orders-details">
                         <div class="orders-details-row">
-                            <div class="left-details-row"><i class="fa-solid fa-store"></i><strong>' . $sellerName . '</strong></div>
+                            <div class="left-details-row"><i class="fa-solid fa-store"></i><strong>' . $sellerName . '</strong><i class="fa-solid fa-phone"></i><strong>' . $contactNumber . '</strong></div>
                             <div class="right-details-row">' . $status . '</div>
                         </div>
                     </div>
@@ -98,8 +101,9 @@ $sql = "SELECT * FROM orders WHERE userID = '$userID' AND orderStatus = 'Complet
                     </div>
                     <div class="order-item-total">
                         <div class="left-order-total">
-                            <p>Order Status: Pending</p>
+                            <p>Order Status: ' . $details . '</p>
                             <p>Order Placed: ' . $formattedDateTime . '</p>
+                            <p>Mode of Payment: ' . $paymentMethod . '</p>
                         </div>
                         <div class="right-order-total">
                             <div class="upper-order-item-total">

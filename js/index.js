@@ -145,18 +145,32 @@ function disableQuantity() {
 
 function addToVariationArray() {
   event.preventDefault();
-  let variantInput = document.getElementById("variant-input").value;
-  if (variantInput.trim() !== "") {
+  let variantInput = document.getElementById("variant-input").value.trim();
+  
+  if (variantInput !== "") {
+    if (variationArray.includes(variantInput)) {
+      Swal.fire({
+        title: "Error!",
+        text: "You already added this variation!",
+        icon: "error"
+      });
+      return; 
+    }
+
     variationArray.push(variantInput);
     document.getElementById("variant-input").value = "";
+
     let variationDiv = document.createElement("div");
     variationDiv.classList.add("variation-div");
+
     let textSpan = document.createElement("span");
     textSpan.textContent = variantInput;
+
     let deleteButton = document.createElement("button");
     let deleteIcon = document.createElement("i");
     deleteIcon.classList.add("fa-solid", "fa-x");
     deleteButton.appendChild(deleteIcon);
+    
     deleteButton.addEventListener("click", function () {
       let index = variationArray.indexOf(variantInput);
       if (index > -1) {
@@ -167,6 +181,7 @@ function addToVariationArray() {
 
     variationDiv.appendChild(textSpan);
     variationDiv.appendChild(deleteButton);
+
     document.getElementById("variation-list").appendChild(variationDiv);
   }
 }
@@ -180,34 +195,52 @@ document
     }
   });
 
-function addToSizeArray() {
-  event.preventDefault();
-  let sizeInput = document.getElementById("size-input").value;
-  if (sizeInput.trim() !== "") {
-    sizeArray.push(sizeInput);
-    document.getElementById("size-input").value = "";
-    let sizeDiv = document.createElement("div");
-    sizeDiv.classList.add("size-div");
-    let textSpan = document.createElement("span");
-    textSpan.textContent = sizeInput;
-    let deleteButton = document.createElement("button");
-    let deleteIcon = document.createElement("i");
-    deleteIcon.classList.add("fa-solid", "fa-x");
-    deleteButton.appendChild(deleteIcon);
-    deleteButton.addEventListener("click", function () {
-      let index = sizeArray.indexOf(sizeInput);
-      let sizeName = sizeArray[index];
-      if (index > -1) {
-        sizeArray.splice(index, 1);
+  function addToSizeArray() {
+    event.preventDefault();
+    let sizeInput = document.getElementById("size-input").value.trim();
+    
+    if (sizeInput !== "") {
+      if (sizeArray.includes(sizeInput)) {
+        Swal.fire({
+          title: "Error!",
+          text: "You already added this size!",
+          icon: "error"
+        });
+        return; 
       }
-      sizeDiv.remove();
-      variations = variations.filter((product) => product.size !== sizeName);
-    });
-    sizeDiv.appendChild(textSpan);
-    sizeDiv.appendChild(deleteButton);
-    document.getElementById("size-list").appendChild(sizeDiv);
+  
+      sizeArray.push(sizeInput);
+      document.getElementById("size-input").value = "";
+  
+      let sizeDiv = document.createElement("div");
+      sizeDiv.classList.add("size-div");
+  
+      let textSpan = document.createElement("span");
+      textSpan.textContent = sizeInput;
+  
+      let deleteButton = document.createElement("button");
+      let deleteIcon = document.createElement("i");
+      deleteIcon.classList.add("fa-solid", "fa-x");
+      deleteButton.appendChild(deleteIcon);
+      
+      deleteButton.addEventListener("click", function () {
+        let index = sizeArray.indexOf(sizeInput);
+        let sizeName = sizeArray[index];
+        if (index > -1) {
+          sizeArray.splice(index, 1);
+        }
+        sizeDiv.remove();
+        // Assuming 'variations' is a global or accessible array of objects with 'size' property
+        variations = variations.filter((product) => product.size !== sizeName);
+      });
+  
+      sizeDiv.appendChild(textSpan);
+      sizeDiv.appendChild(deleteButton);
+  
+      document.getElementById("size-list").appendChild(sizeDiv);
+    }
   }
-}
+  
 
 document
   .getElementById("size-input")

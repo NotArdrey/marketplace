@@ -16,6 +16,24 @@ $row = mysqli_fetch_assoc($result);
 $productName = $row['productName'];
 $productSellerID = $row['productSellerID'];
 
+if ($userID == $productSellerID) {
+  $_SESSION['alert'] = "
+        <script>
+            Swal.fire({
+              title: 'Error',
+              text: 'You can\\'t buy your own product!',
+              icon: 'error'
+            });
+        </script>
+        ";
+        if ($page != "detailed") {
+          header("Location: ../pages/customer_dashboard.php");
+      } else {
+          header("Location: ../pages/product_details.php?productID=$productID");
+      }
+        exit();
+}
+
 $sql = "SELECT * FROM variations WHERE variationName = '$variationName' AND variationSize = '$size' AND productID = '$productID'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);

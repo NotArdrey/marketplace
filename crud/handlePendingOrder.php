@@ -64,7 +64,7 @@ if ($result) {
   }
   
 } else {
-  $sql = "UPDATE orders SET orderStatus = 'Completed', detailedStatus = 'Cancelled' WHERE orderID = '$orderID'";
+  $sql = "UPDATE orders SET orderStatus = 'Rejected', detailedStatus = 'Rejected' WHERE orderID = '$orderID'";
   $result = mysqli_query($conn, $sql);
 
 if ($result) {
@@ -83,7 +83,7 @@ if ($result) {
     });
         Toast.fire({
           icon: 'success',
-          title: 'Order #{$orderID} Cancelled'
+          title: 'Order #{$orderID} Rejected'
         });
     </script>
     ";
