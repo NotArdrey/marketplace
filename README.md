@@ -3,7 +3,7 @@
 Welcome to the **NU Marketplace** repository! This project is a web-based marketplace developed in PHP, designed to streamline the buying and selling of products online. Our goal is to provide an intuitive platform for both buyers and sellers.
 
 ## Features
-
+ 
 - **User Registration and Login**: Users can securely register and log in to manage their accounts.
 - **Product Management**: Sellers have the ability to create and manage their product listings, including images, descriptions, and pricing.
 - **Search and Filter**: Users can efficiently search for products and apply filters based on categories, prices, and other criteria.
